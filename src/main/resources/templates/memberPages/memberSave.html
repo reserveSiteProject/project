@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{component/config :: config}"></th:block>
+</head>
+<body>
+<div class="container mt-4 mb-5">
+    <div class="row justify-content-center">
+        <form class="card me-4 col-md-8 pb-5" action="/member/save" method="post" name="frm">
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center mt-5">
+                    <h3>회원가입</h3>
+                </div>
+            </div>
+            <div class="row mt-4 ms-5">
+                이메일
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-10 me-4">
+                    <div class="input-group">
+                        <input class="form-control" type="text" name="memberEmail" autocomplete='off' maxlength='16'>
+                        <span class="input-group-text">@</span>
+                        <input type="text" class="form-control" list="emailList" maxlength='16' name="email" autocomplete="off" >
+                        <datalist id="emailList">
+                            <option value="naver.com">
+                            <option value="gmail.com">
+                            <option value="">
+                        </datalist>
+                        <input type="button" value="이메일인증" class="ms-3 btn btn-secondary" onclick="email_fn()">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 ms-5">
+                비밀번호
+            </div>
+            <div class="row">
+                <div class="col-8 ms-5">
+                    <div class="input-group">
+                        <input type="password" class="form-control" maxlength="25" name="memberPassword">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 ms-5">
+                비밀번호 재확인
+            </div>
+            <div class="row">
+                <div class="col-8 ms-5">
+                    <div class="input-group">
+                        <input type="password" class="form-control" maxlength="25" name="memberPass">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 ms-5">
+                닉네임
+            </div>
+            <div class="row">
+                <div class="col-8 ms-5">
+                    <div class="input-group">
+                        <input type="text" class="form-control" maxlength="25" name="nickName">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 ms-5">
+                이름
+            </div>
+            <div class="row">
+                <div class="col-8 ms-5">
+                    <div class="input-group">
+                        <input type="text" class="form-control" maxlength="25" name="memberName">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 ms-5">
+                핸드폰번호
+            </div>
+            <div class="row">
+                <div class="col-8 ms-5">
+                    <div class="input-group">
+                        <input type="text" class="form-control" maxlength="25" name="meberMobile">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 ms-5">
+                주소
+            </div>
+            <div class="row">
+                <div class="col-8 ms-5">
+                    <div class="input-group">
+                        <input type="text" class="form-control" maxlength="35" name="meberAddress">
+                        <input type="button" value="주소찾기" class="ms-3 btn btn-secondary" onclick="address_fn()">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 ms-5">
+                생년월일
+            </div>
+            <div class="row">
+                <div class="col-8 ms-5">
+                    <div class="input-group">
+                        <input type="date" class="form-control" maxlength="20" name="meberBirth">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4 ms-5">
+                <div class="col text-center">
+                    <input type="button" value="회원가입" class="btn btn-secondary">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<script>
+
+    //이메일 인증
+    const email_fn = () => {
+        const emailList = document.querySelector("[name='email']").value;
+        alert(emailList);
+
+
+    }
+</script>
+</html>
