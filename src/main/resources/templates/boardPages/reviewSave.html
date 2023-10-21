@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>리뷰 작성 페이지</h1>
+<form action="/board/review/save" method="post" enctype="multipart/form-data">
+<input type="text" name="reviewTitle" placeholder="리뷰 제목" ><br>
+<input type="text" name="reviewWriter" placeholder="리뷰 작성자" th:value="${session.loginEmail}" readonly><br>
+    <textarea name="reviewContents" cols="30" rows="10" placeholder="리뷰 내용을 입력하세요"></textarea><br>
+    <input type="file" name="reviewFile" multiple><br>
+    <input type="submit" value="리뷰 작성하기">
+</form>
+</body>
+</html>
