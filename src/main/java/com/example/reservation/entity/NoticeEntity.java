@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter(AccessLevel.PRIVATE)
 @Table(name = "notice_table")
-public class NoticeEntity {
+public class NoticeEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

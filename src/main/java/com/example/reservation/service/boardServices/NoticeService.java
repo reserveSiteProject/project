@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,4 +20,13 @@ public class NoticeService {
         NoticeEntity noticeEntity = NoticeEntity.toSaveEntity(noticeDTO);
         return noticeRepository.save(noticeEntity).getId();
     }
+    public List<NoticeDTO> notice() throws IOException {
+        List<NoticeDTO> noticeDTOList = new ArrayList<>();
+        List<NoticeEntity> noticeEntityList = noticeRepository.findAll();
+        for(NoticeEntity entity : noticeEntityList) {
+            noticeDTOList.add(NoticeDTO.toDTO(entity));
+        }
+        return noticeDTOList;
+    }
+
 }
