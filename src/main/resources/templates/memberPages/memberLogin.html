@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="~{component/config :: config}"></th:block>
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+</head>
+<body>
+
+<div class="container mt-5 mb-5">
+  <form method="post" action="member/login" class="card p-3" name="frm">
+    <div class="row justify-content-center">
+        <h3 class="text-center">로그인페이지</h3>
+    </div>
+    <div class="row justify-content-center mt-5">
+      <div class="col-3">
+      <div class="input-group">
+        <input type="text" name="memberEmail" class="form-control" placeholder="이메일" autocomplete="off">
+      </div>
+      </div>
+      <div class="row justify-content-center mt-2">
+        <div class="col-3">
+        <div class="input-group">
+          <input type="password" name="memberPassword" class="form-control" placeholder="비밀번호" autocomplete="off">
+        </div>
+        </div>
+        <div class="row mt-2">
+          <div class="text-center">
+          <div class="col">
+            <input type="button" value="로그인" onclick="login_fn()" class="btn btn-secondary">
+          </div>
+          </div>
+          <div class="text-center mt-2 ms-5">
+            <small class="rmb">계정정보저장</small>
+            <input type="checkbox" name="keep">
+            <p id="login-check" class="mt-2 me-2"></p>
+          </div>
+          <div class="text-end">
+          <div class="col-10">
+            <input type="button" value="비밀번호찾기" onclick="findPass_fn()" class="btn btn-success">
+          </div>
+          </div>
+            <p style="text-align: center;">
+              <a href="javascript:void(0)">
+                <img src="./images/ka.png" onclick="kakaoLogin();">
+              </a>
+            </p>
+      <ul>
+          <li onclick="kakaoLogout();">
+            <a href="javascript:void(0)">
+              <span>카카오 로그아웃</span>
+            </a>
+      </ul>
+      </div>
+    </div>
+    </div>
+  </form>
+</div>
+
+
+</body>
+<script th:inline="javascript">
+
+  const login_fn = () => {
+    const memberEmail = document.querySelector("[name = 'memberEmail']").value;
+    const memberPassword = document.querySelector("[name = 'memberPassword']").value;
+    const loginCheck = document.getElementById("login-check");
+    const keep=$(frm.keep).is(":checked");
+    if(memberEmail==""){
+      loginCheck.innerHTML = "이메일 입력바람";
+      loginCheck.style.color = "red";
+      $(frm.memberEmail).focus();
+    }else if(memberPassword==""){
+      loginCheck.innerHTML = "비번 입력바람";
+      loginCheck.style.color = "red";
+      $(frm.memberPassword).focus();
+    }else{
+      $.ajax({
+        type:"post",
+        url:"/member/login",
+        data:{
+          memberEmail, memberPassword, keep
+        },
+        success:function(data){
+          location.href="/";
+        }, error:function (data){
+          console.log(data)
+          loginCheck.innerHTML = "아이디 또는 비밀번호 확인바람";
+          loginCheck.style.color = "red";
+        }
+      })
+    }
+  }
+
+  const findPass_fn = () => {
+    location.href="/member/findPass";
+  }
+
+  Kakao.init('b7e4f9d748685e073e7ee7533744f3e6'); //발급받은 키 중 javascript키를 사용해준다.
+  console.log(Kakao.isInitialized()); // sdk초기화여부판단
+  //카카오로그인
+  function kakaoLogin() {
+    Kakao.Auth.login({
+      success: function (response) {
+        Kakao.API.request({
+          url: '/v2/user/me',
+          success: function (response) {
+            console.log(response)
+            const memberEmail = response.kakao_account.email;
+            const nickName = response.properties.nickname;
+            $.ajax({
+              url:"/member/kakao",
+              type:"get",
+              data:{
+                memberEmail
+              },
+              success:function (data){
+                $.ajax({
+                  type:"post",
+                  url:"/member/kakao/login",
+                  data:{
+                    memberEmail
+                  },
+                  success:function(data){
+                    console.log(data)
+                    location.href="/";
+                  }
+                })
+              },error:function(data){
+                location.href=`/member/kakao/save?memberEmail=${memberEmail}&nickName=${nickName}`;
+              }
+            })
+          },
+          fail: function (error) {
+            console.log(error)
+          },
+        })
+      },
+      fail: function (error) {
+        console.log(error)
+      },
+    })
+  }
+
+  //카카오로그아웃
+  function kakaoLogout() {
+    if (Kakao.Auth.getAccessToken()) {
+      Kakao.API.request({
+        url: '/v1/user/unlink',
+        success: function (response) {
+          console.log(response)
+          $.ajax({
+            url:"/member/logout",
+            type:"get",
+            success:function (data){
+              location.href="/";
+            }
+          })
+        },
+        fail: function (error) {
+          console.log(error)
+        },
+      })
+      Kakao.Auth.setAccessToken(undefined)
+    }
+  }
+</script>
+</html>
