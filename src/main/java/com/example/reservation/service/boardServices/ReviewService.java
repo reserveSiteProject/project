@@ -35,20 +35,11 @@ public class ReviewService {
 //        MemberEntity memberEntity = memberRepository.findByMemberEmail(reviewDTO.getReviewWriter()).orElseThrow(() -> new NoSuchElementException());
         if (reviewDTO.getReviewFile().get(0).isEmpty() && reviewDTO.getReviewFile() != null) {
             // 첨부파일 없음
-            /*타팀원이 해당 엔티티를 구현한 이후에 주석 삭제하고 아래줄코드 삭제하기
-            ReviewEntity reviewEntity = ReviewEntity.toSaveEntity(memberEntity, paymentEntity, reviewDTO);
-
-             */
               ReviewEntity reviewEntity = ReviewEntity.toSaveEntity(reviewDTO);
 
             return reviewRepository.save(reviewEntity).getId();
         } else {
             // 첨부파일 있음
-                        /*타팀원이 해당 엔티티를 구현한 이후에 주석 삭제하고 아래줄코드 삭제하기
-
-           ReviewEntity reviewEntity = ReviewEntity.toSaveEntityWithFile(memberEntity, paymentEntity, reviewDTO);
-
-                         */
             ReviewEntity reviewEntity = ReviewEntity.toSaveEntityWithFile(reviewDTO);
 
             // 게시글 저장처리 후 저장한 엔티티 가져옴

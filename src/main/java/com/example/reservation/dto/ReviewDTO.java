@@ -23,7 +23,6 @@ public class ReviewDTO {
     private int fileAttached;
     private List<String> originalFileName = new ArrayList<>();
     private List<String> storedFileName = new ArrayList<>();
-
 }
 
 

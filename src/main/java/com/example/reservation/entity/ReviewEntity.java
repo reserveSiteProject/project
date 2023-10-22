@@ -55,10 +55,6 @@ public class ReviewEntity {
     // cascade, orphanRemoval: 부모 데이터 삭제시 자식 데이터도 삭제
     @OneToMany(mappedBy = "reviewEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ReviewFileEntity> reviewFileEntityList = new ArrayList<>();
-/*  주입받는 엔티티들 다 구현된뒤 메서드 정의 부분 수정하기
-//    public static ReviewEntity toSaveEntity(MemberEntity memberEntity, PaymentEntity paymentEntity, ReviewDTO reviewDTO) {
-
- */
         public static ReviewEntity toSaveEntity(ReviewDTO reviewDTO) {
             ReviewEntity reviewEntity = new ReviewEntity();
 //        reviewEntity.setMemberEntity(memberEntity);
@@ -70,10 +66,7 @@ public class ReviewEntity {
             reviewEntity.setFileAttached(0);
             return reviewEntity;
         }
-/*  주입받는 엔티티들 다 구현된뒤 메서드 정의 부분 수정하기
-//    public static ReviewEntity toSaveEntityWithFile(MemberEntity memberEntity, PaymentEntity paymentEntity, ReviewDTO reviewDTO) {
 
- */
       public static ReviewEntity toSaveEntityWithFile(ReviewDTO reviewDTO) {
             ReviewEntity reviewEntity = new ReviewEntity();
         //reviewEntity.setMemberEntity(memberEntity);
