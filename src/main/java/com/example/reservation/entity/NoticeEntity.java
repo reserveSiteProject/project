@@ -1,5 +1,6 @@
 package com.example.reservation.entity;
 
+import com.example.reservation.dto.NoticeDTO;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,4 +24,12 @@ public class NoticeEntity {
 
     @Column(length = 50)
     private String noticeTitle;
+
+    public static NoticeEntity toSaveEntity(NoticeDTO noticeDTO) {
+        NoticeEntity noticeEntity = new NoticeEntity();
+        noticeEntity.setNoticeTitle(noticeDTO.getNoticeTitle());
+        noticeEntity.setNoticeContents(noticeDTO.getNoticeContents());
+        noticeEntity.setNoticeWriter(noticeEntity.getNoticeWriter());
+        return noticeEntity;
+    }
 }

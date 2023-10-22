@@ -35,13 +35,11 @@ public class ReviewService {
 //        MemberEntity memberEntity = memberRepository.findByMemberEmail(reviewDTO.getReviewWriter()).orElseThrow(() -> new NoSuchElementException());
         if (reviewDTO.getReviewFile().get(0).isEmpty() && reviewDTO.getReviewFile() != null) {
             // 첨부파일 없음
-//            ReviewEntity reviewEntity = ReviewEntity.toSaveEntity(memberEntity, paymentEntity, reviewDTO);
               ReviewEntity reviewEntity = ReviewEntity.toSaveEntity(reviewDTO);
 
             return reviewRepository.save(reviewEntity).getId();
         } else {
             // 첨부파일 있음
-//            ReviewEntity reviewEntity = ReviewEntity.toSaveEntityWithFile(memberEntity, paymentEntity, reviewDTO);
             ReviewEntity reviewEntity = ReviewEntity.toSaveEntityWithFile(reviewDTO);
 
             // 게시글 저장처리 후 저장한 엔티티 가져옴
