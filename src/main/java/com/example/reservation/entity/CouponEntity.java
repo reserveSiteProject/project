@@ -34,7 +34,7 @@ public class CouponEntity {
     private String endDate;
 
     @Column(nullable = false)
-    private int couponStatus;
+    private String couponStatus;
 
     @Column(nullable = false)
     private String serialNum;

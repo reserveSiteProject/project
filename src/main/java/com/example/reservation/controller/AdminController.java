@@ -1,8 +1,10 @@
 package com.example.reservation.controller;
 
+import com.example.reservation.dto.CouponDTO;
 import com.example.reservation.dto.MemberDTO;
 import com.example.reservation.dto.RoomDTO;
-import com.example.reservation.service.AdminService;
+import com.example.reservation.entity.MemberEntity;
+import com.example.reservation.service.CouponService;
 import com.example.reservation.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -10,13 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminController {
-    private final AdminService adminService;
+    private final CouponService couponService;
     private final MemberService memberService;
 
     @GetMapping("/book")
@@ -48,7 +48,9 @@ public class AdminController {
     }
 
     @PostMapping("/coupon/save")
-    public String couponSave(){
+    public String couponSave(@ModelAttribute CouponDTO couponDTO){
+        MemberEntity memberEntity = couponService.findById(couponDTO.getMemberId());
+        couponService.save(couponDTO, memberEntity);
         return "redirect:/admin/manage";
     }
 

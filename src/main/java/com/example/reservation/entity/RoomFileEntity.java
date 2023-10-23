@@ -46,6 +46,4 @@ public class RoomFileEntity {
         roomFileEntity.setId(roomDTO.getId());
         return roomFileEntity;
     }
-
-
 }

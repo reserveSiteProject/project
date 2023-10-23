@@ -7,6 +7,8 @@ import lombok.Data;
 public class CouponDTO {
     private Long id;
 
+    private Long memberId;
+
     private String couponName;
 
     private Long couponSale;
@@ -17,7 +19,7 @@ public class CouponDTO {
 
     private String serialNum;
 
-    private int couponStatus;
+    private String couponStatus;
 
 
     public static CouponDTO toDTO(CouponEntity couponEntity){
