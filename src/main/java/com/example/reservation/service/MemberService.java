@@ -17,18 +17,18 @@ public class MemberService {
     public final MemberRepository memberRepository;
 
     public Long save(MemberDTO memberDTO) {
-        MemberEntity memberEntity = MemberEntity.toSave(memberDTO);
+        MemberEntity memberEntity = MemberEntity.toSaveEntity(memberDTO);
         return memberRepository.save(memberEntity).getId();
     }
 
     public MemberDTO duplicateCheck(String memberEmail) {
         MemberEntity memberEntity = memberRepository.findByMemberEmail(memberEmail).orElseThrow(() -> new NoSuchElementException());
-        return MemberDTO.toMemberDTO(memberEntity);
+        return MemberDTO.toDTO(memberEntity);
     }
 
     public MemberDTO nicknameCheck(String nickName) {
         MemberEntity memberEntity = memberRepository.findByNickName(nickName).orElseThrow(() -> new NoSuchElementException());
-        return MemberDTO.toMemberDTO(memberEntity);
+        return MemberDTO.toDTO(memberEntity);
     }
 
     public Page<MemberDTO> findAll(int page, String q) {
@@ -57,12 +57,12 @@ public class MemberService {
 
     public MemberDTO login(MemberDTO memberDTO) {
         MemberEntity memberEntity = memberRepository.findByMemberEmailAndMemberPassword(memberDTO.getMemberEmail(), memberDTO.getMemberPassword()).orElseThrow(() -> new NoSuchElementException());
-        return MemberDTO.toMemberDTO(memberEntity);
+        return MemberDTO.toDTO(memberEntity);
     }
 
     public MemberDTO findByMemberEmail(String memberEmail) {
         MemberEntity memberEntity = memberRepository.findByMemberEmail(memberEmail).orElseThrow(() -> new NoSuchElementException());
-        return MemberDTO.toMemberDTO(memberEntity);
+        return MemberDTO.toDTO(memberEntity);
     }
 
     public void update(MemberDTO memberDTO) {

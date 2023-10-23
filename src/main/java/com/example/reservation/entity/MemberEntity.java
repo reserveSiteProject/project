@@ -7,6 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter(AccessLevel.PRIVATE)
 @Getter
@@ -43,10 +45,10 @@ public class MemberEntity extends BaseEntity{
     @Column(nullable = false)
     private int kakao;
 
-//    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-//    private List<CouponEntity> couponEntities = new ArrayList<>();
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CouponEntity> couponEntities = new ArrayList<>();
 
-    public static MemberEntity toSave(MemberDTO memberDTO) {
+    public static MemberEntity toSaveEntity(MemberDTO memberDTO) {
         MemberEntity memberEntity = new MemberEntity();
         memberEntity.setMemberEmail(memberDTO.getMemberEmail());
         memberEntity.setMemberPassword(memberDTO.getMemberPassword());
