@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <th:block th:replace="~{component/config :: config}"></th:block>
+  <link rel="stylesheet" href="/css/find.css">
 </head>
 <body>
 <div class="container mt-5 mb-5">
@@ -25,14 +26,40 @@
         </div>
         </div>
         </div>
+
+<div class="modal fade" id="modal_pass" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">임시비밀번호 발급</h1>
+      </div>
+      <div class="modal-body row justify-contents-center">
+        <div class="col-12 text-center"></div>
+        <div class="MnAr--LoadingSpinner" id="button"></div>
+        <div class="MnAr--LoadingComplete" id="rays">
+          <div class="MnAr--LoadingComplete__check"></div>
+        </div>
+        <div id="not-find" class="text-center" style="color: red">이메일 확인바람!</div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
 </body>
 <script th:inline="javascript">
 
   const find_fn = () => {
+    const notFind = document.querySelector("#not-find");
+    const rays = document.querySelector("#rays");
+    notFind.style.display = "none";
+    rays.style.display = "none";
     const memberEmail = document.querySelector("[name = 'memberEmail']").value;
+    const button = document.querySelector("#button");
+    button.style.display = "block";
     if (memberEmail == "") {
       alert("이메일 입력 바람");
     } else {
+      $("#modal_pass").modal("show");
       $.ajax({
         type: "post",
         url: "/member/findPass",
@@ -40,10 +67,22 @@
           memberEmail: memberEmail
         },
         success: function (data) {
+          setTimeout(function() {
+            button.style.display = "none";
+            rays.style.display = "block";
+          }, 1000);
+          setTimeout(function() {
             location.href="/member/login";
+          }, 2000);
         },
         error: function (data) {
-          alert("이메일 확인 바람");
+          setTimeout(function() {
+            button.style.display = "none";
+            notFind.style.display = "block";
+          }, 1000);
+          setTimeout(function() {
+            $("#modal_pass").modal("hide");
+          }, 2000);
         }
       });
     }

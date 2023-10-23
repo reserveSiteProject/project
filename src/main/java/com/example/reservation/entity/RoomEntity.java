@@ -17,7 +17,6 @@ import java.util.List;
 @Entity
 
 
-
 @Table(name = "room_table")
 public class RoomEntity {
     @Id
@@ -31,9 +30,6 @@ public class RoomEntity {
     private String roomPrice;
 
     @Column
-    private int roomCount;
-
-    @Column
     private int fileAttached;
 
     @Column(length = 50, nullable = false)
@@ -45,10 +41,8 @@ public class RoomEntity {
     @Column(length = 500)
     private String roomInfo;
 
-
     @Column(length = 200)
     private String roomItems;
-
 
     @OneToMany(mappedBy = "roomEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<RoomFileEntity> roomFileEntityList = new ArrayList<>();
@@ -57,31 +51,41 @@ public class RoomEntity {
     private List<ReserveEntity> reserveEntityList = new ArrayList<>();
 
 
-    public static RoomEntity toSaveEntity(RoomDTO roomDTO){
+    public static RoomEntity toSaveEntity(RoomDTO roomDTO) {
         RoomEntity roomEntity = new RoomEntity();
-        roomEntity.setRoomCount(roomDTO.getRoomCount());
         roomEntity.setRoomInfo(roomDTO.getRoomInfo());
         roomEntity.setRoomItems(roomDTO.getRoomItems());
         roomEntity.setRoomName(roomDTO.getRoomName());
         roomEntity.setCapacity(roomDTO.getCapacity());
         roomEntity.setRoomPrice(roomDTO.getRoomPrice());
         roomEntity.setRoomType(roomDTO.getRoomType());
-        roomEntity.setFileAttached(roomDTO.getFileAttached());
+        roomEntity.setFileAttached(0);
         return roomEntity;
     }
 
 
-    public static RoomEntity toUpdateEntity(RoomDTO roomDTO){
+    public static RoomEntity toSaveEntityWithFile(RoomDTO roomDTO) {
         RoomEntity roomEntity = new RoomEntity();
-        roomEntity.setId(roomDTO.getId());
-        roomEntity.setRoomCount(roomDTO.getRoomCount());
         roomEntity.setRoomInfo(roomDTO.getRoomInfo());
         roomEntity.setRoomItems(roomDTO.getRoomItems());
         roomEntity.setRoomName(roomDTO.getRoomName());
         roomEntity.setCapacity(roomDTO.getCapacity());
         roomEntity.setRoomPrice(roomDTO.getRoomPrice());
         roomEntity.setRoomType(roomDTO.getRoomType());
-        roomEntity.setFileAttached(roomDTO.getFileAttached());
+        roomEntity.setFileAttached(1);
+        return roomEntity;
+    }
+
+
+    public static RoomEntity toUpdateEntity(RoomDTO roomDTO) {
+        RoomEntity roomEntity = new RoomEntity();
+        roomEntity.setId(roomDTO.getId());
+        roomEntity.setRoomInfo(roomDTO.getRoomInfo());
+        roomEntity.setRoomItems(roomDTO.getRoomItems());
+        roomEntity.setRoomName(roomDTO.getRoomName());
+        roomEntity.setCapacity(roomDTO.getCapacity());
+        roomEntity.setRoomPrice(roomDTO.getRoomPrice());
+        roomEntity.setRoomType(roomDTO.getRoomType());
         return roomEntity;
     }
 }

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:c="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <th:block th:replace="~{component/config :: config}"></th:block>
 </head>
+
 <body>
 <h1>회원목록 출력</h1>
 <div>
@@ -12,10 +14,80 @@
         <td th:text="${member.memberPassword}"></td>
         <td th:text="${member.memberName}"></td>
         <td th:text="${member.nickName}"></td>
-<!--        <td th:text="${member.memberMobile}"></td>-->
-<!--        <td th:text="${member.memberBirth}"></td>-->
-<!--        <td th:text="${member.memberAddress}"></td>-->
+        <!-- Button trigger modal -->
+        <img src="./images/쿠폰발급.png" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+             aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>쿠폰 발급</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table>
+                            <form action="/admin/coupon/save" method="post" id="save_form">
+                                쿠폰 이름 : <input type="text" name="couponName" id="couponName">
+                                할인 가격 : <input type="text" name="couponSale" id="couponSale"
+                                               oninput="isNumber(this);"><br>
+                                <p id="couponNameCheck"></p>
+                                유효기간 시작일 : <input type="date" name="startDate" id="startDate">
+                                유효기간 종료일 : <input type="date" name="endDate" id="endDate"><br>
+                                <input type="hidden" name="memberId" th:value="${member.id}">
+                                <input type="hidden" name="serialNum" id="serialNum"><br>
+                                <input type="hidden" name="couponStatus" id="couponStatus" value="1">
+                            </form>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" th:onclick="coupon_fn([[${member.id}]])">쿠폰발급</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
     </tr>
 </div>
 </body>
+<script th:inline="javascript">
+    const coupon_fn = (id) => {
+        const regexHangle = /^[가-힣\sㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ]+$/;
+        const regexNumber = /^[0-9]+$/;
+        const regexNumEn = /^[a-z|A-Z|0-9|]+$/;
+
+
+        const saveForm = document.getElementById("save_form")
+        const name = document.getElementById("couponName").value;
+        const sale = document.getElementById("couponSale").value;
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+        const serialNum = document.getElementById("serialNum").value;
+        const couponNameCheck = document.getElementById("couponNameCheck");
+
+        if (name != "" && sale != "" && startDate != "" && endDate != "") {
+            if (startDate <= endDate) {
+                if (regexHangle.test(name) == true) {
+                    serialNum.value = Math.random().toString(36).substring(2, 12);
+                    alert("해당 회원에게 쿠폰이 발급되었습니다.")
+                    saveForm.submit();
+                } else {
+                    couponNameCheck.innerHTML = "한글만 입력이 가능합니다";
+                    couponNameCheck.style.color = "red";
+                }
+            }else {
+                alert("유효기간 확인바랍니다.")
+            }
+        } else {
+            alert("빈칸을 채워주세요.")
+        }
+    }
+    let randomStr = Math.random().toString(36).substring(2, 12);
+
+
+    function isNumber(item) { // 숫자 정규식
+        item.value = item.value.replace(/[^0-9]/g, '');
+    }
+</script>
 </html>

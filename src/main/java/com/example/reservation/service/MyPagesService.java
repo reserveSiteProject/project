@@ -11,6 +11,7 @@ import com.example.reservation.repository.PaymentRepository;
 import com.example.reservation.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -26,9 +27,10 @@ public class MyPagesService {
      */
 
     // 리뷰 목록 출력
+
     public List<ReviewDTO> findAll(MemberDTO memberDTO) {
-        MemberEntity memberEntity = MemberEntity.toSaveEntity(memberDTO);
-        List<ReviewEntity> reviewEntityList = reviewRepository.findAllById(Collections.singleton(memberEntity.getId()));
+        MemberEntity memberEntity = MemberEntity.toUpdateEntity(memberDTO);
+        List<ReviewEntity> reviewEntityList = reviewRepository.findByMemberEntity(memberEntity);
         List<ReviewDTO> reviewDTOList = new ArrayList<>();
         for(ReviewEntity reviewEntity : reviewEntityList){
             ReviewDTO reviewDTO = ReviewDTO.toDTO(reviewEntity);
@@ -46,7 +48,7 @@ public class MyPagesService {
     // 리뷰 수정 처리
     public boolean save(ReviewDTO reviewDTO) {
         MemberEntity memberEntity = memberRepository.findById(reviewDTO.getId()).orElseThrow(() -> new NoSuchElementException());
-        PaymentEntity paymentEntity = paymentRepository.findById(reviewDTO.getPaymentId()).orElseThrow(()->new NoSuchElementException());
+        PaymentEntity paymentEntity = paymentRepository.findById(reviewDTO.getId()).orElseThrow(()->new NoSuchElementException());
         ReviewEntity review = ReviewEntity.toUpdateEntity(paymentEntity, memberEntity, reviewDTO);
         if(review==null){
             return false;

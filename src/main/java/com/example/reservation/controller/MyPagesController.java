@@ -16,7 +16,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/myPages")
-public class MyPagesController {
+public class    MyPagesController {
     private final MyPagesService myPagesService;
     // 마이페이지 리뷰목록 출력
     @GetMapping("/review")
@@ -24,11 +24,12 @@ public class MyPagesController {
         Object memberDTO1 = session.getAttribute("memberDTO");
         MemberDTO memberDTO = (MemberDTO) memberDTO1;
         List<ReviewDTO> reviewList = myPagesService.findAll(memberDTO);
+        System.out.println("reviewList = " + reviewList);
         model.addAttribute("reviewList", reviewList);
         return "MyPages/review";
     }
     // 마이페이지 리뷰 상세페이지 화면 출력
-    @PostMapping("/review/{id}")
+    @GetMapping("/review/{id}")
     public String reviewDetail(@PathVariable("id") Long id, Model model){
         ReviewDTO reviewDTO = myPagesService.findById(id);
         model.addAttribute("review",reviewDTO);
@@ -37,13 +38,16 @@ public class MyPagesController {
     // 마이페이지 리뷰 수정화면 출력
     @GetMapping("/review/update/{id}")
     public String reviewUpdate(@PathVariable("id") Long id, Model model){
+        System.out.println("id = " + id);
         ReviewDTO reviewDTO = myPagesService.findById(id);
+        System.out.println("reviewDTO = " + reviewDTO);
         model.addAttribute("review", reviewDTO);
         return "MyPages/reviewUpdate";
     }
     // 마이페이지 리뷰 수정 처리
-    @PutMapping("/review/{id}")
+    @PutMapping("/review")
     public ResponseEntity reviewUpdate(@ModelAttribute ReviewDTO reviewDTO){
+        System.out.println("reviewDTO = " + reviewDTO);
         boolean result = myPagesService.save(reviewDTO);
         if(result){
             return new ResponseEntity<>("수정 완료", HttpStatus.OK);

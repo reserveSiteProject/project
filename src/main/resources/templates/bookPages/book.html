@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+    <style>
+        #calendar {
+            max-width: 900px;
+            margin: 40px auto;
+        }
+    </style>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    height: 500, // 크기 400
+                    aspectRatio: 2,  //종횡비2
+                    ihandleWindowResize : true,  // 브라우저 창의 크기를 조정할 때 달력의 크기를 자동으로 조정할지 여부
+                    initialView: 'dayGridMonth',
+                    events : [
+                        {
+                            title: '뚜껑 닫기',
+                            start: '2023-10-23',
+                            end: '2023-10-25'
+                        }
+                    ]
+            });
+            calendar.render();
+        });
+
+    </script>
+</head>
+<body>
+<div id='calendar'></div>
+</body>
+</html>

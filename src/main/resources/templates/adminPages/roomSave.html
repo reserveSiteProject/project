@@ -5,6 +5,17 @@
     <title>Title</title>
 </head>
 <body>
-
+<form action="/admin/room/save" method="post" enctype="multipart/form-data">
+    <input type="text" name="roomName" placeholder="방 제목" ><br>
+    <input type="text" name="roomPrice" placeholder="방 가격"><br>
+    <input type="text" name="roomType" placeholder="방 타입"><br>
+    <input type="text" name="capacity" placeholder="수용가능인원"><br>
+    <textarea name="roomItems" cols="30" rows="10" placeholder="객실물품목록"></textarea><br>
+    <textarea name="roomInfo" cols="30" rows="10" placeholder="방 설명"></textarea><br>
+    <input type="file" name="roomFileName" multiple><br><br>
+    <input type="submit" value="방데이터등록">
+</form>
 </body>
+<script>
+</script>
 </html>

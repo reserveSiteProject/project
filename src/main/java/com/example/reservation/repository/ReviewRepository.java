@@ -1,5 +1,6 @@
 package com.example.reservation.repository;
 
+import com.example.reservation.entity.MemberEntity;
 import com.example.reservation.entity.ReviewEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

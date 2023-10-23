@@ -1,23 +1,27 @@
 package com.example.reservation.controller;
 
+import com.example.reservation.dto.CouponDTO;
 import com.example.reservation.dto.MemberDTO;
 import com.example.reservation.dto.RoomDTO;
-import com.example.reservation.service.AdminService;
+import com.example.reservation.entity.MemberEntity;
+import com.example.reservation.service.CouponService;
 import com.example.reservation.service.MemberService;
+import com.example.reservation.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminController {
-    private final AdminService adminService;
+    private final CouponService couponService;
     private final MemberService memberService;
+    private final RoomService roomService;
 
     @GetMapping("/book")
     public String book(){
@@ -48,20 +52,21 @@ public class AdminController {
     }
 
     @PostMapping("/coupon/save")
-    public String couponSave(){
+    public String couponSave(@ModelAttribute CouponDTO couponDTO){
+        MemberEntity memberEntity = couponService.findById(couponDTO.getMemberId());
+        couponService.save(couponDTO, memberEntity);
         return "redirect:/admin/manage";
     }
 
     @GetMapping("/room/save")
     public String roomSave(){
-
         return "adminPages/roomSave";
     }
 
     @PostMapping("/room/save")
-    public String roomSave(@ModelAttribute RoomDTO roomDTO){
-
-        return "redirect:/room";
+    public String roomSave(@ModelAttribute RoomDTO roomDTO) throws IOException {
+        roomService.save(roomDTO);
+        return "adminPages/room";
     }
 
 
