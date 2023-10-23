@@ -1,5 +1,6 @@
 package com.example.reservation.entity;
 
+import com.example.reservation.dto.RoomDTO;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,4 +29,23 @@ public class RoomFileEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private RoomEntity roomEntity; // 이것을 부모로서 참조하겠다.
+
+    public static RoomFileEntity toSaveEntity(String originalFileName, String storedFileName, RoomEntity roomEntity) {
+        RoomFileEntity roomFileEntity = new RoomFileEntity();
+        roomFileEntity.setOriginalFileName(originalFileName);
+        roomFileEntity.setStoredFileName(storedFileName);
+        roomFileEntity.setRoomEntity(roomEntity);
+        return roomFileEntity;
+    }
+
+    public static RoomFileEntity toUpdateEntity(RoomDTO roomDTO, String originalFileName, String storedFileName, RoomEntity roomEntity) {
+        RoomFileEntity roomFileEntity = new RoomFileEntity();
+        roomFileEntity.setOriginalFileName(originalFileName);
+        roomFileEntity.setStoredFileName(storedFileName);
+        roomFileEntity.setRoomEntity(roomEntity);
+        roomFileEntity.setId(roomDTO.getId());
+        return roomFileEntity;
+    }
+
+
 }
