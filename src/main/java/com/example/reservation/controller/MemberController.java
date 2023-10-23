@@ -102,6 +102,7 @@ public class MemberController {
         MemberDTO login = memberService.login(memberDTO);
         if(login!=null){
             session.setAttribute("memberDTO", memberDTO);
+            session.setAttribute("loginEmail", memberDTO.getMemberEmail());
             if(keep){
                 Cookie cookie=new Cookie("memberEmail", memberDTO.getMemberEmail());
                 cookie.setMaxAge(60*60*24*7);
@@ -122,6 +123,7 @@ public class MemberController {
         MemberDTO memberDTO = memberService.findByMemberEmail(memberEmail);
         MemberDTO login = memberService.login(memberDTO);
         if(login!=null){
+            session.setAttribute("loginEmail", memberDTO.getMemberEmail());
             session.setAttribute("memberDTO", memberDTO);
             System.out.println("login = " + login);
             return new ResponseEntity<>(HttpStatus.OK);
