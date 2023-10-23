@@ -1,12 +1,15 @@
-package com.example.reservation.service.boardServices;
+package com.example.reservation.service;
 
 import com.example.reservation.dto.ReviewDTO;
+import com.example.reservation.entity.MemberEntity;
+import com.example.reservation.entity.PaymentEntity;
 import com.example.reservation.entity.ReviewEntity;
 import com.example.reservation.entity.ReviewFileEntity;
-import com.example.reservation.repository.boardRepositories.ReviewFileRepository;
-import com.example.reservation.repository.boardRepositories.ReviewRepository;
+import com.example.reservation.repository.MemberRepository;
+import com.example.reservation.repository.PaymentRepository;
+import com.example.reservation.repository.ReviewFileRepository;
+import com.example.reservation.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,11 +25,11 @@ public class ReviewService {
 
     /*다음은 테스트를 하기 이전의 접근 제한자를 적용한 필드들이다.
     타 팀원이 해당 레파지토리에 대한 pull request를 하고 merge를 한 이후에 김태훈이 주석 삭제하기.
-
+    */
     private final MemberRepository memberRepository;
     private final PaymentRepository paymentRepository;
 
-     */
+
 
     private final ReviewRepository reviewRepository;
     private final ReviewFileRepository reviewFileRepository;
@@ -35,12 +38,16 @@ public class ReviewService {
 //        MemberEntity memberEntity = memberRepository.findByMemberEmail(reviewDTO.getReviewWriter()).orElseThrow(() -> new NoSuchElementException());
         if (reviewDTO.getReviewFile().get(0).isEmpty() && reviewDTO.getReviewFile() != null) {
             // 첨부파일 없음
-              ReviewEntity reviewEntity = ReviewEntity.toSaveEntity(reviewDTO);
+            MemberEntity memberEntity = memberRepository.findById(reviewDTO.getId()).orElseThrow(() -> new NoSuchElementException());
+            PaymentEntity paymentEntity = paymentRepository.findById(reviewDTO.getPaymentId()).orElseThrow(()->new NoSuchElementException());
+            ReviewEntity reviewEntity = ReviewEntity.toSaveEntity(memberEntity,paymentEntity,reviewDTO);
 
             return reviewRepository.save(reviewEntity).getId();
         } else {
             // 첨부파일 있음
-            ReviewEntity reviewEntity = ReviewEntity.toSaveEntityWithFile(reviewDTO);
+            MemberEntity memberEntity = memberRepository.findById(reviewDTO.getId()).orElseThrow(() -> new NoSuchElementException());
+            PaymentEntity paymentEntity = paymentRepository.findById(reviewDTO.getPaymentId()).orElseThrow(()->new NoSuchElementException());
+            ReviewEntity reviewEntity = ReviewEntity.toSaveEntityWithFile(memberEntity,paymentEntity,reviewDTO);
 
             // 게시글 저장처리 후 저장한 엔티티 가져옴
             ReviewEntity savedEntity = reviewRepository.save(reviewEntity);

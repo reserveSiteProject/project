@@ -1,7 +1,7 @@
-package com.example.reservation.controller.BoardControllers;
+package com.example.reservation.controller;
 
 import com.example.reservation.dto.ReviewDTO;
-import com.example.reservation.service.boardServices.ReviewService;
+import com.example.reservation.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

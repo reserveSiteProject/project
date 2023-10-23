@@ -1,4 +1,4 @@
-package com.example.reservation.repository.boardRepositories;
+package com.example.reservation.repository;
 
 import com.example.reservation.entity.ReviewEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
