@@ -63,13 +63,13 @@ public class MyPagesService {
     }
     // 내 정보 화면 데이터 출력
     public MemberDTO findMember(MemberDTO memberDTO) {
-        MemberEntity memberEntity1 = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new NoSuchElementException());
-        return MemberDTO.toDTO(memberEntity1);
+        MemberEntity memberEntity = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new NoSuchElementException());
+        return MemberDTO.toDTO(memberEntity);
     }
 
     // 내 정보 수정 처리
     public boolean saveMember(MemberDTO memberDTO) {
-        MemberEntity memberEntity = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new NoSuchElementException());
+        MemberEntity memberEntity = MemberEntity.toUpdateEntity(memberDTO);
         MemberEntity save = memberRepository.save(memberEntity);
         if(save== null){
             return false;

@@ -57,9 +57,9 @@ public class    MyPagesController {
     }
     // 마이페이지 리뷰 삭제 처리
     @DeleteMapping("/review/{id}")
-    public String reviewDelete(@PathVariable("id") Long id){
+    public ResponseEntity reviewDelete(@PathVariable("id") Long id){
         myPagesService.deleteById(id);
-        return "redirect:/myPages/review";
+        return new ResponseEntity<>("삭제완료",HttpStatus.OK);
     }
     // 마이페이지 내 정보 화면 출력
     @GetMapping
