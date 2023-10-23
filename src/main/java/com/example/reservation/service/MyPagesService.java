@@ -1,5 +1,6 @@
 package com.example.reservation.service;
 
+import com.example.reservation.dto.PaymentDTO;
 import com.example.reservation.dto.ReviewDTO;
 import com.example.reservation.dto.MemberDTO;
 import com.example.reservation.entity.MemberEntity;
@@ -7,7 +8,7 @@ import com.example.reservation.entity.PaymentEntity;
 import com.example.reservation.entity.ReviewEntity;
 import com.example.reservation.repository.MemberRepository;
 import com.example.reservation.repository.PaymentRepository;
-import com.example.reservation.repository.boardRepositories.ReviewRepository;
+import com.example.reservation.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

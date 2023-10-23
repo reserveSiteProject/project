@@ -16,6 +16,7 @@ import java.util.List;
 @ToString
 public class ReviewDTO {
     private Long id;
+    private Long paymentId;
     private String reviewTitle;
     private String reviewContents;
     private String reviewWriter;
@@ -29,7 +30,7 @@ public class ReviewDTO {
     private List<String> originalFileName = new ArrayList<>();
     private List<String> storedFileName = new ArrayList<>();
 
-    public ReviewDTO toDTO(ReviewEntity reviewEntity) {
+    public static ReviewDTO toDTO(ReviewEntity reviewEntity) {
         ReviewDTO reviewDTO = new ReviewDTO();
         reviewDTO.setId(reviewEntity.getId());
         reviewDTO.setReviewTitle(reviewEntity.getReviewTitle());
