@@ -83,6 +83,7 @@ public class ReviewEntity extends BaseEntity {
     // 결제테이블 참조값 추가해야함
     public static ReviewEntity toUpdateEntity(PaymentEntity paymentEntity, MemberEntity memberEntity, ReviewDTO reviewDTO) {
         ReviewEntity reviewEntity = new ReviewEntity();
+        reviewEntity.setId(reviewDTO.getId());
         reviewEntity.setMemberEntity(memberEntity);
         reviewEntity.setPaymentEntity(paymentEntity);
         reviewEntity.setReviewTitle(reviewDTO.getReviewTitle());
