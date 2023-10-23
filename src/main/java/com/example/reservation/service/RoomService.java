@@ -32,10 +32,12 @@ public class RoomService {
             for (MultipartFile roomFile : roomDTO.getRoomFileName()){
                 String originalFileName = roomFile.getOriginalFilename();
                 String storedFileName = System.currentTimeMillis() + "-" + originalFileName;
-                String savePath = "C:\\springBootFinalProject_img\\" + storedFileName;
+                String savePath = "C:\\image\\springBootFinalProject_img\\" + storedFileName;
 
                 roomFile.transferTo(new File(savePath));
                 RoomFileEntity roomFileEntity = RoomFileEntity.toSaveEntity(originalFileName, storedFileName, savedEntity);
+
+                System.out.println(roomFileEntity + "+" + savedEntity);
                 roomFileRepository.save(roomFileEntity);
             }
 
