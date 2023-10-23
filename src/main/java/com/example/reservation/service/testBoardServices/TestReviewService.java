@@ -2,9 +2,9 @@ package com.example.reservation.service.testBoardServices;
 
 import com.example.reservation.dto.ReviewDTO;
 import com.example.reservation.entity.ReviewEntity;
-import com.example.reservation.repository.ReviewFileRepository;
-import com.example.reservation.repository.ReviewRepository;
-import com.example.reservation.service.ReviewService;
+import com.example.reservation.repository.boardRepositories.ReviewFileRepository;
+import com.example.reservation.repository.boardRepositories.ReviewRepository;
+import com.example.reservation.service.boardServices.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;

@@ -1,17 +1,19 @@
-package com.example.reservation.service;
+package com.example.reservation.service.boardServices;
 
 import com.example.reservation.dto.ReviewDTO;
 import com.example.reservation.entity.ReviewEntity;
 import com.example.reservation.entity.ReviewFileEntity;
-import com.example.reservation.repository.ReviewFileRepository;
-import com.example.reservation.repository.ReviewRepository;
+import com.example.reservation.repository.boardRepositories.ReviewFileRepository;
+import com.example.reservation.repository.boardRepositories.ReviewRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor

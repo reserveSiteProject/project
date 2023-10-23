@@ -1,6 +1,5 @@
 package com.example.reservation.dto;
 
-import com.example.reservation.entity.RoomEntity;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -8,6 +7,7 @@ import javax.persistence.Column;
 @Data
 public class RoomDTO {
 
+    @Column
     private Long id;
 
     private String roomName;
@@ -26,28 +26,4 @@ public class RoomDTO {
 
     private String roomItems;
 
-    private String roomFileName;
-
-
-    public static RoomDTO toDTO(RoomEntity roomEntity){
-        RoomDTO roomDTO = new RoomDTO();
-        roomDTO.setId(roomEntity.getId());
-        roomDTO.setRoomCount(roomEntity.getRoomCount());
-        roomDTO.setRoomInfo(roomEntity.getRoomInfo());
-        roomDTO.setRoomItems(roomEntity.getRoomItems());
-        roomDTO.setRoomName(roomDTO.getRoomName());
-        roomDTO.setRoomPrice(roomDTO.getRoomPrice());
-        roomDTO.setRoomType(roomDTO.getRoomType());
-        roomDTO.setCapacity(roomDTO.getCapacity());
-        roomDTO.setFileAttached(roomDTO.getFileAttached());
-
-        return roomDTO;
-    }
-
-
 }
-
-
-
-
-

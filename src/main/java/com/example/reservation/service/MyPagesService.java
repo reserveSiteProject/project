@@ -3,39 +3,37 @@ package com.example.reservation.service;
 import com.example.reservation.dto.ReviewDTO;
 import com.example.reservation.dto.MemberDTO;
 import com.example.reservation.entity.MemberEntity;
-import com.example.reservation.entity.PaymentEntity;
 import com.example.reservation.entity.ReviewEntity;
 import com.example.reservation.repository.MemberRepository;
-import com.example.reservation.repository.PaymentRepository;
 import com.example.reservation.repository.boardRepositories.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class MyPagesService {
     private final ReviewRepository reviewRepository;
     private final MemberRepository memberRepository;
-    private final PaymentRepository paymentRepository;
-
     /*
     Entity, dto 변환 매서드 활성화가 되어있지 않아 주석처리 하였음
      */
 
     // 리뷰 목록 출력
-    public List<ReviewDTO> findAll(MemberDTO memberDTO) {
-        MemberEntity memberEntity = MemberEntity.toSaveEntity(memberDTO);
-        List<ReviewEntity> reviewEntityList = reviewRepository.findAllById(Collections.singleton(memberEntity.getId()));
+    public List<ReviewDTO> findAll(String memberDTO) {
+        MemberEntity member = MemberDTO.toEntity(memberDTO);
+        List<ReviewEntity> reviewEntityList = reviewRepository.findAll(member.getId());
         List<ReviewDTO> reviewDTOList = new ArrayList<>();
         for(ReviewEntity reviewEntity : reviewEntityList){
-            ReviewDTO reviewDTO = ReviewDTO.toDTO(reviewEntity);
+            ReviewDTO reviewDTO = ReviewDTO.toSaveDTO(reviewEntity);
             reviewDTOList.add(reviewDTO);
         }
         return reviewDTOList;
     }
-
     // 리뷰 상세정보
     public ReviewDTO findById(Long id) {
         ReviewEntity reviewEntity = reviewRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
@@ -44,9 +42,8 @@ public class MyPagesService {
 
     // 리뷰 수정 처리
     public boolean save(ReviewDTO reviewDTO) {
-        MemberEntity memberEntity = memberRepository.findById(reviewDTO.getId()).orElseThrow(() -> new NoSuchElementException());
-        PaymentEntity paymentEntity = paymentRepository.findById(reviewDTO.getPaymentId()).orElseThrow(()->new NoSuchElementException());
-        ReviewEntity review = ReviewEntity.toUpdateEntity(paymentEntity, memberEntity, reviewDTO);
+        ReviewEntity reviewEntity = reviewRepository.findById(reviewDTO.getId()).orElseThrow(() -> new NoSuchElementException());
+        ReviewEntity review = ReviewEntity.toUpdateEntity(reviewEntity, reviewDTO);
         if(review==null){
             return false;
         }else{
@@ -59,8 +56,8 @@ public class MyPagesService {
         reviewRepository.deleteById(id);
     }
     // 내 정보 화면 데이터 출력
-    public MemberDTO findMember(MemberDTO memberDTO) {
-        MemberEntity memberEntity = MemberEntity.toSaveEntity(memberDTO);
+    public MemberDTO findMember(String memberDTO) {
+        MemberEntity memberEntity = MemberEntity.toEntity(memberDTO);
         MemberEntity memberEntity1 = memberRepository.findById(memberEntity.getId()).orElseThrow(() -> new NoSuchElementException());
         return MemberDTO.toDTO(memberEntity1);
     }
