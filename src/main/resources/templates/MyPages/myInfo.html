@@ -19,6 +19,7 @@
     주소 : <input type="text" name="memberAddress" th:value="${member.memberAddress}" readonly><br>
     <input type="button" th:onclick="update_fn()" th:value="수정">
   </form>
+  <a th:href="@{|/myPages/change/${member.id}|}">비밀번호 변경</a>
 
 
 </div>

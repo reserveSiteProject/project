@@ -1,5 +1,6 @@
 package com.example.reservation.controller;
 
+import com.example.reservation.dto.CouponDTO;
 import com.example.reservation.dto.MemberDTO;
 import com.example.reservation.dto.ReviewDTO;
 import com.example.reservation.service.MyPagesService;
@@ -86,5 +87,17 @@ public class    MyPagesController {
         model.addAttribute("member", memberDTO);
         return "MyPages/passChange";
     }
-
+    // 마이페이지 비밀번호 변경 처리
+    @PostMapping("/change")
+    public ResponseEntity passChange(@ModelAttribute MemberDTO memberDTO){
+        boolean result = myPagesService.saveMember(memberDTO);
+        return new ResponseEntity("수정완료", HttpStatus.OK);
+    }
+    @GetMapping("/coupon")
+    public String coupon(HttpSession session, Model model){
+        Object memberDTO = session.getAttribute("memberDTO");
+        List<CouponDTO> couponList = myPagesService.coupon((MemberDTO) memberDTO);
+        model.addAttribute("coupon", couponList);
+        return "MyPages/coupon";
+    }
 }

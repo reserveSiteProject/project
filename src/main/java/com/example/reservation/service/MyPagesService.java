@@ -1,11 +1,14 @@
 package com.example.reservation.service;
 
+import com.example.reservation.dto.CouponDTO;
 import com.example.reservation.dto.PaymentDTO;
 import com.example.reservation.dto.ReviewDTO;
 import com.example.reservation.dto.MemberDTO;
+import com.example.reservation.entity.CouponEntity;
 import com.example.reservation.entity.MemberEntity;
 import com.example.reservation.entity.PaymentEntity;
 import com.example.reservation.entity.ReviewEntity;
+import com.example.reservation.repository.CouponRepository;
 import com.example.reservation.repository.MemberRepository;
 import com.example.reservation.repository.PaymentRepository;
 import com.example.reservation.repository.ReviewRepository;
@@ -21,7 +24,7 @@ public class MyPagesService {
     private final ReviewRepository reviewRepository;
     private final MemberRepository memberRepository;
     private final PaymentRepository paymentRepository;
-
+    private final CouponRepository couponRepository;
     /*
     Entity, dto 변환 매서드 활성화가 되어있지 않아 주석처리 하였음
      */
@@ -81,5 +84,16 @@ public class MyPagesService {
     public MemberDTO findByMemberId(Long id) {
         MemberEntity memberEntity = memberRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
         return MemberDTO.toDTO(memberEntity);
+    }
+
+    public List<CouponDTO> coupon(MemberDTO memberDTO) {
+        MemberEntity memberEntity = MemberEntity.toSaveEntity(memberDTO);
+        List<CouponEntity> couponEntityList = couponRepository.findByMemberEntity(memberEntity);
+        List<CouponDTO> couponDTOList = new ArrayList<>();
+        for(CouponEntity couponEntity : couponEntityList){
+            CouponDTO couponDTO = CouponDTO.toDTO(couponEntity);
+            couponDTOList.add(couponDTO);
+        }
+        return couponDTOList;
     }
 }
