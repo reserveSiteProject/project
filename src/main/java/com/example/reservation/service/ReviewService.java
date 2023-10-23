@@ -9,8 +9,12 @@ import com.example.reservation.repository.MemberRepository;
 import com.example.reservation.repository.PaymentRepository;
 import com.example.reservation.repository.ReviewFileRepository;
 import com.example.reservation.repository.ReviewRepository;
+import com.example.reservation.util.UtilClass;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,13 +27,9 @@ import java.util.NoSuchElementException;
 @Profile("!test")
 public class ReviewService {
 
-    /*다음은 테스트를 하기 이전의 접근 제한자를 적용한 필드들이다.
-    타 팀원이 해당 레파지토리에 대한 pull request를 하고 merge를 한 이후에 김태훈이 주석 삭제하기.
-    */
-    private final MemberRepository memberRepository;
-    private final PaymentRepository paymentRepository;
 
-
+//    private final MemberRepository memberRepository;
+//    private final PaymentRepository paymentRepository;
 
     private final ReviewRepository reviewRepository;
     private final ReviewFileRepository reviewFileRepository;
@@ -37,16 +37,19 @@ public class ReviewService {
     public Long save(ReviewDTO reviewDTO) throws IOException {
         if (reviewDTO.getReviewFile().get(0).isEmpty() && reviewDTO.getReviewFile() != null) {
             // 첨부파일 없음
-            MemberEntity memberEntity = memberRepository.findById(reviewDTO.getId()).orElseThrow(() -> new NoSuchElementException());
-            PaymentEntity paymentEntity = paymentRepository.findById(reviewDTO.getPaymentId()).orElseThrow(()->new NoSuchElementException());
-            ReviewEntity reviewEntity = ReviewEntity.toSaveEntity(memberEntity,paymentEntity,reviewDTO);
+//            MemberEntity memberEntity = memberRepository.findById(reviewDTO.getId()).orElseThrow(() -> new NoSuchElementException());
+//            PaymentEntity paymentEntity = paymentRepository.findById(reviewDTO.getPaymentId()).orElseThrow(()->new NoSuchElementException());
+//            ReviewEntity reviewEntity = ReviewEntity.toSaveEntity(memberEntity,paymentEntity,reviewDTO);
+            ReviewEntity reviewEntity = ReviewEntity.toSaveEntity(reviewDTO);
+
 
             return reviewRepository.save(reviewEntity).getId();
         } else {
             // 첨부파일 있음
-            MemberEntity memberEntity = memberRepository.findById(reviewDTO.getId()).orElseThrow(() -> new NoSuchElementException());
-            PaymentEntity paymentEntity = paymentRepository.findById(reviewDTO.getPaymentId()).orElseThrow(()->new NoSuchElementException());
-            ReviewEntity reviewEntity = ReviewEntity.toSaveEntityWithFile(memberEntity,paymentEntity,reviewDTO);
+//            MemberEntity memberEntity = memberRepository.findById(reviewDTO.getId()).orElseThrow(() -> new NoSuchElementException());
+//            PaymentEntity paymentEntity = paymentRepository.findById(reviewDTO.getPaymentId()).orElseThrow(()->new NoSuchElementException());
+//            ReviewEntity reviewEntity = ReviewEntity.toSaveEntityWithFile(memberEntity,paymentEntity,reviewDTO);
+            ReviewEntity reviewEntity = ReviewEntity.toSaveEntityWithFile(reviewDTO);
 
             // 게시글 저장처리 후 저장한 엔티티 가져옴
             ReviewEntity savedEntity = reviewRepository.save(reviewEntity);
@@ -69,5 +72,32 @@ public class ReviewService {
             }
             return savedEntity.getId();
         }
+    }
+
+    public Page<ReviewDTO> findAll(int page, String type, String q) {
+        page = page - 1;
+        int pageLimit = 5;
+        Page<ReviewEntity> reviewEntities = null;
+        // 검색인지 구분
+        if (q.equals("")) {
+            // 일반 페이징
+            reviewEntities = reviewRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+        } else {
+            if (type.equals("reviewTitle")) {
+                reviewEntities = reviewRepository.findByReviewTitleContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+            } else if (type.equals("reviewWriter")) {
+                reviewEntities = reviewRepository.findByReviewWriterContaining(q, PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+            }
+        }
+        Page<ReviewDTO> reviewList = reviewEntities.map(reviewEntity ->
+                ReviewDTO.builder()
+                        .id(reviewEntity.getId())
+                        .reviewTitle(reviewEntity.getReviewTitle())
+                        .reviewWriter(reviewEntity.getReviewWriter())
+                        .reviewStar(reviewEntity.getReviewStar())
+                        .hits(reviewEntity.getHits())
+                        .createdAt(UtilClass.dateTimeFormat(reviewEntity.getCreatedAt()))
+                        .build());
+        return reviewList;
     }
 }
