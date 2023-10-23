@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="~{component/config :: config}"></th:block>
+    <link rel="stylesheet" href="/css/find.css">
 </head>
 <body>
 <div class="container mt-4 mb-5">
@@ -185,6 +186,25 @@
         </form>
     </div>
 </div>
+
+<div class="modal fade" id="modal_email" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">임시비밀번호 발급</h1>
+            </div>
+            <div class="modal-body row justify-contents-center">
+                <div class="col-12 text-center"></div>
+                <div class="MnAr--LoadingSpinner" id="button"></div>
+                <div class="MnAr--LoadingComplete" id="rays">
+                    <div class="MnAr--LoadingComplete__check"></div>
+                </div>
+                <div id="not-find" class="text-center" style="color: red">이메일 확인바람!</div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 </body>
 <script th:inline="javascript">
 
@@ -275,16 +295,23 @@
         }
     }
 
+
     function confirm_fn () {
-        console.log("1")
         const mEmail = document.querySelector("[name='memberEmail']").value;
         const email = document.querySelector("[name='email']").value
         const memberEmail = mEmail + "@" + email;
         const confirmcheck = document.getElementById("confirm-check");
+        const notFind = document.querySelector("#not-find");
+        const rays = document.querySelector("#rays");
+        notFind.style.display = "none";
+        rays.style.display = "none";
+        const button = document.querySelector("#button");
+        button.style.display = "block";
         if(mEmail=="" || email=="") {
             confirmcheck.innerText = "이메일을 입력해주세요.";
             confirmcheck.style.color = "red";
         }else if(idc ==0 && mEmail != "" && email != ""){
+            $("#modal_email").modal("show");
             $.ajax({
                 type:"post",
                 url:"/member/emailConfirm",
@@ -292,9 +319,15 @@
                     memberEmail
                 },
                 success:function (data){
-                    emailc = 0;
-                    confirmcheck.innerText = "";
-                    number= data;
+                    setTimeout(function() {
+                        button.style.display = "none";
+                        rays.style.display = "block";
+                    }, 1000);
+                    setTimeout(function() {
+                        emailc = 0;
+                        confirmcheck.innerText = "";
+                        number= data;
+                    }, 2000);
                 }
             })
         }else if(idc!=0){

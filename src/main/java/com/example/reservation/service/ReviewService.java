@@ -35,7 +35,6 @@ public class ReviewService {
     private final ReviewFileRepository reviewFileRepository;
 
     public Long save(ReviewDTO reviewDTO) throws IOException {
-//        MemberEntity memberEntity = memberRepository.findByMemberEmail(reviewDTO.getReviewWriter()).orElseThrow(() -> new NoSuchElementException());
         if (reviewDTO.getReviewFile().get(0).isEmpty() && reviewDTO.getReviewFile() != null) {
             // 첨부파일 없음
             MemberEntity memberEntity = memberRepository.findById(reviewDTO.getId()).orElseThrow(() -> new NoSuchElementException());

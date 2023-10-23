@@ -1,0 +1,68 @@
+.MnAr--LoadingComplete, .MnAr--LoadingSpinner {
+
+    display: block;
+    margin: 3.75rem auto;
+    width: 7.5rem;
+    height: 7.5rem;
+    border: 0.4875rem solid #cccccc;
+    border-radius: 50%;
+    position: relative;
+}
+
+.MnAr--LoadingSpinner {
+    border-left-color: blue;
+    animation-name: loading-animation;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes loading-animation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.MnAr--LoadingComplete {
+    border-color: blue;
+}
+.MnAr--LoadingComplete__check {
+    position: absolute;
+    left: 1.5rem;
+    top: 3.5625rem;
+    width: 1.875rem;
+    height: 3.75rem;
+    border-right: 0.4875rem solid blue;
+    border-top: 0.4875rem solid blue;
+    transform-origin: left top;
+    transform: scaleX(-1) rotate(135deg);
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: 1;
+    animation-name: check-animation;
+}
+
+@keyframes check-animation {
+    0% {
+        height: 0;
+        width: 0;
+        opacity: 1;
+    }
+    20% {
+        height: 0;
+        width: 1.875rem;
+        opacity: 1;
+    }
+    40% {
+        height: 3.75rem;
+        width: 1.875rem;
+        opacity: 1;
+    }
+    100% {
+        height: 3.75rem;
+        width: 1.875rem;
+        opacity: 1;
+    }
+}
