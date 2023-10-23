@@ -28,16 +28,16 @@ public class MyPagesService {
 
     // 리뷰 목록 출력
 
-    public List<ReviewDTO> findAll(MemberDTO memberDTO) {
-        MemberEntity memberEntity = MemberEntity.toUpdateEntity(memberDTO);
-        List<ReviewEntity> reviewEntityList = reviewRepository.findByMemberEntity(memberEntity);
-        List<ReviewDTO> reviewDTOList = new ArrayList<>();
-        for(ReviewEntity reviewEntity : reviewEntityList){
-            ReviewDTO reviewDTO = ReviewDTO.toDTO(reviewEntity);
-            reviewDTOList.add(reviewDTO);
-        }
-        return reviewDTOList;
-    }
+//    public List<ReviewDTO> findAll(MemberDTO memberDTO) {
+//        MemberEntity memberEntity = MemberEntity.toUpdateEntity(memberDTO);
+////        List<ReviewEntity> reviewEntityList = reviewRepository.findByMemberEntity(memberEntity);
+//        List<ReviewDTO> reviewDTOList = new ArrayList<>();
+////        for(ReviewEntity reviewEntity : reviewEntityList){
+////            ReviewDTO reviewDTO = ReviewDTO.toDTO(reviewEntity);
+//            reviewDTOList.add(reviewDTO);
+//        }
+//        return reviewDTOList;
+//    }
 
     // 리뷰 상세정보
     public ReviewDTO findById(Long id) {

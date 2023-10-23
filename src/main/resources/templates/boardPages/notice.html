@@ -31,7 +31,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="notice : ${noticeList}">
+<!--        <tr th:onclick="|location.href='@{/board/notice/id}'|" th:each="notice : ${noticeList}">-->
+        <tr th:each="notice : ${noticeList}" th:attr="data-id=${notice.id}" onclick="navigateToDetail(this)">
+<!--        <tr th:each="notice : ${noticeList}" th:href="@{'/board/notice/' + ${notice.id}}">-->
+
             <td th:text="${notice.id}">ID</td>
             <td th:text="${notice.noticeWriter}">글쓴이</td>
             <td th:text="${notice.noticeTitle}">제목</td>
@@ -41,6 +44,16 @@
     </table>
 </div>
 <script>
+
+    function navigateToDetail(element) {
+        const id = element.getAttribute('data-id');
+        window.location.href = `/board/notice/${id}`;
+    }
+
+
+    // const reviewDetail_fn = (id) => {
+    //     window.location.href = "/board/notice/" + id;
+    // }
 
     //테이블의 검색 기능(js로만 구현함)
 

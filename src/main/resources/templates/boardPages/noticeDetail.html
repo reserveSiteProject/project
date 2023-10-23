@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>공지사항 상세 페이지</title>
+    <!-- 썸머노트 CSS 추가 -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.css" rel="stylesheet">
+</head>
+<body>
+
+<h1>공지사항 상세 페이지</h1>
+
+<h2 th:text="${notice.noticeTitle}"></h2>
+
+<p th:text="${notice.noticeWriter}"></p>
+
+<!-- 썸머노트에서 작성한 내용 출력 -->
+<div th:utext="${notice.noticeContents}"></div>
+<!-- th:utext를 사용하는 이유는 HTML 태그가 포함된 문자열을 안전하게 출력하기 위함. -->
+
+</body>
+</html>
