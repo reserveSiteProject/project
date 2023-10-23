@@ -1,9 +1,7 @@
 package com.example.reservation.service;
 
 import com.example.reservation.dto.NoticeDTO;
-import com.example.reservation.dto.RoomDTO;
 import com.example.reservation.entity.NoticeEntity;
-import com.example.reservation.entity.RoomEntity;
 import com.example.reservation.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

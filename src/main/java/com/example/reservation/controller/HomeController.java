@@ -13,17 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
-@RequiredArgsConstructor
 public class HomeController {
-    private final NoticeService noticeService;
-
     @GetMapping("/")
     public String index() {
         return "index";
     }
 
     @GetMapping("/room")
-    public String roomIndex(Model model) {
+    public String roomIndex() {
         return "roomList";
     }
 
