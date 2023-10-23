@@ -24,11 +24,12 @@ public class MyPagesController {
         Object memberDTO1 = session.getAttribute("memberDTO");
         MemberDTO memberDTO = (MemberDTO) memberDTO1;
         List<ReviewDTO> reviewList = myPagesService.findAll(memberDTO);
+        System.out.println("reviewList = " + reviewList);
         model.addAttribute("reviewList", reviewList);
         return "MyPages/review";
     }
     // 마이페이지 리뷰 상세페이지 화면 출력
-    @PostMapping("/review/{id}")
+    @GetMapping("/review/{id}")
     public String reviewDetail(@PathVariable("id") Long id, Model model){
         ReviewDTO reviewDTO = myPagesService.findById(id);
         model.addAttribute("review",reviewDTO);

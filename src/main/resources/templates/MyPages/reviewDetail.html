@@ -1,20 +1,58 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <th:block th:replace="~{component/config :: config}"></th:block>
+    <th:block th:replace="~{component/config :: config}"></th:block>
 </head>
 <body>
 <!--<div th:replace="~{component/nav :: nav}"></div>-->
 
 <div class="container mt-5 mb-5">
-  <!-- 화면에 보여질 내용이 들어갈 부분 -->
-  <h2>리뷰 상세정보 출력페이지</h2>
-  <table>
+    <!-- 화면에 보여질 내용이 들어갈 부분 -->
+    <div th:class="row">
+        <div th:class="col">
+            <h2>리뷰 상세정보</h2>
+        </div>
+        <div th:class="col-6">
+            <div>제목 : <span th:text="${review.reviewTitle}"></span></div>
+            <div th:class="col-4">
+                <div>작성자 : <span th:text="${review.reviewWriter}"></span></div>
+                <div>조회수 : <span th:text="${review.hits}"></span></div>
+            </div>
+        </div>
+        <div>
+            <button onclick="update_fn([[${review.id}]])">수정</button>
+            <button onclick="delete_fn([[${review.id}]])">삭제</button>
+        </div>
+    </div>
 
-  </table>
 </div>
 
 <!--<div th:replace="~{component/footer :: footer}"></div>-->
 
 </body>
+<script>
+    const update_fn = (id) =>{
+        axios({
+            method : "put",
+            url : `/myPages/review/${id}`,
+        }).then(res =>{
+            alert("수정완료");
+            location.href = `/myPages/review/${id}`;
+        }).catch(err =>{
+            alert("수정실패");
+        });
+    }
+
+    const delete_fn = (id) =>{
+        axios({
+            method: "delete",
+            url:`/myPages/review/${id}`,
+        }).then(res=>{
+           alert("삭제완료");
+           location.href="/myPages/review";
+        }).catch(err=>{
+            alert("삭제실패");
+        });
+    }
+</script>
 </html>

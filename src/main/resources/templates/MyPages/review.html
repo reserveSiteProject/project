@@ -10,8 +10,24 @@
   <!-- 화면에 보여질 내용이 들어갈 부분 -->
   <h2>리뷰 목록 출력페이지</h2>
   <table>
-
+    <tr>
+      <th>작성자</th>
+      <th>제목</th>
+      <th>내용</th>
+      <th>별점</th>
+      <th>작성일</th>
+      <th>조회수</th>
+    </tr>
+    <tr th:each="review :${reviewList}">
+      <td><a th:href="@{|/myPages/review/${review.id}|}" th:text="${review.reviewWriter}"></a></td>
+      <td th:text="${review.reviewTitle}"></td>
+      <td th:text="${review.reviewContents}"></td>
+      <td th:text="${review.reviewStar}"></td>
+      <td th:text="${review.createdAt}"></td>
+      <td th:text="${review.hits}"></td>
+    </tr>
   </table>
+
 </div>
 
 <!--<div th:replace="~{component/footer :: footer}"></div>-->
