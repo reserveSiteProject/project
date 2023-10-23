@@ -65,6 +65,12 @@
             </div>
 
             <div th:if="${kakao==1}" style="display: none;" id="kakao-pw">
+                <div class="input-group row">
+                    <div class="col-4 ms-5 mt-3">
+                        <input type="text" class="form-control" name="confirm" placeholder="인증번호" onblur="con_fn()">
+                        <p class="mt-3" id="confirm-check"></p>
+                    </div>
+                </div>
                 <div class="row mt-3 ms-5">
                     비밀번호
                 </div>
@@ -214,13 +220,6 @@
             result += "            <p class=\"mt-2\" id=\"email-check\"></p>";
             result += "        </div>";
             result += "    </div>";
-            result += "    <div class=\"input-group row mt-2\">";
-            result += "        <div class=\"col-4\">";
-            result += "            <input type=\"text\" class=\"form-control\" name=\"confirm\" placeholder=\"인증번호\" onblur=\"confirm_fn()\">";
-            result += "            <p class=\"mt-2\" id=\"confirm-check\"></p>";
-            result += "        </div>";
-            result += "    </div>";
-            result += "    <div class=\"row mt-3 ms-5\">";
             document.getElementById("kakao-hidden").innerHTML = result;
             document.querySelector("#kakao-pw").style.display = "block";
             kakao = 1;
@@ -277,6 +276,7 @@
     }
 
     function confirm_fn () {
+        console.log("1")
         const mEmail = document.querySelector("[name='memberEmail']").value;
         const email = document.querySelector("[name='email']").value
         const memberEmail = mEmail + "@" + email;
