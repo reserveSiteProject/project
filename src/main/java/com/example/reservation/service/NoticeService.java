@@ -1,8 +1,8 @@
-package com.example.reservation.service.boardServices;
+package com.example.reservation.service;
 
 import com.example.reservation.dto.NoticeDTO;
 import com.example.reservation.entity.NoticeEntity;
-import com.example.reservation.repository.boardRepositories.NoticeRepository;
+import com.example.reservation.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

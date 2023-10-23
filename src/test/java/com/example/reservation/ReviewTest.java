@@ -1,8 +1,8 @@
 package com.example.reservation;
 
 import com.example.reservation.dto.ReviewDTO;
-import com.example.reservation.repository.boardRepositories.ReviewRepository;
-import com.example.reservation.service.boardServices.ReviewService;
+import com.example.reservation.repository.ReviewRepository;
+import com.example.reservation.service.ReviewService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,7 @@ import java.util.stream.IntStream;
 public class ReviewTest {
     @Autowired
     private ReviewService reviewService;
+
     @Autowired
     private ReviewRepository reviewRepository;
 

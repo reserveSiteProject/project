@@ -1,5 +1,6 @@
-package com.example.reservation.controller.MyPagesController;
+package com.example.reservation.controller;
 
+import com.example.reservation.dto.ReviewDTO;
 import com.example.reservation.service.MyPagesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
