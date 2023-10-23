@@ -57,7 +57,7 @@ public class MyPagesService {
     }
     // 내 정보 화면 데이터 출력
     public MemberDTO findMember(String memberDTO) {
-        MemberEntity memberEntity = MemberEntity.toEntity(memberDTO);
+        MemberEntity memberEntity = MemberEntity.toSaveEntity(memberDTO);
         MemberEntity memberEntity1 = memberRepository.findById(memberEntity.getId()).orElseThrow(() -> new NoSuchElementException());
         return MemberDTO.toDTO(memberEntity1);
     }
