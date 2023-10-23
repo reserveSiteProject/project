@@ -1,11 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="~{component/config :: config}"></th:block>
 </head>
 <body>
-<h1>리뷰 목록 리스트 출력 페이지</h1>
+
+
+<div class="container-fluid mt-5 mb-5">
+    <div class="d-flex justify-content-end mb-3">
+
+    <!--검색부분-->
+    <form action="/board/review" method="get">
+        <div class="row">
+            <div class="col">
+        <input class="form-control w-auto" type="search" name="q" placeholder="검색어를 입력하세요"
+               aria-label="Search">
+            </div>
+            <div class="col">
+        <button class="btn btn-outline-success mb-2" type="submit">Search</button>
+        </div>
+        </div>
+    </form>
+    <!--검색부분-->
+</div>
+    <!-- 화면에 보여질 내용이 들어갈 부분 -->
+    <div class="container" id="paging-list">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">리뷰 제목</th>
+                <th scope="col">리뷰 작성자</th>
+                <th scope="col">별점</th>
+                <th scope="col">조회수</th>
+                <th scope="col">작성일시</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="review: ${reviewList}">
+                <td th:text="${review.id}"></td>
+                <td th:text="${review.reviewTitle}"></td>
+                <td><a th:href="@{|/board/review/${review.id}|(page=${page}, type=${type}, q=${q})}" th:text="${session.memberDTO.getNickName()}">작성자</a></td>
+                <td th:text="${review.reviewStar}"></td>
+                <td th:text="${review.hits}"></td>
+                <td th:text="${review.createdAt}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="container">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <!--첫페이지 요청 링크 /review?page=1 -->
+                    <a class="page-link" th:href="@{/board/review(page=1, type=${type}, q=${q})}">
+                        <span>First</span>
+                    </a>
+                </li>
+
+                <li th:class="${reviewList.first} ? 'disabled'" class="page-item">
+                    <!--boardList.first: isFirst()
+                        boardList.number: getNumber()-->
+                    <!-- 현재 페이지가 첫페이지라면 링크값을 #으로 아니면 /board?page=number 로  -->
+                    <a class="page-link" th:href="${reviewList.first} ? '#' : @{/board/review(page=${reviewList.number}, type=${type}, q=${q})}">
+                        <!-- 사용자 3페이지, number 2 /board?page=2 -->
+                        <span><</span> <!-- < -->
+                    </a>
+                </li>
+
+                <!-- startPage ~ endPage 까지 숫자를 만들어주는 역할
+                    for(int page=startPage; page<=endPage; page++) -->
+                <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+                    th:class="${page == reviewList.number + 1} ? 'page-item active'" class="page-item">
+                    <a class="page-link" th:text="${page}" th:href="@{/board/review(page=${page}, type=${type}, q=${q})}"></a>
+                </li>
+
+                <!-- 다음 페이지 요청
+                    현재 3페이지를 보고 있다면 다음 페이지는 4페이지임.
+                    getNumber() 값은 2임.
+                    따라서 4페이지를 보고 싶다면 getNumber()+2를 해야 컨트롤러에 4를 요청할 수 있음. -->
+                <li th:class="${reviewList.last} ? 'disabled'">
+                    <a class="page-link" th:href="${reviewList.last} ? '#' : @{/board/review(page=${reviewList.number + 2}, type=${type}, q=${q})}">
+                        <!-- 사용자 3페이지, number 2 /board?page=4 -->
+                        <span>&gt;</span>
+                    </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/board/review(page=${reviewList.totalPages}, type=${type}, q=${q})}">
+                        <span>Last</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.example.reservation.entity;
 
 import com.example.reservation.dto.ReviewDTO;
+import jdk.jshell.Snippet;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,10 +57,12 @@ public class ReviewEntity extends BaseEntity {
     private List<ReviewFileEntity> reviewFileEntityList = new ArrayList<>();
 
 
-    public static ReviewEntity toSaveEntity(MemberEntity memberEntity, PaymentEntity paymentEntity, ReviewDTO reviewDTO) {
-        ReviewEntity reviewEntity = new ReviewEntity();
-        reviewEntity.setMemberEntity(memberEntity);
-        reviewEntity.setPaymentEntity(paymentEntity);
+//    public static ReviewEntity toSaveEntity(MemberEntity memberEntity, PaymentEntity paymentEntity, ReviewDTO reviewDTO) {
+public static ReviewEntity toSaveEntity(ReviewDTO reviewDTO) {
+
+    ReviewEntity reviewEntity = new ReviewEntity();
+//        reviewEntity.setMemberEntity(memberEntity);
+//        reviewEntity.setPaymentEntity(paymentEntity);
         reviewEntity.setReviewTitle(reviewDTO.getReviewTitle());
         reviewEntity.setReviewContents(reviewDTO.getReviewContents());
         reviewEntity.setReviewWriter(reviewDTO.getReviewWriter());
@@ -68,10 +71,12 @@ public class ReviewEntity extends BaseEntity {
         return reviewEntity;
     }
 
-    public static ReviewEntity toSaveEntityWithFile(MemberEntity memberEntity, PaymentEntity paymentEntity, ReviewDTO reviewDTO) {
-        ReviewEntity reviewEntity = new ReviewEntity();
-        reviewEntity.setMemberEntity(memberEntity);
-        reviewEntity.setPaymentEntity(paymentEntity);
+//    public static ReviewEntity toSaveEntityWithFile(MemberEntity memberEntity, PaymentEntity paymentEntity, ReviewDTO reviewDTO) {
+        public static ReviewEntity toSaveEntityWithFile(ReviewDTO reviewDTO) {
+
+            ReviewEntity reviewEntity = new ReviewEntity();
+//        reviewEntity.setMemberEntity(memberEntity);
+//        reviewEntity.setPaymentEntity(paymentEntity);
         reviewEntity.setReviewTitle(reviewDTO.getReviewTitle());
         reviewEntity.setReviewContents(reviewDTO.getReviewContents());
         reviewEntity.setReviewWriter(reviewDTO.getReviewWriter());
@@ -92,4 +97,6 @@ public class ReviewEntity extends BaseEntity {
         reviewEntity.setFileAttached(reviewDTO.getFileAttached());
         return reviewEntity;
     }
+
+
 }
