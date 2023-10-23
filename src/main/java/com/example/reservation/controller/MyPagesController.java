@@ -19,15 +19,15 @@ import java.util.List;
 public class    MyPagesController {
     private final MyPagesService myPagesService;
     // 마이페이지 리뷰목록 출력
-    @GetMapping("/review")
-    public String review(HttpSession session, Model model){
-        Object memberDTO1 = session.getAttribute("memberDTO");
-        MemberDTO memberDTO = (MemberDTO) memberDTO1;
-        List<ReviewDTO> reviewList = myPagesService.findAll(memberDTO);
-        System.out.println("reviewList = " + reviewList);
-        model.addAttribute("reviewList", reviewList);
-        return "MyPages/review";
-    }
+//    @GetMapping("/review")
+//    public String review(HttpSession session, Model model){
+//        Object memberDTO1 = session.getAttribute("memberDTO");
+//        MemberDTO memberDTO = (MemberDTO) memberDTO1;
+//        List<ReviewDTO> reviewList = myPagesService.findAll(memberDTO);
+//        System.out.println("reviewList = " + reviewList);
+//        model.addAttribute("reviewList", reviewList);
+//        return "MyPages/review";
+//    }
     // 마이페이지 리뷰 상세페이지 화면 출력
     @GetMapping("/review/{id}")
     public String reviewDetail(@PathVariable("id") Long id, Model model){

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,4 +31,9 @@ public class NoticeService {
         return noticeDTOList;
     }
 
+    public NoticeDTO findById(Long id) throws IOException {
+        NoticeEntity noticeEntity = noticeRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+
+        return NoticeDTO.toDTO(noticeEntity);
+    }
 }

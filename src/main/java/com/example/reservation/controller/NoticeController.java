@@ -5,10 +5,7 @@ import com.example.reservation.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -37,5 +34,12 @@ public class NoticeController {
     public String noticeSave(@ModelAttribute NoticeDTO noticeDTO) throws IOException {
         noticeService.save(noticeDTO);
         return "redirect:/board/notice";
+    }
+
+    @GetMapping("/notice/{id}")
+    public String noticeDetail(@PathVariable("id") Long id, Model model) throws IOException {
+        NoticeDTO noticeDTO = noticeService.findById(id);
+        model.addAttribute("notice", noticeDTO);
+        return "boardPages/noticeDetail";
     }
 }
