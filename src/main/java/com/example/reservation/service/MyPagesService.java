@@ -48,7 +48,7 @@ public class MyPagesService {
     // 리뷰 수정 처리
     public boolean save(ReviewDTO reviewDTO) {
         MemberEntity memberEntity = memberRepository.findById(reviewDTO.getId()).orElseThrow(() -> new NoSuchElementException());
-        PaymentEntity paymentEntity = paymentRepository.findById(reviewDTO.getPaymentId()).orElseThrow(()->new NoSuchElementException());
+        PaymentEntity paymentEntity = paymentRepository.findById(reviewDTO.getId()).orElseThrow(()->new NoSuchElementException());
         ReviewEntity review = ReviewEntity.toUpdateEntity(paymentEntity, memberEntity, reviewDTO);
         if(review==null){
             return false;

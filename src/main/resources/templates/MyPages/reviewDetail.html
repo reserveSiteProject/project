@@ -20,8 +20,8 @@
             </div>
         </div>
         <div>
-            <button onclick="update_fn([[${review.id}]])">수정</button>
-            <button onclick="delete_fn([[${review.id}]])">삭제</button>
+            <button th:onclick="update_fn([[${review.id}]])">수정</button>
+            <button th:onclick="delete_fn([[${review.id}]])">삭제</button>
         </div>
     </div>
 
@@ -32,15 +32,7 @@
 </body>
 <script>
     const update_fn = (id) =>{
-        axios({
-            method : "put",
-            url : `/myPages/review/${id}`,
-        }).then(res =>{
-            alert("수정완료");
-            location.href = `/myPages/review/${id}`;
-        }).catch(err =>{
-            alert("수정실패");
-        });
+        location.href=`/myPages/review/update/${id}`;
     }
 
     const delete_fn = (id) =>{

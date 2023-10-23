@@ -19,7 +19,7 @@ public class PaymentEntity {
     private String paymentBy;
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "reserve_id")
-    private ReserveEntity reseveEntity;
+    private ReserveEntity reserveEntity;
 
 
 }

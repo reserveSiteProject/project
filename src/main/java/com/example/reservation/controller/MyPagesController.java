@@ -38,13 +38,16 @@ public class    MyPagesController {
     // 마이페이지 리뷰 수정화면 출력
     @GetMapping("/review/update/{id}")
     public String reviewUpdate(@PathVariable("id") Long id, Model model){
+        System.out.println("id = " + id);
         ReviewDTO reviewDTO = myPagesService.findById(id);
+        System.out.println("reviewDTO = " + reviewDTO);
         model.addAttribute("review", reviewDTO);
         return "MyPages/reviewUpdate";
     }
     // 마이페이지 리뷰 수정 처리
-    @PutMapping("/review/{id}")
+    @PutMapping("/review")
     public ResponseEntity reviewUpdate(@ModelAttribute ReviewDTO reviewDTO){
+        System.out.println("reviewDTO = " + reviewDTO);
         boolean result = myPagesService.save(reviewDTO);
         if(result){
             return new ResponseEntity<>("수정 완료", HttpStatus.OK);
