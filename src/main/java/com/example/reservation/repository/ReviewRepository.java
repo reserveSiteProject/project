@@ -24,4 +24,6 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
     Page<ReviewEntity> findByReviewTitleContaining(String q, Pageable pageable);
     // 작성자로 검색한 결과를 Page 객체로 리턴
     Page<ReviewEntity> findByReviewWriterContaining(String q, Pageable pageable);
+
+    List<ReviewEntity> findByMemberEntity(MemberEntity memberEntity);
 }
