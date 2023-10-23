@@ -101,7 +101,7 @@ public class MemberController {
     public ResponseEntity login(@ModelAttribute MemberDTO memberDTO, @RequestParam("keep") boolean keep, HttpSession session, HttpServletResponse response){
         MemberDTO login = memberService.login(memberDTO);
         if(login!=null){
-            session.setAttribute("member", memberDTO);
+            session.setAttribute("memberDTO", memberDTO);
             if(keep){
                 Cookie cookie=new Cookie("memberEmail", memberDTO.getMemberEmail());
                 cookie.setMaxAge(60*60*24*7);
@@ -122,7 +122,7 @@ public class MemberController {
         MemberDTO memberDTO = memberService.findByMemberEmail(memberEmail);
         MemberDTO login = memberService.login(memberDTO);
         if(login!=null){
-            session.setAttribute("member", memberDTO);
+            session.setAttribute("memberDTO", memberDTO);
             System.out.println("login = " + login);
             return new ResponseEntity<>(HttpStatus.OK);
         }else{
