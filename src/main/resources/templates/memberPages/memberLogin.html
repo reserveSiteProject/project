@@ -38,6 +38,11 @@
             <input type="button" value="비밀번호찾기" onclick="findPass_fn()" class="btn btn-success">
           </div>
           </div>
+          <div class="text-center">
+            <div class="col-12">
+              <input type="button" value="회원가입" onclick="save_()" class="btn btn-warning">
+            </div>
+          </div>
             <p style="text-align: center;">
               <a href="javascript:void(0)">
                 <img src="./images/ka.png" onclick="kakaoLogin();">
@@ -58,6 +63,10 @@
 
 </body>
 <script th:inline="javascript">
+
+  const save_ = () => {
+    location.href="/member/save";
+  }
 
   const login_fn = () => {
     const memberEmail = document.querySelector("[name = 'memberEmail']").value;
