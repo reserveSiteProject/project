@@ -2,8 +2,11 @@ package com.example.reservation.dto;
 
 import com.example.reservation.entity.RoomEntity;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class RoomDTO {
@@ -15,10 +18,6 @@ public class RoomDTO {
 
     private String roomPrice;
 
-    private int roomCount;
-
-    private int fileAttached;
-
     private String roomType;
 
     private int capacity;
@@ -27,13 +26,17 @@ public class RoomDTO {
 
     private String roomItems;
 
-    private String roomFileName;
+
+
+    private List<MultipartFile> RoomFileName;
+    private int fileAttached;
+    private List<String> originalFileName = new ArrayList<>();
+    private List<String> storedFileName = new ArrayList<>();
 
 
     public static RoomDTO toDTO(RoomEntity roomEntity){
         RoomDTO roomDTO = new RoomDTO();
         roomDTO.setId(roomEntity.getId());
-        roomDTO.setRoomCount(roomEntity.getRoomCount());
         roomDTO.setRoomInfo(roomEntity.getRoomInfo());
         roomDTO.setRoomItems(roomEntity.getRoomItems());
         roomDTO.setRoomName(roomDTO.getRoomName());
