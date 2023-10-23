@@ -23,7 +23,7 @@ public class MemberDTO{
     private String memberAddress;
     private int kakao;
 
-    public static MemberDTO toMemberDTO(MemberEntity memberEntity) {
+    public static MemberDTO toDTO(MemberEntity memberEntity) {
         MemberDTO memberDTO = new MemberDTO();
         memberDTO.setId(memberEntity.getId());
         memberDTO.setMemberEmail(memberEntity.getMemberEmail());

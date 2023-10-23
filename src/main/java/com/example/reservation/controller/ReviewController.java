@@ -1,4 +1,4 @@
-package com.example.reservation.controller.BoardControllers;
+package com.example.reservation.controller;
 
 import com.example.reservation.dto.ReviewDTO;
 import com.example.reservation.service.boardServices.ReviewService;
