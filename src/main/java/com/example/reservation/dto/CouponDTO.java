@@ -1,6 +1,5 @@
 package com.example.reservation.dto;
 
-import com.example.reservation.entity.CouponEntity;
 import lombok.Data;
 
 @Data
@@ -22,19 +21,4 @@ public class CouponDTO {
     private int couponStatus;
 
 
-    public static CouponDTO toDTO(CouponEntity couponEntity){
-        CouponDTO couponDTO = new CouponDTO();
-
-
-        return couponDTO;
-    }
-
 }
-
-
-
-
-
-
-
-

@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "review_table")
-public class ReviewEntity extends BaseEntity{
+public class ReviewEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -55,8 +55,6 @@ public class ReviewEntity extends BaseEntity{
     // cascade, orphanRemoval: 부모 데이터 삭제시 자식 데이터도 삭제
     @OneToMany(mappedBy = "reviewEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ReviewFileEntity> reviewFileEntityList = new ArrayList<>();
-
-
         public static ReviewEntity toSaveEntity(ReviewDTO reviewDTO) {
             ReviewEntity reviewEntity = new ReviewEntity();
 //        reviewEntity.setMemberEntity(memberEntity);
@@ -81,16 +79,5 @@ public class ReviewEntity extends BaseEntity{
         return reviewEntity;
     }
 
-    // 결제테이블 참조값 추가해야함
-    public static ReviewEntity toUpdateEntity(PaymentEntity paymentEntity, MemberEntity memberEntity, ReviewDTO reviewDTO) {
-            ReviewEntity reviewEntity = new ReviewEntity();
-        //reviewEntity.setMemberEntity(memberEntity);
-        //reviewEntity.setPaymentEntity(paymentEntity);
-        reviewEntity.setReviewTitle(reviewDTO.getReviewTitle());
-        reviewEntity.setReviewContents(reviewDTO.getReviewContents());
-        reviewEntity.setReviewWriter(reviewDTO.getReviewWriter());
-        reviewEntity.setReviewStar(reviewDTO.getReviewStar());
-        reviewEntity.setFileAttached(reviewDTO.getFileAttached());
-        return reviewEntity;
-    }
+
 }

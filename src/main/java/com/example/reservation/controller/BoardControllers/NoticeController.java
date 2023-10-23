@@ -1,7 +1,7 @@
-package com.example.reservation.controller;
+package com.example.reservation.controller.BoardControllers;
 
 import com.example.reservation.dto.NoticeDTO;
-import com.example.reservation.service.NoticeService;
+import com.example.reservation.service.boardServices.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller

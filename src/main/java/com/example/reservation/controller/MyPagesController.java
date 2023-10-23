@@ -21,8 +21,8 @@ public class MyPagesController {
     // 마이페이지 리뷰목록 출력
     @GetMapping("/review")
     public String review(HttpSession session, Model model){
-        Object memberDTO1 = session.getAttribute("memberDTO");
-        MemberDTO memberDTO = (MemberDTO) memberDTO1;
+        Object loginEmail = session.getAttribute("memberDTO");
+        String memberDTO = (String)loginEmail;
         List<ReviewDTO> reviewList = myPagesService.findAll(memberDTO);
         model.addAttribute("reviewList", reviewList);
         return "MyPages/review";
@@ -61,7 +61,7 @@ public class MyPagesController {
     @GetMapping
     public String myInfo(HttpSession session, Model model){
         Object memberDTO = session.getAttribute("memberDTO");
-        MemberDTO memberDTO1 = myPagesService.findMember((MemberDTO) memberDTO);
+        MemberDTO memberDTO1 = myPagesService.findMember((String) memberDTO);
         model.addAttribute("member", memberDTO1);
         return "MyPages/myInfo";
     }
