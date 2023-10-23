@@ -33,17 +33,17 @@ public class AdminController {
     public String manage(Model model,
                          @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                          @RequestParam(value = "q", required = false, defaultValue = "") String q) {
-//      Page<MemberDTO> memberDTOList = memberService.findAll(page, q);
-//
-//        int blockLimit = 3;
-//        int startPage = (((int) (Math.ceil((double) page / blockLimit))) - 1) * blockLimit + 1;
-//        int endPage = ((startPage + blockLimit - 1) < memberDTOList.getTotalPages()) ? startPage + blockLimit - 1 : memberDTOList.getTotalPages();
-//
-//        model.addAttribute("memberList", memberDTO
-//        model.addAttribute("endPage", endPage);List);
-////        model.addAttribute("startPage", startPage);
-//        model.addAttribute("page", page);
-//        model.addAttribute("q", q);
+      Page<MemberDTO> memberDTOList = memberService.findAll(page, q);
+
+        int blockLimit = 3;
+        int startPage = (((int) (Math.ceil((double) page / blockLimit))) - 1) * blockLimit + 1;
+        int endPage = ((startPage + blockLimit - 1) < memberDTOList.getTotalPages()) ? startPage + blockLimit - 1 : memberDTOList.getTotalPages();
+
+        model.addAttribute("memberList", memberDTOList);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("page", page);
+        model.addAttribute("q", q);
         return "adminPages/manage";
     }
 
