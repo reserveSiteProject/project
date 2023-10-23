@@ -16,7 +16,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/myPages")
-public class MyPagesController {
+public class    MyPagesController {
     private final MyPagesService myPagesService;
     // 마이페이지 리뷰목록 출력
     @GetMapping("/review")
