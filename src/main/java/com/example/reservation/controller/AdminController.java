@@ -6,11 +6,14 @@ import com.example.reservation.dto.RoomDTO;
 import com.example.reservation.entity.MemberEntity;
 import com.example.reservation.service.CouponService;
 import com.example.reservation.service.MemberService;
+import com.example.reservation.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
     private final CouponService couponService;
     private final MemberService memberService;
+    private final RoomService roomService;
 
     @GetMapping("/book")
     public String book(){
@@ -56,14 +60,13 @@ public class AdminController {
 
     @GetMapping("/room/save")
     public String roomSave(){
-
         return "adminPages/roomSave";
     }
 
     @PostMapping("/room/save")
-    public String roomSave(@ModelAttribute RoomDTO roomDTO){
-
-        return "redirect:/room";
+    public String roomSave(@ModelAttribute RoomDTO roomDTO) throws IOException {
+        roomService.save(roomDTO);
+        return "adminPages/room";
     }
 
 
