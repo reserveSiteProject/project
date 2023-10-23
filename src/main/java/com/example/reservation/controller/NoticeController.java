@@ -1,7 +1,7 @@
 package com.example.reservation.controller;
 
 import com.example.reservation.dto.NoticeDTO;
-import com.example.reservation.service.boardServices.NoticeService;
+import com.example.reservation.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
