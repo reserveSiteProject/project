@@ -2,10 +2,12 @@ package com.example.reservation.controller;
 
 import com.example.reservation.dto.CouponDTO;
 import com.example.reservation.dto.MemberDTO;
+import com.example.reservation.dto.ReserveDTO;
 import com.example.reservation.dto.RoomDTO;
 import com.example.reservation.entity.MemberEntity;
 import com.example.reservation.service.CouponService;
 import com.example.reservation.service.MemberService;
+import com.example.reservation.service.ReserveService;
 import com.example.reservation.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,15 +26,19 @@ public class AdminController {
     private final CouponService couponService;
     private final MemberService memberService;
     private final RoomService roomService;
+    private final ReserveService reserveService;
 
-    @GetMapping("/book")
-    public String book(){
-        return "adminPages/book";
+    @GetMapping("/reserve")
+    public String reserve(Model model){
+        List<ReserveDTO> reserveDTOList = reserveService.findAll();
+        System.out.println(reserveDTOList);
+        model.addAttribute("memberReserveList", reserveDTOList);
+        return "adminPages/reserve";
     }
 
-    @PostMapping("/book/{id}")
-    public String book(@PathVariable("id")Long id){
-        return "redirect:/admin/book";
+    @PostMapping("/reserve/{id}")
+    public String reserve(@PathVariable("id")Long id){
+        return "redirect:/admin/reserve";
     }
 
     @GetMapping("/manage")
