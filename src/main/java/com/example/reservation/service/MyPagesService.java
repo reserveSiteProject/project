@@ -1,17 +1,8 @@
 package com.example.reservation.service;
 
-import com.example.reservation.dto.CouponDTO;
-import com.example.reservation.dto.PaymentDTO;
-import com.example.reservation.dto.ReviewDTO;
-import com.example.reservation.dto.MemberDTO;
-import com.example.reservation.entity.CouponEntity;
-import com.example.reservation.entity.MemberEntity;
-import com.example.reservation.entity.PaymentEntity;
-import com.example.reservation.entity.ReviewEntity;
-import com.example.reservation.repository.CouponRepository;
-import com.example.reservation.repository.MemberRepository;
-import com.example.reservation.repository.PaymentRepository;
-import com.example.reservation.repository.ReviewRepository;
+import com.example.reservation.dto.*;
+import com.example.reservation.entity.*;
+import com.example.reservation.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,22 +16,24 @@ public class MyPagesService {
     private final MemberRepository memberRepository;
     private final PaymentRepository paymentRepository;
     private final CouponRepository couponRepository;
+    private final ReserveRepository reserveRepository;
     /*
     Entity, dto 변환 매서드 활성화가 되어있지 않아 주석처리 하였음
      */
 
     // 리뷰 목록 출력
 
-//    public List<ReviewDTO> findAll(MemberDTO memberDTO) {
+    public List<ReviewDTO> findAll(MemberDTO memberDTO) {
 //        MemberEntity memberEntity = MemberEntity.toUpdateEntity(memberDTO);
-////        List<ReviewEntity> reviewEntityList = reviewRepository.findByMemberEntity(memberEntity);
-//        List<ReviewDTO> reviewDTOList = new ArrayList<>();
-////        for(ReviewEntity reviewEntity : reviewEntityList){
-////            ReviewDTO reviewDTO = ReviewDTO.toDTO(reviewEntity);
-//            reviewDTOList.add(reviewDTO);
-//        }
-//        return reviewDTOList;
-//    }
+        MemberEntity memberEntity = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new NoSuchElementException());
+        List<ReviewEntity> reviewEntityList = reviewRepository.findByMemberEntity(memberEntity);
+        List<ReviewDTO> reviewDTOList = new ArrayList<>();
+        for(ReviewEntity reviewEntity : reviewEntityList){
+            ReviewDTO reviewDTO = ReviewDTO.toDTO(reviewEntity);
+            reviewDTOList.add(reviewDTO);
+        }
+        return reviewDTOList;
+    }
 
     // 리뷰 상세정보
     public ReviewDTO findById(Long id) {
@@ -86,8 +79,9 @@ public class MyPagesService {
         return MemberDTO.toDTO(memberEntity);
     }
 
-    public List<CouponDTO> coupon(MemberDTO memberDTO) {
-        MemberEntity memberEntity = MemberEntity.toSaveEntity(memberDTO);
+    public List<CouponDTO> findCoupon(Object memberDTO) {
+        MemberDTO memberDTO1 = (MemberDTO) memberDTO;
+        MemberEntity memberEntity = memberRepository.findById(memberDTO1.getId()).orElseThrow(() -> new NoSuchElementException());
         List<CouponEntity> couponEntityList = couponRepository.findByMemberEntity(memberEntity);
         List<CouponDTO> couponDTOList = new ArrayList<>();
         for(CouponEntity couponEntity : couponEntityList){
@@ -95,5 +89,16 @@ public class MyPagesService {
             couponDTOList.add(couponDTO);
         }
         return couponDTOList;
+    }
+
+    public List<ReserveDTO> findReserve(MemberDTO memberDTO) {
+        MemberEntity memberEntity = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new NoSuchElementException());
+        List<ReserveEntity> reserveEntityList = reserveRepository.findByMemberEntity(memberEntity);
+        List<ReserveDTO> reserveDTOList = new ArrayList<>();
+        for(ReserveEntity reserveEntity : reserveEntityList){
+            ReserveDTO reserveDTO = ReserveDTO.toDTO(reserveEntity);
+            reserveDTOList.add(reserveDTO);
+        }
+        return reserveDTOList;
     }
 }
