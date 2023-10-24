@@ -1,37 +1,72 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset='utf-8' />
-    <style>
-        #calendar {
-            max-width: 900px;
-            margin: 40px auto;
-        }
-    </style>
+    <th:block th:replace="~{component/config :: config}"></th:block>
+    <script class="cssdesk" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.0/moment.min.js" type="text/javascript"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
-    <script>
-
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-                var calendar = new FullCalendar.Calendar(calendarEl, {
-                    height: 500, // 크기 400
-                    aspectRatio: 2,  //종횡비2
-                    ihandleWindowResize : true,  // 브라우저 창의 크기를 조정할 때 달력의 크기를 자동으로 조정할지 여부
-                    initialView: 'dayGridMonth',
-                    events : [
-                        {
-                            title: '뚜껑 닫기',
-                            start: '2023-10-23',
-                            end: '2023-10-25'
-                        }
-                    ]
-            });
-            calendar.render();
-        });
-
-    </script>
 </head>
 <body>
-<div id='calendar'></div>
+<!--<div th:replace="~{component/nav :: nav}"></div>-->
+
+<div class="container mt-5 mb-5">
+    <div id="calendar"></div>
+
+</div>
+
+<!--<div th:replace="~{component/footer :: footer}"></div>-->
+
 </body>
+<script th:inline="javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        let today = new Date();
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            plugin : ['interaction', 'dayGrid'], // 클릭,드래그, 이벤트 감지 interaction / daygrid 달력그리기
+            initialView: 'dayGridMonth',
+            height: '500px', // calendar 높이 설정
+            expandRows: true, // 화면에 맞게 높이 재설정
+            navLinks: false, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
+            editable: true, // 수정 가능?
+            locale: "ko",
+            selectable: true,// 달력 일자 드래그 설정가능
+            nowIndicator: true, // 현재 시간 마크
+            eventClick: function(info) {
+                if (confirm("이벤트를 삭제하시겠습니까?")) {
+                    info.event.remove(); // 이벤트 삭제
+                }
+            },
+            select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
+                let dt_start = moment(arg.start).format('YYYYMMDD');
+                let dt_end = moment(arg.end).format('YYYYMMDD');
+
+                let year = today.getFullYear().toString(); // 년도
+                let month = today.getMonth() +1;  // 월 getMonth 는 0~11월 출력하기때문에 +1
+                let date = today.getDate().toString();  // 날짜
+                let dt_date = year+month+date;
+
+                if(dt_start>=dt_date){
+                    var allEvents = calendar.getEvents();
+                    allEvents.forEach(function(event) {
+                        event.remove();
+                    });
+                    var title = "삭제버튼"
+                    if (title) {
+                        calendar.addEvent({
+                            title: title,
+                            start: arg.start,
+                            end: arg.end,
+                            allDay: arg.allDay
+                        })
+                        // console.log(arg.start)
+                        // console.log(arg.end)
+                    }
+                }else{
+                    alert("과거는 불가능합니다.")
+                }
+                calendar.unselect()
+            },
+        });
+        calendar.render();
+    });
+</script>
 </html>
