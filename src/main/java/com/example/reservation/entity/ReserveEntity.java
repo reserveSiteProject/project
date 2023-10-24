@@ -1,7 +1,6 @@
 package com.example.reservation.entity;
 
 
-import com.example.reservation.dto.MemberDTO;
 import com.example.reservation.dto.ReserveDTO;
 import lombok.AccessLevel;
 import lombok.Getter;

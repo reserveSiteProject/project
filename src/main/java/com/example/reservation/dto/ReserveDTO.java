@@ -15,7 +15,9 @@ import lombok.NoArgsConstructor;
 public class ReserveDTO {
     private Long id;
     private Long memberId;
-    private Long roomdId;
+    private String memberName;
+    private Long roomId;
+    private RoomDTO roomDTO;
     private String checkInDate;
     private String checkOutDate;
     private int persons;
@@ -24,7 +26,7 @@ public class ReserveDTO {
         ReserveDTO reserveDTO = new ReserveDTO();
         reserveDTO.setId(reserveEntity.getId());
         reserveDTO.setMemberId(reserveEntity.getMemberEntity().getId());
-        reserveDTO.setRoomdId(reserveEntity.getRoomEntity().getId());
+        reserveDTO.setRoomId(reserveEntity.getRoomEntity().getId());
         reserveDTO.setCheckInDate(reserveEntity.getCheckInDate());
         reserveDTO.setCheckOutDate(reserveEntity.getCheckOutDate());
         reserveDTO.setPersons(reserveDTO.getPersons());

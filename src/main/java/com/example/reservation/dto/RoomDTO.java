@@ -39,11 +39,11 @@ public class RoomDTO {
         roomDTO.setId(roomEntity.getId());
         roomDTO.setRoomInfo(roomEntity.getRoomInfo());
         roomDTO.setRoomItems(roomEntity.getRoomItems());
-        roomDTO.setRoomName(roomDTO.getRoomName());
-        roomDTO.setRoomPrice(roomDTO.getRoomPrice());
-        roomDTO.setRoomType(roomDTO.getRoomType());
-        roomDTO.setCapacity(roomDTO.getCapacity());
-        roomDTO.setFileAttached(roomDTO.getFileAttached());
+        roomDTO.setRoomName(roomEntity.getRoomName());
+        roomDTO.setRoomPrice(roomEntity.getRoomPrice());
+        roomDTO.setRoomType(roomEntity.getRoomType());
+        roomDTO.setCapacity(roomEntity.getCapacity());
+        roomDTO.setFileAttached(roomEntity.getFileAttached());
 
         return roomDTO;
     }
