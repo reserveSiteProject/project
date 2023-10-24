@@ -34,6 +34,27 @@ public class MyPagesService {
         }
         return reviewDTOList;
     }
+    public List<ReviewDTO> findAllByType(MemberDTO memberDTO, String type) {
+        MemberEntity memberEntity = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new NoSuchElementException());
+        if(type.equals("createdAt")){
+            List<ReviewEntity> reviewEntityList = reviewRepository.findByMemberEntityOrderByCreatedAtDesc(memberEntity);
+            List<ReviewDTO> reviewDTOList = new ArrayList<>();
+            for(ReviewEntity reviewEntity : reviewEntityList){
+                ReviewDTO reviewDTO = ReviewDTO.toDTO(reviewEntity);
+                reviewDTOList.add(reviewDTO);
+                return reviewDTOList;
+            }
+        }else if(type.equals("hits")){
+            List<ReviewEntity> reviewEntityList = reviewRepository.findByMemberEntityOrderByHitsDesc(memberEntity);
+            List<ReviewDTO> reviewDTOList = new ArrayList<>();
+            for(ReviewEntity reviewEntity : reviewEntityList){
+                ReviewDTO reviewDTO = ReviewDTO.toDTO(reviewEntity);
+                reviewDTOList.add(reviewDTO);
+                return reviewDTOList;
+            }
+        }
+        return null;
+    }
 
     // 리뷰 상세정보
     public ReviewDTO findById(Long id) {
@@ -101,4 +122,6 @@ public class MyPagesService {
         }
         return reserveDTOList;
     }
+
+
 }
