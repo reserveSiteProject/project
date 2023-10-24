@@ -26,4 +26,8 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
     Page<ReviewEntity> findByReviewWriterContaining(String q, Pageable pageable);
 
     List<ReviewEntity> findByMemberEntity(MemberEntity memberEntity);
+
+    List<ReviewEntity> findByMemberEntityOrderByCreatedAtDesc(MemberEntity memberEntity);
+    List<ReviewEntity> findByMemberEntityOrderByHitsDesc(MemberEntity memberEntity);
+
 }
