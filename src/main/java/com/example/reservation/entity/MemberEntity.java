@@ -46,7 +46,7 @@ public class MemberEntity extends BaseEntity{
     private int kakao;
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<CouponEntity> couponEntities = new ArrayList<>();
+    private List<CouponEntity> couponEntityList = new ArrayList<>();
 
     @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ReserveEntity> reserveEntityList = new ArrayList<>();
