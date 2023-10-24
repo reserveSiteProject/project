@@ -7,48 +7,128 @@
 
 <body>
 <h1>회원목록 출력</h1>
-<div>
-    <tr th:each="member : ${memberList}">
-        <td th:text="${member.id}"></td>
-        <td th:text="${member.memberEmail}"></td>
-        <td th:text="${member.memberPassword}"></td>
-        <td th:text="${member.memberName}"></td>
-        <td th:text="${member.nickName}"></td>
-        <!-- Button trigger modal -->
-        <img src="./images/쿠폰발급.png" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-        <!-- Modal -->
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-             aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2>쿠폰 발급</h2>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <table>
-                            <form action="/admin/coupon/save" method="post" id="save_form">
-                                쿠폰 이름 : <input type="text" name="couponName" id="couponName">
-                                할인 가격 : <input type="text" name="couponSale" id="couponSale"
-                                               oninput="isNumber(this);"><br>
-                                <p id="couponNameCheck"></p>
-                                유효기간 시작일 : <input type="date" name="startDate" id="startDate">
-                                유효기간 종료일 : <input type="date" name="endDate" id="endDate"><br>
-                                <input type="hidden" name="memberId" th:value="${member.id}">
-                                <input type="hidden" name="serialNum" id="serialNum"><br>
-                                <input type="hidden" name="couponStatus" id="couponStatus" value="1">
-                            </form>
-                        </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" th:onclick="coupon_fn([[${member.id}]])">쿠폰발급</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    </div>
+<div id="section" class="container">
+    <div id="search-area" class="mt-5">
+        <!-- 검색 폼 -->
+        <form action="/admin/manage" method="get">
+            <select id="listCount" name="listCount" value="${listCount}">
+                <option value="5" selected>글 개수</option>
+                <option value="3">3개씩 보기</option>
+                <option value="5">5개씩 보기</option>
+                <option value="10">10개씩 보기</option>
+                <option value="15">15개씩 보기</option>
+                <option value="20">20개씩 보기</option>
+            </select>
+            <input id="q" type="text" name="q" placeholder="이름을 입력하세요">
+            <input type="submit" value="검색">
+        </form>
+    </div>
+    <table class="table table-hover text-center">
+        <thead class="thead-light">
+        <tr>
+            <th>회원번호</th>
+            <th>작성자명</th>
+            <th>작성자이메일</th>
+            <th>닉네임</th>
+            <th>첨부파일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 각 행에 대한 Thymeleaf 반복 -->
+        <tr th:each="member : ${memberList}">
+            <td th:text="${member.id}"></td>
+            <td th:text="${member.memberName}"></td>
+            <td th:text="${member.memberEmail}"></td>
+            <td th:text="${member.nickName}"></td>
+            <!-- 버튼을 클릭하여 모달 표시 -->
+            <td>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" th:attr="data-bs-target='#modal-'+${member.id}">쿠폰 발급</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- 각 멤버에 대한 모달 창 -->
+<div th:each="member : ${memberList}">
+    <div class="modal fade" th:id="'modal-'+${member.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">쿠폰 발급</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- 쿠폰 발급 폼 -->
+                    <form action="/admin/coupon/save" method="post" id="save_form">
+                        쿠폰 이름 : <input type="text" name="couponName" id="couponName">
+                        할인 가격 : <input type="text" name="couponSale" id="couponSale" oninput="isNumber(this);"><br>
+                        <p id="couponNameCheck"></p>
+                        유효기간 시작일 : <input type="date" name="startDate" id="startDate">
+                        유효기간 종료일 : <input type="date" name="endDate" id="endDate"><br>
+                        <input type="hidden" name="memberId" th:value="${member.id}">
+                        <input type="hidden" name="serialNum" id="serialNum"><br>
+                        <input type="hidden" name="couponStatus" id="couponStatus" value="1">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" th:onclick="coupon_fn([[${member.id}]])">쿠폰발급</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                 </div>
             </div>
         </div>
-        <br>
-    </tr>
+    </div>
+</div>
+
+<div class="container">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <!--첫페이지 요청 링크 /board?page=1 -->
+            <a class="page-link" th:href="@{/admin/manage(page=1, q=${q})}">
+                <span>First</span>
+            </a>
+        </li>
+
+        <li th:class="${memberList.first} ? 'disabled'" class="page-item">
+            <!--boardList.first: isFirst()
+                boardList.number: getNumber()-->
+            <!-- 현재 페이지가 첫페이지라면 링크값을 #으로 아니면 /board?page=number 로  -->
+            <a class="page-link"
+               th:href="${memberList.first} ? '#' : @{/admin/manage(page=${memberList.number}, q=${q})}">
+                <!-- 사용자 3페이지, number 2 /board?page=2 -->
+                <span><</span> <!-- < -->
+            </a>
+        </li>
+
+        <!-- startPage ~ endPage 까지 숫자를 만들어주는 역할
+            for(int page=startPage; page<=endPage; page++) -->
+        <li th:each="page: ${#numbers.sequence(startPage, endPage)}"
+            th:class="${page == memberList.number + 1} ? 'page-item active'" class="page-item">
+            <a class="page-link" th:text="${page}" th:href="@{/admin/manage(page=${page}, q=${q})}"></a>
+        </li>
+
+        <!-- 다음 페이지 요청
+            현재 3페이지를 보고 있다면 다음 페이지는 4페이지임.
+            getNumber() 값은 2임.
+            따라서 4페이지를 보고 싶다면 getNumber()+2를 해야 컨트롤러에 4를 요청할 수 있음. -->
+        <li th:class="${memberList.last} ? 'disabled'">
+            <a class="page-link"
+               th:href="${memberList.last} ? '#' : @{/admin/manage(page=${memberList.number + 2}, q=${q})}">
+                <!-- 사용자 3페이지, number 2 /board?page=4 -->
+                <span>&gt;</span>
+            </a>
+        </li>
+
+        <li class="page-item">
+            <a class="page-link" th:href="@{/admin/manage(page=${memberList.totalPages}, q=${q})}">
+                <span>Last</span>
+            </a>
+        </li>
+    </ul>
+</div>
+</div>
 </div>
 </body>
 <script th:inline="javascript">
@@ -76,7 +156,7 @@
                     couponNameCheck.innerHTML = "한글만 입력이 가능합니다";
                     couponNameCheck.style.color = "red";
                 }
-            }else {
+            } else {
                 alert("유효기간 확인바랍니다.")
             }
         } else {
