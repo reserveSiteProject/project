@@ -9,20 +9,20 @@
 <div class="container-fluid mt-5 mb-5">
     <div class="d-flex justify-content-end mb-3">
 
-    <!--검색부분-->
-    <form action="/board/review" method="get">
-        <div class="row">
-            <div class="col">
-        <input class="form-control w-auto" type="search" name="q" placeholder="검색어를 입력하세요"
-               aria-label="Search">
+        <!--검색부분-->
+        <form action="/board/review" method="get">
+            <div class="row">
+                <div class="col">
+                    <input class="form-control w-auto" type="search" name="q" placeholder="검색어를 입력하세요"
+                           aria-label="Search">
+                </div>
+                <div class="col">
+                    <button class="btn btn-outline-success mb-2" type="submit">Search</button>
+                </div>
             </div>
-            <div class="col">
-        <button class="btn btn-outline-success mb-2" type="submit">Search</button>
-        </div>
-        </div>
-    </form>
-    <!--검색부분-->
-</div>
+        </form>
+        <!--검색부분-->
+    </div>
     <!-- 화면에 보여질 내용이 들어갈 부분 -->
     <div class="container" id="paging-list">
         <table class="table table-hover">
@@ -37,14 +37,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="review: ${reviewList}">
+            <tr th:attr="data-id=${review.id}" onclick="navigateToDetail(this)" th:each="review: ${reviewList}">
                 <td th:text="${review.id}"></td>
                 <td th:text="${review.reviewTitle}"></td>
-                <td><a th:href="@{|/board/review/${review.id}|(page=${page}, type=${type}, q=${q})}" th:text="${session.memberDTO.getNickName()}">작성자</a></td>
+                <td th:text="${session.memberDTO.getNickName()}">작성자</td>
                 <td th:text="${review.reviewStar}"></td>
                 <td th:text="${review.hits}"></td>
                 <td th:text="${review.createdAt}"></td>
-
             </tr>
             </tbody>
         </table>
@@ -95,6 +94,15 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    function navigateToDetail(element) {
+        const id = element.getAttribute('data-id');
+        window.location.href = `/board/review/${id}`;
+    }
+
+</script>
 
 </body>
 </html>
