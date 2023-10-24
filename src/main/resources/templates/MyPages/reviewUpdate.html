@@ -9,15 +9,15 @@
 
 <div class="container mt-5 mb-5">
   <!-- 화면에 보여질 내용이 들어갈 부분 -->
-  <h2>리뷰 수정화면 출력페이지</h2>
-  <form action="/myPages/review/update/" method="post">
+  <h2>리뷰 수정</h2>
+  <form action="/myPages/review/update/" method="post" class="form-control">
     <input type="hidden" name="id" th:value="${review.id}"><br>
-    <input type="text" name="reviewWriter" th:value="${review.reviewWriter}"><br>
-    <input type="text" name="reviewTitle" th:value="${review.reviewTitle}"><br>
-    <input type="number" name="reviewStar" th:value="${review.reviewStar}"><br>
+    작성자 : <input type="text" name="reviewWriter" th:value="${review.reviewWriter}"><br>
+    제목 : <input type="text" name="reviewTitle" th:value="${review.reviewTitle}"><br>
+    평점 : <input type="number" name="reviewStar" th:value="${review.reviewStar}"><br>
     <textarea name="reviewContents"  cols="30" rows="10" th:text="${review.reviewContents}"></textarea><br>
-    <input type="button" th:onclick="update_fn()" class="btn btn-dark" th:value="수정처리">
-    <input type="button" th:onclick="list_fn()" class="btn btn-primary"  th:value="목록으로">
+    <input type="button" th:onclick="update_fn()" class="btn btn-dark" th:value="수정">
+    <input type="button" th:onclick="list_fn()" class="btn btn-success"  th:value="목록으로">
   </form>
 </div>
 

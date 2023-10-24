@@ -1,66 +1,69 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <th:block th:replace="~{component/config :: config}"></th:block>
+    <th:block th:replace="~{component/config :: config}"></th:block>
 </head>
 <body>
 <!--<div th:replace="~{component/nav :: nav}"></div>-->
 
 <div class="container mt-5 mb-5">
-  <!-- 화면에 보여질 내용이 들어갈 부분 -->
-  <h2>비밀번호 변경 페이지</h2>
-  <form action="">
-    현재 비밀번호 : <input type="text" name="passWord" placeholder="현재 비밀번호를 입력하세요"><br>
-    새 비밀번호 : <input type="text" name="memberPassword" placeholder="새로운 비밀번호 입력하시오"><br>
-    새 비밀번호 확인 : <input type="text" name="checkPassword" placeholder="다시 한번 입력해주세요"><br>
-    <input type="button" th:onclick="pass_change()" th:value="수정">
-    <input type="button" th:onclick="myInfo()" th:value="취소">
-  </form>
+    <!-- 화면에 보여질 내용이 들어갈 부분 -->
+    <h2>비밀번호 변경</h2>
+    <form action="" class="form-control mt-4">
+        현재 비밀번호 : <input class="rounded" type="text" name="passWord" placeholder="현재 비밀번호를 입력하세요"><br><br>
+        새 비밀번호 : <input class="rounded" type="text" name="memberPassword" placeholder="새로운 비밀번호 입력하시오"><br>
+        새 비밀번호 확인 : <input class="rounded" type="text" name="checkPassword" placeholder="다시 한번 입력해주세요"><br>
+        <input class="btn btn-dark" type="button" th:onclick="pass_change()" th:value="수정">
+        <input class="btn btn-success" type="button" th:onclick="myInfo()" th:value="취소">
+    </form>
 </div>
 
 <!--<div th:replace="~{component/footer :: footer}"></div>-->
 
 </body>
 <script th:inline="javascript">
-const pass_change = () =>{
-  console.log("dddd");
-  const id = [[${member.id}]];
-  const memberEmail = [[${member.memberEmail}]];
-  const memberName = [[${member.memberName}]];
-  const nickName = [[${member.nickName}]];
-  const memberMobile = [[${member.memberMobile}]];
-  const memberBirth = [[${member.memberBirth}]];
-  const memberAddress = [[${member.memberAddress}]];
-  const kakao = [[${member.kakao}]];
-  const pass = [[${member.memberPassword}]];
-
-  const passWord = document.querySelector('[name="passWord"]').value;
-  const memberPassword = document.querySelector('[name="memberPassword"]').value;
-  const checkPassword = document.querySelector('[name="checkPassword"]').value;
-
-  if(pass == passWord){
-    if(memberPassword == checkPassword){
-      $.ajax({
-        type : "post",
-        url : "/myPages/change",
-        data :{
-          id : id,
-          memberEmail : memberEmail,
-          memberPassword : memberPassword,
-          memberName : memberName,
-          nickName : nickName,
-          memberMobile : memberMobile,
-          memberBirth : memberBirth,
-          memberAddress : memberAddress,
-          kakao : kakao
-        },
-        success:function (data){
-          alert("수정 완료")
-          location.href = "/myPages";
-        }
-      })
+    const myInfo = () =>{
+        location.href="/myPages";
     }
-  }
-}
+    const pass_change = () => {
+        console.log("dddd");
+        const id = [[${member.id}]];
+        const memberEmail = [[${member.memberEmail}]];
+        const memberName = [[${member.memberName}]];
+        const nickName = [[${member.nickName}]];
+        const memberMobile = [[${member.memberMobile}]];
+        const memberBirth = [[${member.memberBirth}]];
+        const memberAddress = [[${member.memberAddress}]];
+        const kakao = [[${member.kakao}]];
+        const pass = [[${member.memberPassword}]];
+
+        const passWord = document.querySelector('[name="passWord"]').value;
+        const memberPassword = document.querySelector('[name="memberPassword"]').value;
+        const checkPassword = document.querySelector('[name="checkPassword"]').value;
+
+        if (pass == passWord) {
+            if (memberPassword == checkPassword) {
+                $.ajax({
+                    type: "post",
+                    url: "/myPages/change",
+                    data: {
+                        id: id,
+                        memberEmail: memberEmail,
+                        memberPassword: memberPassword,
+                        memberName: memberName,
+                        nickName: nickName,
+                        memberMobile: memberMobile,
+                        memberBirth: memberBirth,
+                        memberAddress: memberAddress,
+                        kakao: kakao
+                    },
+                    success: function (data) {
+                        alert("수정 완료")
+                        location.href = "/myPages";
+                    }
+                })
+            }
+        }
+    }
 </script>
 </html>
