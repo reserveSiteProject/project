@@ -39,7 +39,7 @@ public class CouponEntity {
     @Column(nullable = false)
     private String serialNum;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity; // 이것을 부모로서 참조하겠다.
 

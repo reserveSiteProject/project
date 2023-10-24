@@ -2,6 +2,7 @@ package com.example.reservation.controller;
 
 import com.example.reservation.dto.CouponDTO;
 import com.example.reservation.dto.MemberDTO;
+import com.example.reservation.dto.ReserveDTO;
 import com.example.reservation.dto.ReviewDTO;
 import com.example.reservation.service.MyPagesService;
 import lombok.RequiredArgsConstructor;
@@ -20,15 +21,15 @@ import java.util.List;
 public class    MyPagesController {
     private final MyPagesService myPagesService;
     // 마이페이지 리뷰목록 출력
-//    @GetMapping("/review")
-//    public String review(HttpSession session, Model model){
-//        Object memberDTO1 = session.getAttribute("memberDTO");
-//        MemberDTO memberDTO = (MemberDTO) memberDTO1;
-//        List<ReviewDTO> reviewList = myPagesService.findAll(memberDTO);
-//        System.out.println("reviewList = " + reviewList);
-//        model.addAttribute("reviewList", reviewList);
-//        return "MyPages/review";
-//    }
+    @GetMapping("/review")
+    public String review(HttpSession session, Model model){
+        Object memberDTO1 = session.getAttribute("memberDTO");
+        MemberDTO memberDTO = (MemberDTO) memberDTO1;
+        List<ReviewDTO> reviewList = myPagesService.findAll(memberDTO);
+        System.out.println("reviewList = " + reviewList);
+        model.addAttribute("reviewList", reviewList);
+        return "MyPages/review";
+    }
     // 마이페이지 리뷰 상세페이지 화면 출력
     @GetMapping("/review/{id}")
     public String reviewDetail(@PathVariable("id") Long id, Model model){
@@ -93,11 +94,20 @@ public class    MyPagesController {
         boolean result = myPagesService.saveMember(memberDTO);
         return new ResponseEntity("수정완료", HttpStatus.OK);
     }
+    //마이페이지 쿠폰함 리스트 출력
     @GetMapping("/coupon")
     public String coupon(HttpSession session, Model model){
         Object memberDTO = session.getAttribute("memberDTO");
-        List<CouponDTO> couponList = myPagesService.coupon((MemberDTO) memberDTO);
-        model.addAttribute("coupon", couponList);
+        List<CouponDTO> couponList = myPagesService.findCoupon(memberDTO);
+        model.addAttribute("couponList", couponList);
         return "MyPages/coupon";
+    }
+    // 마이페이지 예약내역 리스트 출력
+    @GetMapping("/book")
+    public String book(HttpSession session, Model model){
+        Object memberDTO = session.getAttribute("memberDTO");
+        List<ReserveDTO> reserveDTOList = myPagesService.findReserve((MemberDTO) memberDTO);
+        model.addAttribute("reserveList", reserveDTOList);
+        return "MyPages/book";
     }
 }

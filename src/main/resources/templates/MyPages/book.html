@@ -8,21 +8,15 @@
 
 <div class="container mt-5 mb-5">
   <!-- 화면에 보여질 내용이 들어갈 부분 -->
-  <h2>쿠폰 리스트</h2>
+  <h2>예약 리스트</h2>
   <table>
     <tr>
-      <th>쿠폰이름</th>
-      <th>일련번호</th>
-      <th>할인금액</th>
-      <th>시작일</th>
-      <th>만료일</th>
+      <th>인원수</th>
+      <th>예약날짜</th>
     </tr>
-    <tr th:each="coupon :${couponList}">
-      <td th:text="${coupon.couponName}"></td>
-      <td th:text="${coupon.serialNum}"></td>
-      <td th:text="${coupon.couponSale}"></td>
-      <td th:text="${coupon.startDate}"></td>
-      <td th:text="${coupon.endDate}"></td>
+    <tr th:each="reserve :${reserveList}">
+      <td th:text="${reserve.checkInDate}"></td>
+      <td th:text="${reserve.persons}"></td>
     </tr>
   </table>
 
