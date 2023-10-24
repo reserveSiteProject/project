@@ -33,7 +33,6 @@ public class NoticeService {
 
     public NoticeDTO findById(Long id) throws IOException {
         NoticeEntity noticeEntity = noticeRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
-
         return NoticeDTO.toDTO(noticeEntity);
     }
 }

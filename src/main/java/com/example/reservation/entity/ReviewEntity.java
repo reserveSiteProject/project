@@ -39,8 +39,6 @@ public class ReviewEntity extends BaseEntity {
     @Column
     private int fileAttached;
 
-    /* 타인원이 해당 엔티티들을 구현하고 pull request를 하고 팀장이 merge를 한후 주석을 지우면 되는 부분이다.
-     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
@@ -53,16 +51,15 @@ public class ReviewEntity extends BaseEntity {
     // 참조관계 정의
     // mappedBy: 자식 엔티티에 정의한 필드 이름
     // cascade, orphanRemoval: 부모 데이터 삭제시 자식 데이터도 삭제
-    @OneToMany(mappedBy = "reviewEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "reviewEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<ReviewFileEntity> reviewFileEntityList = new ArrayList<>();
 
 
-//    public static ReviewEntity toSaveEntity(MemberEntity memberEntity, PaymentEntity paymentEntity, ReviewDTO reviewDTO) {
-public static ReviewEntity toSaveEntity(ReviewDTO reviewDTO) {
+    public static ReviewEntity toSaveEntity(MemberEntity memberEntity, PaymentEntity paymentEntity, ReviewDTO reviewDTO) {
 
-    ReviewEntity reviewEntity = new ReviewEntity();
-//        reviewEntity.setMemberEntity(memberEntity);
-//        reviewEntity.setPaymentEntity(paymentEntity);
+        ReviewEntity reviewEntity = new ReviewEntity();
+        reviewEntity.setMemberEntity(memberEntity);
+        reviewEntity.setPaymentEntity(paymentEntity);
         reviewEntity.setReviewTitle(reviewDTO.getReviewTitle());
         reviewEntity.setReviewContents(reviewDTO.getReviewContents());
         reviewEntity.setReviewWriter(reviewDTO.getReviewWriter());
@@ -71,12 +68,10 @@ public static ReviewEntity toSaveEntity(ReviewDTO reviewDTO) {
         return reviewEntity;
     }
 
-//    public static ReviewEntity toSaveEntityWithFile(MemberEntity memberEntity, PaymentEntity paymentEntity, ReviewDTO reviewDTO) {
-        public static ReviewEntity toSaveEntityWithFile(ReviewDTO reviewDTO) {
-
-            ReviewEntity reviewEntity = new ReviewEntity();
-//        reviewEntity.setMemberEntity(memberEntity);
-//        reviewEntity.setPaymentEntity(paymentEntity);
+    public static ReviewEntity toSaveEntityWithFile(MemberEntity memberEntity, PaymentEntity paymentEntity, ReviewDTO reviewDTO) {
+        ReviewEntity reviewEntity = new ReviewEntity();
+        reviewEntity.setMemberEntity(memberEntity);
+        reviewEntity.setPaymentEntity(paymentEntity);
         reviewEntity.setReviewTitle(reviewDTO.getReviewTitle());
         reviewEntity.setReviewContents(reviewDTO.getReviewContents());
         reviewEntity.setReviewWriter(reviewDTO.getReviewWriter());

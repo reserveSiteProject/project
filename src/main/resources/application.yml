@@ -22,6 +22,12 @@ spring:
     hibernate:
       ddl-auto: update
 
+  web:
+    resources:
+      static-locations:
+        - 'file:/C:/springboot_reviewImg/'
+        - 'classpath:/static/'
+
 # db query log
 logging:
   level:

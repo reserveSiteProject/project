@@ -1,3 +1,4 @@
+
 package com.example.reservation.entity;
 
 import lombok.AccessLevel;
@@ -21,7 +22,7 @@ public class ReviewFileEntity {
     @Column(length = 200)
     private String storedFileName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "review_id")
     private ReviewEntity reviewEntity;
     public static ReviewFileEntity toSaveReviewFile(ReviewEntity savedEntity, String originalFilename, String storedFileName) {
