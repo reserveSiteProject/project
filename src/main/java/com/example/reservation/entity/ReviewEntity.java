@@ -56,7 +56,6 @@ public class ReviewEntity extends BaseEntity {
 
 
     public static ReviewEntity toSaveEntity(MemberEntity memberEntity, PaymentEntity paymentEntity, ReviewDTO reviewDTO) {
-
         ReviewEntity reviewEntity = new ReviewEntity();
         reviewEntity.setMemberEntity(memberEntity);
         reviewEntity.setPaymentEntity(paymentEntity);

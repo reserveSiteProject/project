@@ -1,14 +1,8 @@
 package com.example.reservation.service;
 
 import com.example.reservation.dto.ReviewDTO;
-import com.example.reservation.entity.MemberEntity;
-import com.example.reservation.entity.PaymentEntity;
-import com.example.reservation.entity.ReviewEntity;
-import com.example.reservation.entity.ReviewFileEntity;
-import com.example.reservation.repository.MemberRepository;
-import com.example.reservation.repository.PaymentRepository;
-import com.example.reservation.repository.ReviewFileRepository;
-import com.example.reservation.repository.ReviewRepository;
+import com.example.reservation.entity.*;
+import com.example.reservation.repository.*;
 import com.example.reservation.util.UtilClass;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Hibernate;
@@ -25,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -33,7 +28,6 @@ import java.util.Optional;
 @Profile("!test")
 public class ReviewService {
 
-
     private final MemberRepository memberRepository;
     private final PaymentRepository paymentRepository;
 
@@ -41,19 +35,16 @@ public class ReviewService {
     private final ReviewFileRepository reviewFileRepository;
 
     public Long save(ReviewDTO reviewDTO) throws IOException {
+        MemberEntity memberEntity = memberRepository.findByMemberEmail(reviewDTO.getReviewWriter()).orElseThrow(() -> new NoSuchElementException());
+        System.out.println("memberEntity 의 id = " + memberEntity.getId());
+        PaymentEntity paymentEntity = paymentRepository.findByMemberEntity(memberEntity).orElseThrow(()->new NoSuchElementException());
+        System.out.println("paymentEntity 의 id = " + paymentEntity.getId());
         if (reviewDTO.getReviewFile().get(0).isEmpty() && reviewDTO.getReviewFile() != null) {
             // 첨부파일 없음
-            MemberEntity memberEntity = memberRepository.findById(reviewDTO.getId()).orElseThrow(() -> new NoSuchElementException());
-            PaymentEntity paymentEntity = paymentRepository.findById(reviewDTO.getPaymentId()).orElseThrow(()->new NoSuchElementException());
             ReviewEntity reviewEntity = ReviewEntity.toSaveEntity(memberEntity,paymentEntity,reviewDTO);
-
-
-
             return reviewRepository.save(reviewEntity).getId();
         } else {
             // 첨부파일 있음
-            MemberEntity memberEntity = memberRepository.findById(reviewDTO.getId()).orElseThrow(() -> new NoSuchElementException());
-            PaymentEntity paymentEntity = paymentRepository.findById(reviewDTO.getPaymentId()).orElseThrow(()->new NoSuchElementException());
             ReviewEntity reviewEntity = ReviewEntity.toSaveEntityWithFile(memberEntity,paymentEntity,reviewDTO);
 
             // 게시글 저장처리 후 저장한 엔티티 가져옴
@@ -78,6 +69,7 @@ public class ReviewService {
             return savedEntity.getId();
         }
     }
+
 
     public Page<ReviewDTO> findAll(int page, String type, String q) {
         page = page - 1;

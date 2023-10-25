@@ -52,7 +52,8 @@ public class ReviewController {
 
     @PostMapping("/review/save")
     public String reviewSave(@ModelAttribute ReviewDTO reviewDTO) throws IOException {
-        reviewService.save(reviewDTO);
+        Long id = reviewService.save(reviewDTO);
+        System.out.println(" 컨트롤러 id = " + id);
         return "redirect:/board/review";
     }
 
