@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>호텔 예약 사이트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navigation bar styles */
+        .navbar {
+            background-color: #1E90FF; /* Deep Sky Blue color */
+            overflow: hidden;
+            padding: 14px 16px;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #00CED1; /* Dark Turquoise color */
+            color: white;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            position: fixed;
+            height: calc(100vh / 3);
+            width: 60px;
+            top: 30%;
+            left: 0;
+            background-color: #20B2AA; /* Light Sea Green color */
+            overflow-x: hidden;
+            transition: width 0.5s;
+            z-index: 2;
+        }
+
+        .sidebar:hover {
+            width: 200px;
+        }
+
+        .sidebar h2 {
+            display: none;
+            padding-left: 10px;
+            color: #FFD700; /* Gold color */
+        }
+
+        .sidebar:hover h2 {
+            display: block;
+        }
+
+        .sidebar-icon {
+            padding: 10px;
+            text-align: center;
+            transition: 0.3s;
+            color: #FFD700; /* Gold color */
+        }
+
+        .sidebar-icon:hover {
+            background-color: #00CED1; /* Dark Turquoise color */
+        }
+
+        .sidebar-icon i {
+            font-size: 24px;
+            margin: 8px 0;
+        }
+
+        .sidebar-text {
+            display: none;
+        }
+
+        .sidebar:hover .sidebar-text {
+            display: inline;
+            transition: 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation bar -->
+<div class="navbar">
+    <a href="#home">Home</a>
+    <a href="#reservation">Reservation</a>
+    <a href="#contact">Contact</a>
+    <a href="#about">About</a>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h2>MyPage</h2>
+    <div class="sidebar-icon">
+        <i class="fas fa-comment-dots"></i>
+        <span class="sidebar-text">리뷰 작성하기</span>
+    </div>
+    <div class="sidebar-icon">
+        <i class="fas fa-user"></i>
+        <span class="sidebar-text">내 정보</span>
+    </div>
+    <div class="sidebar-icon">
+        <i class="fas fa-ticket-alt"></i>
+        <span class="sidebar-text">쿠폰함</span>
+    </div>
+    <div class="sidebar-icon">
+        <i class="fas fa-calendar-check"></i>
+        <span class="sidebar-text">예약하기</span>
+    </div>
+</div>
+
+</body>
+</html>
