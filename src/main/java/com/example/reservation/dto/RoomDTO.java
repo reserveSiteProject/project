@@ -1,6 +1,8 @@
 package com.example.reservation.dto;
 
+import com.example.reservation.entity.ReviewFileEntity;
 import com.example.reservation.entity.RoomEntity;
+import com.example.reservation.entity.RoomFileEntity;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,8 +45,16 @@ public class RoomDTO {
         roomDTO.setRoomPrice(roomEntity.getRoomPrice());
         roomDTO.setRoomType(roomEntity.getRoomType());
         roomDTO.setCapacity(roomEntity.getCapacity());
-        roomDTO.setFileAttached(roomEntity.getFileAttached());
-
+        if (roomEntity.getFileAttached() == 1) {
+            for (RoomFileEntity roomFileEntity : roomEntity.getRoomFileEntityList()) {
+                roomDTO.getOriginalFileName().add(roomFileEntity.getOriginalFileName());
+                roomDTO.getStoredFileName().add(roomFileEntity.getStoredFileName());
+            }
+            roomDTO.setFileAttached(1);
+        }else {
+            roomDTO.setFileAttached(0);
+        }
+        System.out.println(roomDTO);
         return roomDTO;
     }
 

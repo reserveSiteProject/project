@@ -7,10 +7,12 @@ import com.example.reservation.repository.RoomFileRepository;
 import com.example.reservation.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,6 +23,7 @@ public class RoomService {
 
 
 
+    @Transactional
     public void save(RoomDTO roomDTO) throws IOException {
         if (roomDTO.getRoomFileName().get(0).isEmpty()){
             RoomEntity roomEntity = RoomEntity.toSaveEntity(roomDTO);
@@ -46,4 +49,14 @@ public class RoomService {
     }
 
 
+
+    @Transactional
+    public List<RoomDTO> findAll() {
+        List<RoomEntity> roomEntityList = roomRepository.findAll();
+        List<RoomDTO> roomDTOList = new ArrayList<>();
+        roomEntityList.forEach(room -> {
+            roomDTOList.add(RoomDTO.toDTO(room));
+        });
+        return roomDTOList;
+    }
 }
