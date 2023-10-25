@@ -66,7 +66,7 @@ public class ReviewService {
                 // 저장용 파일 이름
                 String storedFileName = System.currentTimeMillis() + "_" + originalFilename;
                 // 저장경로+파일이름 준비
-                String savePath = "C:\\final_project\\springboot_reviewImg\\" + storedFileName;
+                String savePath = "C:\\final_img\\" + storedFileName;
                 // 파일 폴더에 저장
                 reviewFile.transferTo(new File(savePath));
                 // 파일 정보 board_file_table에 저장

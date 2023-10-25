@@ -19,7 +19,7 @@ public class CouponDTO {
 
     private String serialNum;
 
-    private String couponStatus;
+    private int couponStatus;
 
 
     public static CouponDTO toDTO(CouponEntity couponEntity){

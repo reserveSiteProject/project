@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -34,7 +35,7 @@ public class CouponEntity {
     private String endDate;
 
     @Column(nullable = false)
-    private String couponStatus;
+    private int couponStatus;
 
     @Column(nullable = false)
     private String serialNum;

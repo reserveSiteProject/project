@@ -8,14 +8,14 @@
 
 <div class="container mt-5 mb-5">
   <!-- 화면에 보여질 내용이 들어갈 부분 -->
-  <h2>쿠폰 리스트</h2>
-  <table>
+  <h2 class="text-center mb-3">쿠폰 리스트</h2>
+  <table class="table table-hover">
     <tr>
-      <th>쿠폰이름</th>
-      <th>일련번호</th>
-      <th>할인금액</th>
-      <th>시작일</th>
-      <th>만료일</th>
+      <th scope="col">쿠폰이름</th>
+      <th scope="col">일련번호</th>
+      <th scope="col">할인금액</th>
+      <th scope="col">시작일</th>
+      <th scope="col">만료일</th>
     </tr>
     <tr th:each="coupon :${couponList}">
       <td th:text="${coupon.couponName}"></td>
@@ -28,9 +28,7 @@
 
 
 </div>
-
   <!--<div th:replace="~{component/footer :: footer}"></div>-->
-
 </body>
 <script>
 </script>
