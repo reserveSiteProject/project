@@ -14,9 +14,11 @@
             <div class="fw-bold fs-5">제목 : <span  th:text="${review.reviewTitle}"></span></div>
             <div class="fw-bold fs-5">작성자 : <span th:text="${review.reviewWriter}"></span></div>
             <div class="fw-bold fs-5">조회수 : <span th:text="${review.hits}"></span></div>
+            <div class="fw-bold fs-5">내용 : <span th:text="${review.reviewContents}"></span></div>
         </div>
-        <div>
-            <textarea class="mt-3 ms-3" name="" cols="100" rows="5" th:text="${review.reviewContents}" readonly></textarea>
+        <!-- 사진 표시 (사진이 있을 경우) -->
+        <div th:if="${review.fileAttached == 1}" th:each="fileName: ${review.storedFileName}">
+            <img th:src="@{|/upload/${fileName}|}" class="img-fluid mb-3" alt="">
         </div>
         <div class="mt-4 ms-4">
             <button class="btn btn-success" th:onclick="update_fn([[${review.id}]])">리뷰수정</button>
