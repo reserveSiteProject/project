@@ -1,11 +1,13 @@
 package com.example.reservation.entity;
 
+import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Setter
+@Getter
 @Table(name="payment_table")
 public class PaymentEntity {
     @Id
@@ -17,6 +19,7 @@ public class PaymentEntity {
     private String paymentAt;
     @Column(nullable = false)
     private String paymentBy;
+
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "reserve_id")
     private ReserveEntity reserveEntity;

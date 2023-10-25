@@ -8,6 +8,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter(AccessLevel.PRIVATE)
 @Getter
@@ -28,6 +30,9 @@ public class ReserveEntity extends BaseEntity{
 
     @Column(nullable = false)
     private int persons;
+
+    @OneToMany(mappedBy = "reserveEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<PaymentEntity> paymentEntityList = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY) // 지금 클래스 기준
     @JoinColumn(name="member_id")

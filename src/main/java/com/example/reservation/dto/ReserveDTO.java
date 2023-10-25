@@ -1,6 +1,7 @@
 package com.example.reservation.dto;
 
 
+import com.example.reservation.entity.PaymentEntity;
 import com.example.reservation.entity.ReserveEntity;
 import com.example.reservation.entity.RoomFileEntity;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class ReserveDTO {
     private String checkInDate;
     private String checkOutDate;
     private int persons;
+    private Long totalPrice;
 
     private int fileAttached;
     private String roomName;
@@ -47,7 +49,10 @@ public class ReserveDTO {
         reserveDTO.setRoomId(reserveEntity.getRoomEntity().getId());
         reserveDTO.setCheckInDate(reserveEntity.getCheckInDate());
         reserveDTO.setCheckOutDate(reserveEntity.getCheckOutDate());
-        reserveDTO.setPersons(reserveDTO.getPersons());
+        reserveDTO.setPersons(reserveEntity.getPersons());
+        for (PaymentEntity paymentEntity:reserveEntity.getPaymentEntityList()) {
+            reserveDTO.setTotalPrice(paymentEntity.getTotalPrice());
+        }
         System.out.println("reserveDTO = " + reserveDTO);
         return reserveDTO;
     }
