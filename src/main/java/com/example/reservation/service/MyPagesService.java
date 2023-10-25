@@ -116,6 +116,8 @@ public class MyPagesService {
         return couponDTOList;
     }
 
+
+    @Transactional
     public List<ReserveDTO> findReserve(MemberDTO memberDTO) {
         MemberEntity memberEntity = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new NoSuchElementException());
         List<ReserveEntity> reserveEntityList = reserveRepository.findByMemberEntity(memberEntity);
