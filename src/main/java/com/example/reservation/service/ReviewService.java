@@ -109,7 +109,7 @@ public class ReviewService {
     @Transactional
     public ReviewDTO findById(Long id) {
         ReviewEntity reviewEntity = reviewRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
-        Hibernate.initialize(reviewEntity.getReviewFileEntityList());  // 지연 로딩된 컬렉션 초기화
+//        Hibernate.initialize(reviewEntity.getReviewFileEntityList());  // 지연 로딩된 컬렉션 초기화
         System.out.println("reviewEntity = " + reviewEntity);
         return ReviewDTO.toDTO(reviewEntity);
 
