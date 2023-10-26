@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -58,5 +59,11 @@ public class RoomService {
             roomDTOList.add(RoomDTO.toDTO(room));
         });
         return roomDTOList;
+    }
+
+    @Transactional
+    public RoomDTO findById(Long roomId) {
+        RoomEntity roomEntity = roomRepository.findById(roomId).orElseThrow(() -> new NoSuchElementException());
+        return RoomDTO.toDTO(roomEntity);
     }
 }

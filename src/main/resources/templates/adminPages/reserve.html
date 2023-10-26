@@ -15,6 +15,7 @@
             <td>방 이름</td>
             <td>방 타입</td>
             <td>결제 가격</td>
+            <td>기준인원</td>
             <td>수용인원</td>
             <td>예약인원</td>
             <td>체크인 일자</td>
@@ -27,6 +28,7 @@
             <td th:text="${reserve.roomDTO.roomName}"></td>
             <td th:text="${reserve.roomDTO.roomType}"></td>
             <td th:text="${reserve.roomDTO.roomPrice}"></td>
+            <td th:text="${reserve.roomDTO.standardPerson}"></td>
             <td th:text="${reserve.roomDTO.capacity}"></td>
             <td th:text="${reserve.persons}"></td>
             <td th:text="${reserve.checkInDate}"></td>

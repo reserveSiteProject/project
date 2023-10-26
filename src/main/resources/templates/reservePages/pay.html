@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="~{component/config :: config}"></th:block>
+</head>
+<body>
+
+<div class="container mt-5 mb-5">
+  <h3>객실선택</h3>
+  <div th:text="${room.id}"></div>
+  <div th:text="${room.roomType}"></div>
+  <div th:text="${room.roomPrice}"></div>
+  <div th:text="${room.roomName}"></div>
+  <div th:text="${addPrice}"></div>
+  <div th:text="${checkInDate}"></div>
+  <div th:text="${checkOutDate}"> </div>
+  <div th:text="${persons}"></div>
+</div>
+
+
+</body>
+</html>
