@@ -27,7 +27,7 @@ public class    RoomEntity {
     private String roomName;
 
     @Column(length = 50, nullable = false)
-    private Long roomPrice;
+    private String roomPrice;
 
     @Column
     private int fileAttached;
