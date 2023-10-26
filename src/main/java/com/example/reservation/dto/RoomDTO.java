@@ -18,7 +18,7 @@ public class RoomDTO {
 
     private String roomName;
 
-    private String roomPrice;
+    private Long roomPrice;
 
     private String roomType;
 

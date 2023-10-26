@@ -23,11 +23,12 @@ public class ReserveDTO {
     private Long memberId;
     private String memberName;
     private Long roomId;
-    private RoomDTO roomDTO;
     private String checkInDate;
     private String checkOutDate;
     private int persons;
     private Long totalPrice;
+    private int status;
+
 
     private int fileAttached;
     private String roomName;
@@ -37,22 +38,26 @@ public class ReserveDTO {
 
 
     public static ReserveDTO toDTO(ReserveEntity reserveEntity) {
+
+
         ReserveDTO reserveDTO = new ReserveDTO();
-        reserveDTO.setRoomName(reserveEntity.getRoomEntity().getRoomName());
+        reserveDTO.setMemberName(reserveEntity.getMemberEntity().getMemberName());
+
         for (RoomFileEntity roomFileEntity: reserveEntity.getRoomEntity().getRoomFileEntityList()) {
             reserveDTO.getOriginalFileName().add(roomFileEntity.getOriginalFileName());
             reserveDTO.getStoredFileName().add(roomFileEntity.getStoredFileName());
         }
-        reserveDTO.setId(reserveEntity.getId());
+        reserveDTO.setRoomName(reserveEntity.getRoomEntity().getRoomName());
         reserveDTO.setFileAttached(reserveEntity.getRoomEntity().getFileAttached());
-        reserveDTO.setMemberId(reserveEntity.getMemberEntity().getId());
         reserveDTO.setRoomId(reserveEntity.getRoomEntity().getId());
+
+
+        reserveDTO.setId(reserveEntity.getId());
+        reserveDTO.setMemberId(reserveEntity.getMemberEntity().getId());
         reserveDTO.setCheckInDate(reserveEntity.getCheckInDate());
         reserveDTO.setCheckOutDate(reserveEntity.getCheckOutDate());
         reserveDTO.setPersons(reserveEntity.getPersons());
-        for (PaymentEntity paymentEntity:reserveEntity.getPaymentEntityList()) {
-            reserveDTO.setTotalPrice(paymentEntity.getTotalPrice());
-        }
+        reserveDTO.setTotalPrice(reserveEntity.getPaymentEntity().getTotalPrice());
         System.out.println("reserveDTO = " + reserveDTO);
         return reserveDTO;
     }
