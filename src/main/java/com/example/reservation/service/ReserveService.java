@@ -71,4 +71,8 @@ public class ReserveService {
         return reserveDTOList;
     }
 
+    public ReserveDTO findById(Long id) {
+        ReserveEntity reserveEntity = reserveRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        return ReserveDTO.toDTO(reserveEntity);
+    }
 }

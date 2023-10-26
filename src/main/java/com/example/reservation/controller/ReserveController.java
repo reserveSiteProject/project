@@ -1,5 +1,6 @@
 package com.example.reservation.controller;
 
+import com.example.reservation.dto.ReserveDTO;
 import com.example.reservation.dto.RoomDTO;
 import com.example.reservation.service.ReserveService;
 import com.example.reservation.service.RoomService;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -33,5 +35,11 @@ public class ReserveController {
         List<RoomDTO> roomDTOList = roomService.findAll();
         System.out.println("roomDTOList = " + roomDTOList);
         return new ResponseEntity<>(roomDTOList, HttpStatus.OK);
+    }
+    @GetMapping("/save")
+    public String bookSave(@ModelAttribute ReserveDTO reserveDTO, Model model){
+        ReserveDTO reserveDTO1 = reserveService.findById(reserveDTO.getId());
+        model.addAttribute("reserve", reserveDTO1);
+        return "/reservePages/reserveSave";
     }
 }
