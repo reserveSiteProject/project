@@ -46,4 +46,8 @@ public class RoomService {
     }
 
 
+    public List<RoomDTO> findAll() {
+        List<RoomEntity> roomEntities = roomRepository.findAll();
+
+    }
 }
