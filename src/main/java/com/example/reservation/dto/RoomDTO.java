@@ -19,7 +19,7 @@ public class RoomDTO {
 
     private String roomName;
 
-    private Long roomPrice;
+    private String roomPrice;
 
     private String roomType;
 
@@ -32,14 +32,10 @@ public class RoomDTO {
 
 
 
-
-
     private List<MultipartFile> RoomFileName;
     private int fileAttached;
     private List<String> originalFileName = new ArrayList<>();
     private List<String> storedFileName = new ArrayList<>();
-
-
 
 
     public static RoomDTO toDTO(RoomEntity roomEntity){
@@ -50,9 +46,9 @@ public class RoomDTO {
         roomDTO.setRoomItems(roomEntity.getRoomItems());
         roomDTO.setRoomName(roomEntity.getRoomName());
         roomDTO.setRoomPrice(df.format(Integer.parseInt(roomEntity.getRoomPrice())));
+        roomDTO.setStandardPerson((roomEntity.getStandardPerson()));
         roomDTO.setRoomType(roomEntity.getRoomType());
         roomDTO.setCapacity(roomEntity.getCapacity());
-        roomDTO.setStandardPerson(roomEntity.getStandardPerson());
         if (roomEntity.getFileAttached() == 1) {
             for (RoomFileEntity roomFileEntity : roomEntity.getRoomFileEntityList()) {
                 roomDTO.getOriginalFileName().add(roomFileEntity.getOriginalFileName());

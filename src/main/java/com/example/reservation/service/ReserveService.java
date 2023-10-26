@@ -73,6 +73,7 @@ public class ReserveService {
         RoomEntity roomEntity = roomRepository.findById(reserveDTO.getRoomId()).orElseThrow(() -> new NoSuchElementException());
         ReserveEntity reserveEntity = ReserveEntity.toSaveEntity(reserveDTO, memberEntity, roomEntity);
         return reserveRepository.save(reserveEntity).getId();
+    }
 
     public void deleteById(Long id) {
         reserveRepository.deleteById(id);
