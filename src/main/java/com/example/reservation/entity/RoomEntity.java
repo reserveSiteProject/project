@@ -13,8 +13,8 @@ import java.util.List;
 
 @Setter(AccessLevel.PRIVATE)
 @Getter
-@ToString
 @Entity
+@ToString
 
 
 @Table(name = "room_table")
@@ -89,6 +89,7 @@ public class    RoomEntity {
         roomEntity.setRoomItems(roomDTO.getRoomItems());
         roomEntity.setRoomName(roomDTO.getRoomName());
         roomEntity.setCapacity(roomDTO.getCapacity());
+        roomEntity.setStandardPerson(roomDTO.getStandardPerson());
         roomEntity.setRoomPrice(roomDTO.getRoomPrice());
         roomEntity.setRoomType(roomDTO.getRoomType());
         return roomEntity;

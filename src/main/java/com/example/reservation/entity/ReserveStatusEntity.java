@@ -22,8 +22,8 @@ public class ReserveStatusEntity {
     @Column
     private int status;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reserveId")
+    @OneToOne(fetch = FetchType.LAZY) // 지금 클래스 기준
+    @JoinColumn(name="reserve_id")
     private ReserveEntity reserveEntity;
 
 
