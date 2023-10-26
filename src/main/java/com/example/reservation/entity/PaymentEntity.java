@@ -2,6 +2,7 @@ package com.example.reservation.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Setter
+@ToString
 @Getter
 @Table(name="payment_table")
 public class PaymentEntity {
@@ -26,7 +28,7 @@ public class PaymentEntity {
     @JoinColumn(name = "reserve_id")
     private ReserveEntity reserveEntity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 

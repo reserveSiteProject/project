@@ -68,6 +68,7 @@ public class ReserveService {
     }
 
 
+
     public Long save(ReserveDTO reserveDTO) {
         MemberEntity memberEntity = memberRepository.findById(reserveDTO.getMemberId()).orElseThrow(() -> new NoSuchElementException());
         RoomEntity roomEntity = roomRepository.findById(reserveDTO.getRoomId()).orElseThrow(() -> new NoSuchElementException());
@@ -78,5 +79,15 @@ public class ReserveService {
     public void deleteById(Long id) {
         reserveRepository.deleteById(id);
 
+    }
+
+    @Transactional
+    public ReserveDTO find(Long roomId, String checkInDate, String checkOutDate) {
+        System.out.println("응애");
+        RoomEntity roomEntity = roomRepository.findById(roomId).orElseThrow(() -> new NoSuchElementException());
+        System.out.println("음메" + roomEntity);
+        ReserveEntity reserveEntity = reserveRepository.findByCheckInDateLessThanEqualAndCheckOutDateGreaterThanEqualAndRoomEntity(checkInDate, checkOutDate, roomEntity);
+        System.out.println("여기가는지" + reserveEntity);
+        return ReserveDTO.toDTO(reserveEntity);
     }
 }

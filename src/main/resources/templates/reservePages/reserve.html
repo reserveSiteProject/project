@@ -87,55 +87,62 @@
                             },
                             success: function (data) {
                                 const roomList = document.getElementById("room-list");
-                                let result = "";
+                                roomList.innerHTML = ""; // Clear the previous content
+
                                 for (let i in data) {
                                     const room = data[i];
-                                    result += "<div class='row'>";
-                                    result += `<div class='col-3'><img src="/upload/${room.storedFileName}" width="200" height="200" alt=""></div>`;
-                                    result += "<div class='col'>";
-                                    result += "<div class='row'>";
-                                    result += `<div class='col-2'>${room.roomName}(${room.roomType})</div>`;
-                                    result += "<div class='col-2'>성인:</div>";
-                                    result += "<div class='col-2'>아동:</div>";
-                                    result += "<div class='col-2'>유아:</div>";
-                                    result += `<div class='col text-end'>${room.roomPrice}원</div>`;
-                                    result += "</div>";
-                                    result += "<div class='row'>";
-                                    result += "<div class='col text-end'>";
-                                    result += `<p style='display: none;' id='p-standard${room.id}'></p>`;
-                                    result += "</div>";
-                                    result += "</div>";
-                                    result += "<div class='row'>";
-                                    result += `<div class='col-2'>기준 ${room.standardPerson}명/최대${room.capacity}명</div>`;
-                                    result += `<div class='col-2'><input type='number' id='a${room.id}' max='${room.capacity}' min='0' value='0' oninput='fn("a", ${room.id}, ${room.capacity}, ${room.standardPerson})'/></div>`;
-                                    result += `<div class='col-2'><input type='number' id='b${room.id}' max='${room.capacity}' min='0' value='0' oninput='fn("b", ${room.id}, ${room.capacity}, ${room.standardPerson})'/></div>`;
-                                    result += `<div class='col-2'><input type='number' id='c${room.id}' max='${room.capacity}' min='0' value='0' oninput='fn("c", ${room.id}, ${room.capacity}, ${room.standardPerson})'/></div>`;
-                                    // $.ajax({
-                                    //     type: "get",
-                                    //     url: `/reserve/${room.id}`,
-                                    //     data:{
-                                    //         checkInDate: dt_start, checkOutDate: dt_end,
-                                    //     },
-                                    //     success: function (reserveData) {
-                                    //         console.log(reserveData + " success");
-                                    //         result += "<div class='col text-end'>";
-                                    //         result += `<button class='btn btn-secondary' onclick='wait_fn()'>예약대기</button>`;
-                                    //         result += "</div>";
-                                    //     },
-                                    //     error: function (reserveData) {
-                                    //         console.log(reserveData + " error");
-                                            result += "<div class='col text-end'>";
-                                            result += `<button class='btn btn-primary' onclick='reserve_fn(${room.id})'>예약</button>`;
-                                            result += `    <input id="input-price${room.id}" value="0" type="hidden">`;
-                                            result += "</div>";
-                                        // }
-                                    // });
-                                    result += "</div>";
-                                    result += "</div>";
-                                    result += "</div>";
-                                    result += "<hr style='border: solid 2px'>";
+                                    const roomDiv = document.createElement("div");
+                                    roomDiv.className = "row";
+
+                                    // Create your content for each room
+                                    roomDiv.innerHTML = `
+                <div class='col-3'><img src="/upload/${room.storedFileName}" width="200" height="200" alt=""></div>
+                <div class='col'>
+                    <div class='row'>
+                        <div class='col-2'>${room.roomName}(${room.roomType})</div>
+                        <div class='col-2'>성인:</div>
+                        <div class='col-2'>아동:</div>
+                        <div class='col-2'>유아:</div>
+                        <div class='col text-end'>${room.roomPrice}원</div>
+                    </div>
+                    <div class='row'>
+                        <div class='col text-end'>
+                            <p style='display: none;' id='p-standard${room.id}'></p>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class='col-2'>기준 ${room.standardPerson}명/최대${room.capacity}명</div>
+                        <div class='col-2'><input type='number' id='a${room.id}' max='${room.capacity}' min='0' value='0' oninput='fn("a", ${room.id}, ${room.capacity}, ${room.standardPerson})'/></div>
+                        <div class='col-2'><input type='number' id='b${room.id}' max='${room.capacity}' min='0' value='0' oninput='fn("b", ${room.id}, ${room.capacity}, ${room.standardPerson})'/></div>
+                        <div class='col-2'><input type='number' id='c${room.id}' max='${room.capacity}' min='0' value='0' oninput='fn("c", ${room.id}, ${room.capacity}, ${room.standardPerson})'/></div>
+                    </div>
+                </div>
+            `;
+
+                                    const reserveButtonDiv = document.createElement("div");
+                                    reserveButtonDiv.className = "col text-end";
+
+                                    $.ajax({
+                                        type: "get",
+                                        url: `/reserve/${room.id}`,
+                                        data: {
+                                            checkInDate: dt_start,
+                                            checkOutDate: dt_end,
+                                        },
+                                        success: function (reserveData) {
+                                            reserveButtonDiv.innerHTML = `<button class='btn btn-secondary' onclick='wait_fn()'>예약대기</button>`;
+                                            console.log(reserveData + " success");
+                                        },
+                                        error: function (reserveData) {
+                                            reserveButtonDiv.innerHTML = `<button class='btn btn-primary' onclick='reserve_fn(${room.id})'>예약</button>`;
+                                            reserveButtonDiv.innerHTML += `<input id="input-price${room.id}" value="0" type="hidden">`;
+                                            console.log(reserveData + " error");
+                                        }
+                                    });
+
+                                    roomDiv.appendChild(reserveButtonDiv);
+                                    roomList.appendChild(roomDiv);
                                 }
-                                roomList.innerHTML = result;
                             }
                         });
                     }

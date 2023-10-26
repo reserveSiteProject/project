@@ -32,9 +32,11 @@ public class ReserveController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity find(@PathVariable("id") Long id,
+    public ResponseEntity find(@PathVariable("id") Long roomId,
                                    @RequestParam("checkInDate") String checkInDate,
                                    @RequestParam("checkOutDate") String checkOutDate) {
+        ReserveDTO reserveDTO = reserveService.find(roomId, checkInDate, checkOutDate);
+        System.out.println(reserveDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
