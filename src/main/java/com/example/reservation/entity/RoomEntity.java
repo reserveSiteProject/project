@@ -18,7 +18,7 @@ import java.util.List;
 
 
 @Table(name = "room_table")
-public class RoomEntity {
+public class    RoomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,6 +37,9 @@ public class RoomEntity {
 
     @Column
     private int capacity;
+
+    @Column
+    private int standardPerson;
 
     @Column(length = 500)
     private String roomInfo;
@@ -57,6 +60,7 @@ public class RoomEntity {
         roomEntity.setRoomItems(roomDTO.getRoomItems());
         roomEntity.setRoomName(roomDTO.getRoomName());
         roomEntity.setCapacity(roomDTO.getCapacity());
+        roomEntity.setStandardPerson(roomDTO.getStandardPerson());
         roomEntity.setRoomPrice(roomDTO.getRoomPrice());
         roomEntity.setRoomType(roomDTO.getRoomType());
         roomEntity.setFileAttached(0);
@@ -70,6 +74,7 @@ public class RoomEntity {
         roomEntity.setRoomItems(roomDTO.getRoomItems());
         roomEntity.setRoomName(roomDTO.getRoomName());
         roomEntity.setCapacity(roomDTO.getCapacity());
+        roomEntity.setStandardPerson(roomDTO.getStandardPerson());
         roomEntity.setRoomPrice(roomDTO.getRoomPrice());
         roomEntity.setRoomType(roomDTO.getRoomType());
         roomEntity.setFileAttached(1);

@@ -7,6 +7,7 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +24,13 @@ public class RoomDTO {
     private String roomType;
 
     private int capacity;
+    private int standardPerson;
 
     private String roomInfo;
 
     private String roomItems;
+
+
 
 
 
@@ -36,15 +40,19 @@ public class RoomDTO {
     private List<String> storedFileName = new ArrayList<>();
 
 
+
+
     public static RoomDTO toDTO(RoomEntity roomEntity){
+        DecimalFormat df = new DecimalFormat("###,###");
         RoomDTO roomDTO = new RoomDTO();
         roomDTO.setId(roomEntity.getId());
         roomDTO.setRoomInfo(roomEntity.getRoomInfo());
         roomDTO.setRoomItems(roomEntity.getRoomItems());
         roomDTO.setRoomName(roomEntity.getRoomName());
-        roomDTO.setRoomPrice(roomEntity.getRoomPrice());
+        roomDTO.setRoomPrice(df.format(Integer.parseInt(roomEntity.getRoomPrice())));
         roomDTO.setRoomType(roomEntity.getRoomType());
         roomDTO.setCapacity(roomEntity.getCapacity());
+        roomDTO.setStandardPerson(roomEntity.getStandardPerson());
         if (roomEntity.getFileAttached() == 1) {
             for (RoomFileEntity roomFileEntity : roomEntity.getRoomFileEntityList()) {
                 roomDTO.getOriginalFileName().add(roomFileEntity.getOriginalFileName());

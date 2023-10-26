@@ -35,7 +35,7 @@ public class MemberController {
     @PostMapping("/findPass")
     public ResponseEntity findPass(@RequestParam("memberEmail") String memberEmail) throws Exception{
         MemberDTO memberDTO = memberService.findByMemberEmail(memberEmail);
-        if(memberDTO!=null){
+        if(memberDTO!=null && memberDTO.getKakao()==0){ // 카카오이메일이 아닌경우에만 findPass실행
             String confirm = emailService.sendPassMessage(memberEmail);
             memberDTO.setMemberPassword(confirm);
             System.out.println("confirm = " + confirm);
