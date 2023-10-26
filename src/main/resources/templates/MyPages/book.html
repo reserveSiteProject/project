@@ -1,29 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <th:block th:replace="~{component/config :: config}"></th:block>
+    <th:block th:replace="~{component/config :: config}"></th:block>
 </head>
 <body>
 <!--<div th:replace="~{component/nav :: nav}"></div>-->
 
 <div class="container mt-5 mb-5">
-  <!-- 화면에 보여질 내용이 들어갈 부분 -->
-  <h2>예약 리스트</h2>
-  <table>
-    <tr>
-      <th>인원수</th>
-      <th>예약날짜</th>
-    </tr>
-    <tr th:each="reserve :${reserveList}">
-      <td th:text="${reserve.checkInDate}"></td>
-      <td th:text="${reserve.persons}"></td>
-    </tr>
-  </table>
+    <!-- 화면에 보여질 내용이 들어갈 부분 -->
+    <h2 class="text-center">예약 리스트</h2>
+    <table class="table table-hover">
+        <tr>
+            <th>방사진</th>
+            <th>방이름</th>
+            <th>인원수</th>
+            <th>금액</th>
+            <th>시작일</th>
+            <th>종료일</th>
+        </tr>
+        <tr th:each="reserve :${reserveList}">
+            <!-- 사진 표시 (사진이 있을 경우) -->
+            <td>
+                <div th:if="${reserve.fileAttached == 1}" th:each="fileName: ${reserve.storedFileName}" class="col-4">
+                    <img th:src="@{|/upload/${fileName}|}" class="img-fluid mb-3" alt="" width="200" height="30">
+                </div>
+            </td>
+            <td th:text="${reserve.roomName}"></td>
+            <td th:text="${reserve.persons}"></td>
+            <td th:text="${reserve.totalPrice}"></td>
+            <td th:text="${reserve.checkInDate}"></td>
+            <td th:text="${reserve.checkOutDate}"></td>
+        </tr>
+    </table>
 
 
 </div>
 
-  <!--<div th:replace="~{component/footer :: footer}"></div>-->
+<!--<div th:replace="~{component/footer :: footer}"></div>-->
 
 </body>
 <script>

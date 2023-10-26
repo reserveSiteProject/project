@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.lang.model.SourceVersion;
 import java.util.*;
 
 @Service
@@ -22,7 +23,7 @@ public class MyPagesService {
      */
 
     // 리뷰 목록 출력
-
+    @Transactional
     public List<ReviewDTO> findAll(MemberDTO memberDTO) {
 //        MemberEntity memberEntity = MemberEntity.toUpdateEntity(memberDTO);
         MemberEntity memberEntity = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new NoSuchElementException());
@@ -34,29 +35,30 @@ public class MyPagesService {
         }
         return reviewDTOList;
     }
-
-    public List<ReviewDTO> findAllByType(MemberDTO memberDTO, String type) {
-        MemberEntity memberEntity = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new NoSuchElementException());
+    @Transactional
+    public List<ReviewDTO> findAllByType(Object memberDTO, String type) {
+        MemberDTO memberDTO1 = (MemberDTO) memberDTO;
+        MemberEntity memberEntity = memberRepository.findById(memberDTO1.getId()).orElseThrow(() -> new NoSuchElementException());
         if (type.equals("createdAt")) {
             List<ReviewEntity> reviewEntityList = reviewRepository.findByMemberEntityOrderByCreatedAtDesc(memberEntity);
             List<ReviewDTO> reviewDTOList = new ArrayList<>();
             for (ReviewEntity reviewEntity : reviewEntityList) {
                 ReviewDTO reviewDTO = ReviewDTO.toDTO(reviewEntity);
                 reviewDTOList.add(reviewDTO);
-                return reviewDTOList;
             }
+            return reviewDTOList;
         } else if (type.equals("hits")) {
             List<ReviewEntity> reviewEntityList = reviewRepository.findByMemberEntityOrderByHitsDesc(memberEntity);
             List<ReviewDTO> reviewDTOList = new ArrayList<>();
             for (ReviewEntity reviewEntity : reviewEntityList) {
                 ReviewDTO reviewDTO = ReviewDTO.toDTO(reviewEntity);
                 reviewDTOList.add(reviewDTO);
-                return reviewDTOList;
             }
+            return reviewDTOList;
         }
         return null;
     }
-
+    @Transactional
     // 리뷰 상세정보
     public ReviewDTO findById(Long id) {
         ReviewEntity reviewEntity = reviewRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
@@ -129,5 +131,8 @@ public class MyPagesService {
         return reserveDTOList;
     }
 
-
+    @Transactional
+    public void increaseHits(Long id) {
+        reviewRepository.increaseHits(id);
+    }
 }
