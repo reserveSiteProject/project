@@ -1,20 +1,184 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <th:block th:replace="~{component/config :: config}"></th:block>
+    <th:block th:replace="~{component/config :: config}"></th:block>
 </head>
 <body>
 
 <div class="container mt-5 mb-5">
-  <h3>객실선택</h3>
-  <div th:text="${room.id}"></div>
-  <div th:text="${room.roomType}"></div>
-  <div th:text="${room.roomPrice}"></div>
-  <div th:text="${room.roomName}"></div>
-  <div th:text="${addPrice}"></div>
-  <div th:text="${checkInDate}"></div>
-  <div th:text="${checkOutDate}"> </div>
-  <div th:text="${persons}"></div>
+    <h3>객실선택</h3>
+    <div class="row">
+        <table class="table table-hover">
+            <tr>
+                <th scope="col">객실 사진</th>
+                <th scope="col">객실명</th>
+                <th scope="col">이용기간</th>
+                <th scope="col">인원</th>
+                <th scope="col">방금액</th>
+                <th scope="col">추가금액</th>
+                <th scope="col">총 결제금액</th>
+            </tr>
+            <tr>
+                <td>
+                    <div th:if="${room.fileAttached == 1}" th:each="fileName: ${room.storedFileName}" class="col-4">
+                        <img th:src="@{|/upload/${fileName}|}" class="img-fluid mb-3" alt="" width="50" height="30">
+                    </div>
+                </td>
+                <td th:text="${room.roomName}"></td>
+                <td th:text="${checkInDate + '~ ' + checkOutDate}"></td>
+                <td th:text="${persons}"></td>
+                <td th:text="${room.roomPrice}"></td>
+                <td th:text="${addPrice}"></td>
+                <td th:text="(${room.roomPrice + addPrice})"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="mt-4"><h2>부가서비스 선택</h2></div>
+    <div class="row">
+        <table class="table table-striped">
+            <tr>
+                <th scope="col">부가서비스명</th>
+                <th scope="col">설명</th>
+                <th scope="col">개당 가격</th>
+                <th scope="col">수량</th>
+            </tr>
+            <tr>
+                <td>바베큐 전기 그릴 셋트</td>
+                <td>야외테라스 및 동앞 마당에서 이용 가능한 전기그릴 셋트입니다.</td>
+                <td>20000</td>
+                <td>
+                    <select name="option" id="">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="mt-4"><h2>약관동의</h2></div>
+    <div class="row">
+        <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                aria-expanded="false" aria-controls="collapseExample">
+            개인정보 동의 약관서
+        </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                Some placeholder content for the collapse component. This panel is hidden by default but revealed when
+                the user activates the relevant trigger.
+            </div>
+        </div>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">
+            (필수) 동의 합니까?
+        </label>
+    </div>
+    <div class="row">
+        <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample1"
+                aria-expanded="false" aria-controls="collapseExample1">
+            쏼라쏼라 동의서
+        </button>
+        </p>
+        <div class="collapse" id="collapseExample1">
+            <div class="card card-body">
+                Some placeholder content for the collapse component. This panel is hidden by default but revealed when
+                the user activates the relevant trigger.
+            </div>
+        </div>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1">
+        <label class="form-check-label" for="flexCheckDefault2">
+            (필수) 동의 합니까?
+        </label>
+    </div>
+    <div class="row">
+        <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2"
+                aria-expanded="false" aria-controls="collapseExample2">
+            에베베 약관서
+        </button>
+        </p>
+        <div class="collapse" id="collapseExample2">
+            <div class="card card-body">
+                Some placeholder content for the collapse component. This panel is hidden by default but revealed when
+                the user activates the relevant trigger.
+            </div>
+        </div>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2">
+        <label class="form-check-label" for="flexCheckDefault2">
+            (필수) 동의 합니까?
+        </label>
+    </div>
+
+    <div class="row mt-5">
+        <h2>결제수단 선택</h2>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+            <label class="form-check-label" for="flexRadioDefault1">
+                신용/체크 카드
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+                무통장 입금
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <table class="table table-hover">
+                <tr>
+                    <th scope="col">객실</th>
+                    <th scope="col"></th>
+                    <th scope="col">추가인원</th>
+                    <th scope="col"></th>
+                    <th scope="col">부가서비스</th>
+                    <th scope="col"></th>
+                </tr>
+                <tr>
+                    <td th:text="${room.roomPrice}"></td>
+                    <td>+</td>
+                    <td th:text="${addPrice}"></td>
+                    <td>+</td>
+                    <td>20000</td>
+                    <td>=</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-4">
+            <table class="table table-hover">
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">최종 이용 금액</th>
+                </tr>
+                <tr>
+                    <td>총금액</td>
+                    <td th:text="${room.roomPrice}"></td>
+                </tr>
+                <tr>
+                    <td>즉시결제</td>
+                    <td th:text="${room.roomPrice}"></td>
+                </tr>
+                <tr>
+                    <td>현장결제</td>
+                    <td th:text="${addPrice + 20000}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <img src="https://t1.daumcdn.net/kakaopay/brand_site/img/og/kakaopay_og_20201217.png" alt="" class="img-fluid mb-3" width="100" height="50">
+        </div>
+        <div class="col-6 text-end">
+            <button class="btn btn-dark">결제하기</button>
+        </div>
+    </div>
 </div>
 
 
