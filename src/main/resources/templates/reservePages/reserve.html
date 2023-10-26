@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:replace="~{component/config :: config}"></th:block>
-<!--    풀켈린더 dateFormat 용 라이브러리-->
+    <!--    풀켈린더 dateFormat 용 라이브러리-->
     <script class="cssdesk" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.0/moment.min.js" type="text/javascript"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
 </head>
@@ -12,6 +12,24 @@
 <div class="container mt-5 mb-5">
     <div id="calendar"></div>
 
+    <div class="row mt-5">
+        <div class="col-1 ms-2" style="font-weight: bold;">객실선택</div>
+        <div class="text-end col">
+            <span class="col" style="font-weight: bold;">나이기준</span>
+            <span class="col">성인(만 19세이상)</span>
+            <span class="col">아동(만 12세이상)</span>
+            <span class="col">유아(만 24개월까지)</span>
+        </div>
+
+    </div>
+    <hr style="border: solid 1px">
+    <div class="table" id="room-list">
+
+    </div>
+    <input id="input-total" value="0" type="hidden">
+    <input id="input-start" value="0" type="hidden">
+    <input id="input-end" value="0" type="hidden">
+    <input id="input-price" value="0" type="hidden">
 </div>
 
 <!--<div th:replace="~{component/footer :: footer}"></div>-->
@@ -27,7 +45,7 @@
             height: '500px', // calendar 높이 설정
             expandRows: true, // 화면에 맞게 높이 재설정
             navLinks: false, // 날짜를 선택하면 Day 캘린더나 Week 캘린더로 링크
-            editable: true, // 수정 가능?
+            editable: false, // 수정 가능? 이벤트 못옴기게 변경
             locale: "ko", //한국어
             selectable: true,// 달력 일자 드래그 설정가능
             nowIndicator: true, // 현재 시간 마크
@@ -59,14 +77,48 @@
                             end: arg.end,
                             allDay: arg.allDay
                         })
+                        const start = document.getElementById("input-start").value = dt_start;
+                        const end = document.getElementById("input-end").value = dt_end;
                         $.ajax({
                             type:"get",
                             url:"/reserve/list",
                             data:{
-                                checkInDate:dt_start,
-                                checkOutDate:dt_end,
+                                // checkInDate:dt_start,
+                                // checkOutDate:dt_end,
                             },success:function(data){
-                                console.log(data)
+                                const roomList = document.getElementById("room-list");
+                                let result = "";
+                                for (let i in data){
+                                    result += "        <div class=\"row\">\n" +
+                                        `      <div class='col-3'><img src=\"/upload/${data[i].storedFileName}\" width=\"200\" height=\"200\" alt=\"\"></div>\n` +
+                                        "      <div class='col'>\n" +
+                                        "        <div class=\"row\">\n" +
+                                        `          <div class=\"col-2\">${data[i].roomName}(${data[i].roomType})</div>\n` +
+                                        "          <div class=\"col-2\">성인:</div>\n" +
+                                        "          <div class=\"col-2\">아동:</div>\n" +
+                                        "          <div class=\"col-2\">유아:</div>\n" +
+                                        `          <div class=\"col text-end\">${data[i].roomPrice}원</div>\n` +
+                                        "        </div>\n" +
+                                        "        <div class=\"row\">\n" +
+                                        "<div class='col text-end'>\n" +
+                                        "<p style='display: none;' id='p-standard'></p>\n" +
+                                        "</div>\n" +
+                                        "</div>\n"+
+                                        "        <div class=\"row\">\n" +
+                                        `       <div class=\"col-2\">기준 ${data[i].standardPerson}명/최대${data[i].capacity}명</div>\n` +
+                                        `          <div class=\"col-2\"><input type=\"number\" id=\"a${data[i].id}" max=\"${data[i].capacity}\" min=\"0\" value=\"0\" oninput=\"fn('a', ${data[i].id}, ${data[i].capacity}, ${data[i].standardPerson})\"/></div>\n` +
+                                        `          <div class=\"col-2\"><input type=\"number\" id=\"b${data[i].id}" max=\"${data[i].capacity}\" min=\"0\" value=\"0\" oninput=\"fn('b', ${data[i].id}, ${data[i].capacity}, ${data[i].standardPerson})\"/></div>\n` +
+                                        `          <div class=\"col-2\"><input type=\"number\" id=\"c${data[i].id}" max=\"${data[i].capacity}\" min=\"0\" value=\"0\" oninput=\"fn('c', ${data[i].id}, ${data[i].capacity}, ${data[i].standardPerson})\"/></div>\n` +
+                                        "    <div class='col text-end'>\n" +
+                                        `      <button class='btn btn-primary' onclick=\"reserve_fn(${data[i].id})\">예약</button>\n` +
+                                        "    </div>\n" +
+                                        "        </div>\n" +
+                                        "      </div>\n" +
+                                        "    </div>\n" +
+                                        "    </div>"
+                                    result += "<hr style=\"border: solid 2px\">";
+                                }
+                                roomList.innerHTML = result;
                             }
                         });
                     }
@@ -78,5 +130,62 @@
         });
         calendar.render(); // 캘린더 다시불러오기
     });
+
+
+
+    const fn = (inputId, id, max, standard) => {
+        console.log(id)
+        const a = parseInt(document.getElementById("a" +id).value);
+        const b = parseInt(document.getElementById("b" +id).value);
+        const c = parseInt(document.getElementById("c" +id).value);
+
+        const total = a + b + c;
+
+        const inputElement = document.getElementById(inputId+id);
+        let inputValue = inputElement.value;
+
+        if (isNaN(inputValue) || inputValue.length > 1) {
+            if (total > max) {
+                const excess = total - max;
+                if (inputId+id === 'a'+id) {
+                    document.getElementById("a"+id).value = a - excess;
+                } else if (inputId+id === 'b'+id) {
+                    document.getElementById("b"+id).value = b - excess;
+                } else {
+                    document.getElementById("c"+id).value = c - excess;
+                }
+            }
+        } else {
+            if (total > max) {
+                const excess = total - max;
+                if (inputId+id === 'a'+id) {
+                    document.getElementById("a"+id).value = a - excess;
+                } else if (inputId+id === 'b'+id) {
+                    document.getElementById("b"+id).value = b - excess;
+                } else {
+                    document.getElementById("c"+id).value = c - excess;
+                }
+            }
+        }
+        const pstandard = document.getElementById("p-standard"); // 추가인원 표시
+        if(standard < parseInt(document.getElementById("a"+id).value) + parseInt(document.getElementById("b"+id).value) + parseInt(document.getElementById("c"+id).value)){ // 추가인원이 있으면
+            const staNum = (parseInt(document.getElementById("a"+id).value) + parseInt(document.getElementById("b"+id).value) + parseInt(document.getElementById("c"+id).value)) - standard; // 추가인원 구하는공식
+            const staPrice = 20000 * staNum; // 추가인원당 2만원
+            document.getElementById("input-price").value = staPrice;
+            pstandard.innerHTML = "추가인원 +" + staPrice;
+            pstandard.style.display = "block";
+        }else{
+            pstandard.style.display = "none";
+        }
+    };
+
+
+    const reserve_fn = (roomId) => {
+        let persons = document.getElementById("input-total").value = parseInt(document.getElementById("a"+roomId).value) + parseInt(document.getElementById("b"+roomId).value) + parseInt(document.getElementById("c"+roomId).value);
+        const checkInDate = document.getElementById("input-start").value;
+        const checkOutDate = document.getElementById("input-end").value;
+        const addPrice = document.getElementById("input-price").value; // 추가금액
+        location.href="/reserve/save?roomId=" + roomId +"&checkInDate=" + checkInDate +"&checkOutDate=" + checkOutDate + "&persons=" + persons + "&addPrice=" + addPrice;
+    }
 </script>
 </html>

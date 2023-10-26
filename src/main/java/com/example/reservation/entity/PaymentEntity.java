@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Setter
@@ -23,6 +25,13 @@ public class PaymentEntity {
     @OneToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "reserve_id")
     private ReserveEntity reserveEntity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
+
+    @OneToMany(mappedBy = "paymentEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<ReviewEntity> reviewEntityList = new ArrayList<>();
 
 
 }

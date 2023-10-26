@@ -20,6 +20,7 @@
                 <div class="row justify-content-center">
                     <div class="col-10 me-5">
                         <div class="input-group">
+                            <input type="hidden" name="kakao" value="1">
                             <input class="form-control" type="text" name="memberEmail" autocomplete='off' maxlength='16' th:value="${memberEmail1}" onblur="kakao_fn(), check_fn()" >
                             <span class="input-group-text">@</span>
                             <input type="text" class="form-control" list="emailL" maxlength='16' name="email" autocomplete="off" th:value="${memberEmail2}" onblur="kakao_fn(), check_fn()">
@@ -322,13 +323,13 @@
                     setTimeout(function() {
                         button.style.display = "none";
                         rays.style.display = "block";
-                        $("#modal_email").modal("hide");
                     }, 1000);
                     setTimeout(function() {
+                        $("#modal_email").modal("hide");
                         emailc = 0;
                         confirmcheck.innerText = "";
                         number= data;
-                    }, 2000);
+                    }, 3000);
                 }
             })
         }else if(idc!=0){
@@ -377,6 +378,7 @@
             const memberMobile = document.querySelector("[name='memberMobile']").value;
             const memberAddress = document.querySelector("[name='memberAddress']").value;
             const memberBirth = document.querySelector("[name='memberBirth']").value;
+            const kakao = document.querySelector("[name='kakao']").value;
             const memberEmail = mEmail + "@" + email;
             if(mEmail=="" || email==""){
                 savecheck.innerText = "이메일 입력해주세요."
@@ -399,7 +401,7 @@
                     type:"post",
                     url:"/member/save",
                     data:{
-                        memberEmail, memberBirth, memberName, memberMobile, memberAddress, nickName
+                        kakao, memberEmail, memberBirth, memberName, memberMobile, memberAddress, nickName
                     },
                     success:function(data){
                         location.href="/member/login";

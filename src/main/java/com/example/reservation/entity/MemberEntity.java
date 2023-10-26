@@ -1,6 +1,7 @@
 package com.example.reservation.entity;
 
 import com.example.reservation.dto.MemberDTO;
+import com.example.reservation.repository.PaymentRepository;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
