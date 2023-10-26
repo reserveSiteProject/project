@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+  <div class="row text-center">
+    <h3 th:text="${session.loginEmail}">님 결제가 완료 되었습니다.</h3>
+  </div>
+  <div class="row">
+    <table class="table table-hover">
+      <tr>
+        <th>객실 사진</th>
+        <th>객실 이름</th>
+        <th>객실 타입</th>
+        <th>인원수</th>
+        <th>결제금액</th>
+        <th>결제날짜</th>
+      </tr>
+      <tr>
+        <td>
+          <div th:if="${room.fileAttached == 1}" th:each="fileName: ${room.storedFileName}" class="col-4">
+            <img th:src="@{|/upload/${fileName}|}" class="img-fluid mb-3" alt="" width="50" height="30">
+          </div>
+        </td>
+        <td th:text="${room.roomName}"></td>
+        <td th:text="${persons}"></td>
+        <td th:text="${room.roomType}"></td>
+        <td th:text="${payment.price}"></td>
+        <td th:text="${payment.date}"></td>
+      </tr>
+    </table>
+  </div>
+  <a href="/">메인으로</a>
+</div>
+</body>
+</html>
