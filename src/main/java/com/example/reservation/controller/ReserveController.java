@@ -5,15 +5,11 @@ import com.example.reservation.dto.RoomDTO;
 import com.example.reservation.service.ReserveService;
 import com.example.reservation.service.RoomService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,16 +26,28 @@ public class ReserveController {
     }
 
     @GetMapping("/list")
-//    public String list(@RequestParam("checkInDate") String checkInDate, @RequestParam("checkOutDate") String checkOutDate) {
-    public ResponseEntity list(Model model) {
+    public ResponseEntity list() {
         List<RoomDTO> roomDTOList = roomService.findAll();
-        System.out.println("roomDTOList = " + roomDTOList);
         return new ResponseEntity<>(roomDTOList, HttpStatus.OK);
     }
+
+
+
     @GetMapping("/save")
-    public String bookSave(@ModelAttribute ReserveDTO reserveDTO, Model model){
-        ReserveDTO reserveDTO1 = reserveService.findById(reserveDTO.getId());
-        model.addAttribute("reserve", reserveDTO1);
-        return "/reservePages/reserveSave";
+    public String save(@RequestParam("roomId") Long roomId,
+                       @RequestParam("checkInDate") String checkInDate,
+                       @RequestParam("checkOutDate") String checkOutDate,
+                       @RequestParam("persons") String persons,
+                       @RequestParam("addPrice") String addPrice,
+                       Model model) {
+        System.out.println("roomId = " + roomId + ", checkInDate = " + checkInDate + ", checkOutDate = " + checkOutDate + ", persons = " + persons + ", addPrice = " + addPrice + ", model = " + model);
+        RoomDTO roomDTO = roomService.findById(roomId);
+        System.out.println("roomDTO = " + roomDTO);
+        model.addAttribute("room", roomDTO);
+        model.addAttribute("checkInDate", checkInDate);
+        model.addAttribute("checkOutDate", checkOutDate);
+        model.addAttribute("persons", persons);
+        model.addAttribute("addPrice", addPrice);
+        return "reservePages/pay";
     }
 }

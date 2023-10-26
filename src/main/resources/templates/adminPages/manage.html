@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <script th:href="@{/css/button/button.css}"></script>
     <th:block th:replace="~{component/config :: config}"></th:block>
 </head>
-
 <body>
 <h1>회원목록 출력</h1>
 <div id="section" class="container">
@@ -41,17 +41,23 @@
             <td th:text="${member.memberEmail}"></td>
             <td th:text="${member.nickName}"></td>
             <!-- 버튼을 클릭하여 모달 표시 -->
-            <td>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" th:attr="data-bs-target='#modal-'+${member.id}">쿠폰 발급</button>
-            </td>
+                <td>
+                    <button class="btn" data-bs-toggle="modal" th:attr="data-bs-target='#modal-'+${member.id}"><span>쿠폰발급</span></button>
+                </td>
         </tr>
         </tbody>
     </table>
+    <!--                -->
+
+    <!--                <button type="button" class="btn btn-outline-danger btn-layer-2_4" data-bs-toggle="modal" th:attr="data-bs-target='#modal-'+${member.id}">쿠폰 발급-->
+    <!--                    <i class="fa fa-check"></i>-->
+    <!--                </button>-->
 </div>
 
 <!-- 각 멤버에 대한 모달 창 -->
 <div th:each="member : ${memberList}">
-    <div class="modal fade" th:id="'modal-'+${member.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" th:id="'modal-'+${member.id}" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -74,8 +80,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" th:onclick="coupon_fn([[${member.id}]])">쿠폰발급</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    <button type="button"  th:onclick="coupon_fn([[${member.id}]])">쿠폰발급</button>
+                    <button type="button"  data-bs-dismiss="modal">취소</button>
                 </div>
             </div>
         </div>

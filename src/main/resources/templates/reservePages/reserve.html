@@ -26,7 +26,10 @@
     <div class="table" id="room-list">
 
     </div>
-    <input id="input-total" value="0" type="text">
+    <input id="input-total" value="0" type="hidden">
+    <input id="input-start" value="0" type="hidden">
+    <input id="input-end" value="0" type="hidden">
+    <input id="input-price" value="0" type="hidden">
 </div>
 
 <!--<div th:replace="~{component/footer :: footer}"></div>-->
@@ -74,8 +77,8 @@
                             end: arg.end,
                             allDay: arg.allDay
                         })
-                        console.log(dt_start)
-                        console.log(dt_end)
+                        const start = document.getElementById("input-start").value = dt_start;
+                        const end = document.getElementById("input-end").value = dt_end;
                         $.ajax({
                             type:"get",
                             url:"/reserve/list",
@@ -94,14 +97,20 @@
                                         "          <div class=\"col-2\">성인:</div>\n" +
                                         "          <div class=\"col-2\">아동:</div>\n" +
                                         "          <div class=\"col-2\">유아:</div>\n" +
+                                        `          <div class=\"col text-end\">${data[i].roomPrice}원</div>\n` +
                                         "        </div>\n" +
                                         "        <div class=\"row\">\n" +
-                                        `       <div class=\"col-2\">${data[i].capacity}</div>\n` +
-                                        `          <div class=\"col-2\"><input type=\"number\" id=\"a${data[i].id}" max=\"3\" min=\"0\" value=\"0\" oninput=\"fn('a', ${data[i].id})\"/></div>\n` +
-                                        `          <div class=\"col-2\"><input type=\"number\" id=\"b${data[i].id}" max=\"3\" min=\"0\" value=\"0\" oninput=\"fn('b', ${data[i].id})\"/></div>\n` +
-                                        `          <div class=\"col-2\"><input type=\"number\" id=\"c${data[i].id}" max=\"3\" min=\"0\" value=\"0\" oninput=\"fn('c', ${data[i].id})\"/></div>\n` +
+                                        "<div class='col text-end'>\n" +
+                                        "<p style='display: none;' id='p-standard'></p>\n" +
+                                        "</div>\n" +
+                                        "</div>\n"+
+                                        "        <div class=\"row\">\n" +
+                                        `       <div class=\"col-2\">기준 ${data[i].standardPerson}명/최대${data[i].capacity}명</div>\n` +
+                                        `          <div class=\"col-2\"><input type=\"number\" id=\"a${data[i].id}" max=\"${data[i].capacity}\" min=\"0\" value=\"0\" oninput=\"fn('a', ${data[i].id}, ${data[i].capacity}, ${data[i].standardPerson})\"/></div>\n` +
+                                        `          <div class=\"col-2\"><input type=\"number\" id=\"b${data[i].id}" max=\"${data[i].capacity}\" min=\"0\" value=\"0\" oninput=\"fn('b', ${data[i].id}, ${data[i].capacity}, ${data[i].standardPerson})\"/></div>\n` +
+                                        `          <div class=\"col-2\"><input type=\"number\" id=\"c${data[i].id}" max=\"${data[i].capacity}\" min=\"0\" value=\"0\" oninput=\"fn('c', ${data[i].id}, ${data[i].capacity}, ${data[i].standardPerson})\"/></div>\n` +
                                         "    <div class='col text-end'>\n" +
-                                        "      <button class='btn btn-primary' onclick=\"reserve_fn(${data[i].id})\">예약</button>\n" +
+                                        `      <button class='btn btn-primary' onclick=\"reserve_fn(${data[i].id})\">예약</button>\n` +
                                         "    </div>\n" +
                                         "        </div>\n" +
                                         "      </div>\n" +
@@ -124,20 +133,20 @@
 
 
 
-    const fn = (inputId, id) => {
+    const fn = (inputId, id, max, standard) => {
         console.log(id)
         const a = parseInt(document.getElementById("a" +id).value);
         const b = parseInt(document.getElementById("b" +id).value);
         const c = parseInt(document.getElementById("c" +id).value);
-        let to = document.getElementById("input-total");
+
         const total = a + b + c;
 
         const inputElement = document.getElementById(inputId+id);
         let inputValue = inputElement.value;
 
         if (isNaN(inputValue) || inputValue.length > 1) {
-            if (total > 3) {
-                const excess = total - 3;
+            if (total > max) {
+                const excess = total - max;
                 if (inputId+id === 'a'+id) {
                     document.getElementById("a"+id).value = a - excess;
                 } else if (inputId+id === 'b'+id) {
@@ -147,8 +156,8 @@
                 }
             }
         } else {
-            if (total > 3) {
-                const excess = total - 3;
+            if (total > max) {
+                const excess = total - max;
                 if (inputId+id === 'a'+id) {
                     document.getElementById("a"+id).value = a - excess;
                 } else if (inputId+id === 'b'+id) {
@@ -158,15 +167,25 @@
                 }
             }
         }
-        to.value = parseInt(document.getElementById("a"+id).value) + parseInt(document.getElementById("b"+id).value) + parseInt(document.getElementById("c"+id).value);
+        const pstandard = document.getElementById("p-standard"); // 추가인원 표시
+        if(standard < parseInt(document.getElementById("a"+id).value) + parseInt(document.getElementById("b"+id).value) + parseInt(document.getElementById("c"+id).value)){ // 추가인원이 있으면
+            const staNum = (parseInt(document.getElementById("a"+id).value) + parseInt(document.getElementById("b"+id).value) + parseInt(document.getElementById("c"+id).value)) - standard; // 추가인원 구하는공식
+            const staPrice = 20000 * staNum; // 추가인원당 2만원
+            document.getElementById("input-price").value = staPrice;
+            pstandard.innerHTML = "추가인원 +" + staPrice;
+            pstandard.style.display = "block";
+        }else{
+            pstandard.style.display = "none";
+        }
     };
 
 
-    const reserve_fn = (id) => {
-
-
+    const reserve_fn = (roomId) => {
+        let persons = document.getElementById("input-total").value = parseInt(document.getElementById("a"+roomId).value) + parseInt(document.getElementById("b"+roomId).value) + parseInt(document.getElementById("c"+roomId).value);
+        const checkInDate = document.getElementById("input-start").value;
+        const checkOutDate = document.getElementById("input-end").value;
+        const addPrice = document.getElementById("input-price").value; // 추가금액
+        location.href="/reserve/save?roomId=" + roomId +"&checkInDate=" + checkInDate +"&checkOutDate=" + checkOutDate + "&persons=" + persons + "&addPrice=" + addPrice;
     }
-
-
 </script>
 </html>

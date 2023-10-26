@@ -16,8 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -29,15 +27,35 @@ public class AdminController {
     private final ReserveService reserveService;
 
     @GetMapping("/reserve")
-    public String reserve(Model model){
-        List<ReserveDTO> reserveDTOList = reserveService.findAll();
-        System.out.println(reserveDTOList);
+    public String reserve(Model model,
+                          @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                          @RequestParam(value = "q", required = false, defaultValue = "") String q,
+                          @RequestParam(value = "type", required = false, defaultValue = "") String type,
+                          @RequestParam(value = "listCount", required = false, defaultValue = "5") int list,
+                          @RequestParam(value = "checkInDate", required = false, defaultValue = "") String checkInDate) {
+        System.out.println(checkInDate + "날짜");
+        Page<ReserveDTO> reserveDTOList = reserveService.findAll(page, q, type, list , checkInDate);
+
+        int blockLimit = 3;
+        int startPage = (((int) (Math.ceil((double) page / blockLimit))) - 1) * blockLimit + 1;
+        int endPage = ((startPage + blockLimit - 1) < reserveDTOList.getTotalPages()) ? startPage + blockLimit - 1 : reserveDTOList.getTotalPages();
+
         model.addAttribute("memberReserveList", reserveDTOList);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("page", page);
+        model.addAttribute("q", q);
+        model.addAttribute("checkInDate", checkInDate);
+        model.addAttribute("type", type);
+        model.addAttribute("listCount", list);
+        System.out.println(reserveDTOList);
         return "adminPages/reserve";
     }
 
-    @PostMapping("/reserve/{id}")
-    public String reserve(@PathVariable("id")Long id){
+    @PostMapping("/reserve")
+    public String reserve(@ModelAttribute ReserveDTO reserveDTO) {
+        reserveService.deleteById(reserveDTO.getId());
+        System.out.println(reserveDTO.getId());
         return "redirect:/admin/reserve";
     }
 
@@ -45,7 +63,7 @@ public class AdminController {
     public String manage(Model model,
                          @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                          @RequestParam(value = "q", required = false, defaultValue = "") String q) {
-      Page<MemberDTO> memberDTOList = memberService.findAll(page, q);
+        Page<MemberDTO> memberDTOList = memberService.findAll(page, q);
 
         int blockLimit = 3;
         int startPage = (((int) (Math.ceil((double) page / blockLimit))) - 1) * blockLimit + 1;
@@ -60,25 +78,22 @@ public class AdminController {
     }
 
     @PostMapping("/coupon/save")
-    public String couponSave(@ModelAttribute CouponDTO couponDTO){
+    public String couponSave(@ModelAttribute CouponDTO couponDTO) {
         MemberEntity memberEntity = couponService.findById(couponDTO.getMemberId());
         couponService.save(couponDTO, memberEntity);
         return "redirect:/admin/manage";
     }
 
     @GetMapping("/room/save")
-    public String roomSave(){
+    public String roomSave() {
         return "adminPages/roomSave";
     }
 
     @PostMapping("/room/save")
     public String roomSave(@ModelAttribute RoomDTO roomDTO) throws IOException {
         roomService.save(roomDTO);
-        return "adminPages/room";
+        return "/index";
     }
-
-
-
 
 
 }
