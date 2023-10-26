@@ -9,7 +9,7 @@
     outline: none;
     overflow: hidden;
     position: relative;
-    color: #fff;
+    color: #020101;
     font-weight: 700;
     font-size: 14px; /* 변경된 크기 */
     background-color: #222;
@@ -43,6 +43,6 @@
 }
 
 .link a {
-    color: #000;
+    color: #ffffff;
     font-size: 25px;
 }

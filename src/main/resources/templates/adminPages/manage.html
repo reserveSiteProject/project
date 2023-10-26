@@ -2,12 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <script th:href="@{/css/button/button.css}"></script>
     <th:block th:replace="~{component/config :: config}"></th:block>
 </head>
 <body>
 <h1>회원목록 출력</h1>
-<div id="section" class="container">
+<div class="container mt-5 mb-5">
     <div id="search-area" class="mt-5">
         <!-- 검색 폼 -->
         <form action="/admin/manage" method="get">
@@ -23,17 +22,14 @@
             <input type="submit" value="검색">
         </form>
     </div>
-    <table class="table table-hover text-center">
-        <thead class="thead-light">
+    <table class="table table-hover text-center mt-3">
         <tr>
-            <th>회원번호</th>
-            <th>작성자명</th>
-            <th>작성자이메일</th>
-            <th>닉네임</th>
-            <th>첨부파일</th>
+            <th scope="col">회원번호</th>
+            <th scope="col">작성자명</th>
+            <th scope="col">작성자이메일</th>
+            <th scope="col">닉네임</th>
+            <th scope="col">쿠폰발급</th>
         </tr>
-        </thead>
-        <tbody>
         <!-- 각 행에 대한 Thymeleaf 반복 -->
         <tr th:each="member : ${memberList}">
             <td th:text="${member.id}"></td>
@@ -45,7 +41,6 @@
                     <button class="btn" data-bs-toggle="modal" th:attr="data-bs-target='#modal-'+${member.id}"><span>쿠폰발급</span></button>
                 </td>
         </tr>
-        </tbody>
     </table>
     <!--                -->
 

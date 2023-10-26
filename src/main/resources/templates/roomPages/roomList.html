@@ -1,10 +1,26 @@
 <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="~{component/config :: config}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/room/room.css}">
 </head>
 <body>
-
+<h1 class="text-center">방 리스트</h1>
+<div class="image-container row">
+    <div th:each="room : ${roomList}" class="image-item mt-5 mb-5 col-lg-4 col-md-7 col-sm-2">
+        <td th:if="${room.fileAttached == 1}" th:each="fileName: ${room.storedFileName[0]}">
+            <!--room의 첫번째 인덱스라면 room[0]이지만 room안의 storedFileName의 첫번째 인덱스를 가져오고 싶기 때문에 위와 같이 쓴다.-->
+            <img th:src="@{|/upload/${fileName}|}" class="image" alt="Room Image" th:onclick="detail_fn([[${room.id}]])">
+        </td>
+        <td th:text="${room.roomName}"></td>
+    </div>
+</div>
 </body>
+<script th:inline="javascript">
+    const detail_fn = (id) => {
+        location.href = `/room/detail/${id}`;
+    }
+
+</script>
 </html>
