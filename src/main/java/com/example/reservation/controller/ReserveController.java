@@ -31,6 +31,13 @@ public class ReserveController {
         return new ResponseEntity<>(roomDTOList, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity find(@PathVariable("id") Long id,
+                                   @RequestParam("checkInDate") String checkInDate,
+                                   @RequestParam("checkOutDate") String checkOutDate) {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 
     @GetMapping("/save")
