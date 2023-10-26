@@ -5,7 +5,6 @@ import com.example.reservation.dto.MemberDTO;
 import com.example.reservation.dto.ReserveDTO;
 import com.example.reservation.dto.RoomDTO;
 import com.example.reservation.entity.MemberEntity;
-import com.example.reservation.entity.ReserveEntity;
 import com.example.reservation.service.CouponService;
 import com.example.reservation.service.MemberService;
 import com.example.reservation.service.ReserveService;
@@ -17,9 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -96,7 +92,7 @@ public class AdminController {
     @PostMapping("/room/save")
     public String roomSave(@ModelAttribute RoomDTO roomDTO) throws IOException {
         roomService.save(roomDTO);
-        return "adminPages/room";
+        return "/index";
     }
 
 
