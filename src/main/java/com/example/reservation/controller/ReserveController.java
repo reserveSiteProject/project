@@ -1,5 +1,6 @@
 package com.example.reservation.controller;
 
+import com.example.reservation.dto.ReserveDTO;
 import com.example.reservation.dto.RoomDTO;
 import com.example.reservation.service.ReserveService;
 import com.example.reservation.service.RoomService;
@@ -28,6 +29,13 @@ public class ReserveController {
     public ResponseEntity list() {
         List<RoomDTO> roomDTOList = roomService.findAll();
         return new ResponseEntity<>(roomDTOList, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity find(@PathVariable("id") Long id,
+                                   @RequestParam("checkInDate") String checkInDate,
+                                   @RequestParam("checkOutDate") String checkOutDate) {
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 

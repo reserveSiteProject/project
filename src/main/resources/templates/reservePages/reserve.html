@@ -29,7 +29,6 @@
     <input id="input-total" value="0" type="hidden">
     <input id="input-start" value="0" type="hidden">
     <input id="input-end" value="0" type="hidden">
-    <input id="input-price" value="0" type="hidden">
 </div>
 
 <!--<div th:replace="~{component/footer :: footer}"></div>-->
@@ -80,43 +79,61 @@
                         const start = document.getElementById("input-start").value = dt_start;
                         const end = document.getElementById("input-end").value = dt_end;
                         $.ajax({
-                            type:"get",
-                            url:"/reserve/list",
-                            data:{
-                                // checkInDate:dt_start,
-                                // checkOutDate:dt_end,
-                            },success:function(data){
+                            type: "get",
+                            url: "/reserve/list",
+                            data: {
+                                // checkInDate: dt_start,
+                                // checkOutDate: dt_end,
+                            },
+                            success: function (data) {
                                 const roomList = document.getElementById("room-list");
                                 let result = "";
-                                for (let i in data){
-                                    result += "        <div class=\"row\">\n" +
-                                        `      <div class='col-3'><img src=\"/upload/${data[i].storedFileName}\" width=\"200\" height=\"200\" alt=\"\"></div>\n` +
-                                        "      <div class='col'>\n" +
-                                        "        <div class=\"row\">\n" +
-                                        `          <div class=\"col-2\">${data[i].roomName}(${data[i].roomType})</div>\n` +
-                                        "          <div class=\"col-2\">성인:</div>\n" +
-                                        "          <div class=\"col-2\">아동:</div>\n" +
-                                        "          <div class=\"col-2\">유아:</div>\n" +
-                                        `          <div class=\"col text-end\">${data[i].roomPrice}원</div>\n` +
-                                        "        </div>\n" +
-                                        "        <div class=\"row\">\n" +
-                                        "<div class='col text-end'>\n" +
-                                        "<p style='display: none;' id='p-standard'></p>\n" +
-                                        "</div>\n" +
-                                        "</div>\n"+
-                                        "        <div class=\"row\">\n" +
-                                        `       <div class=\"col-2\">기준 ${data[i].standardPerson}명/최대${data[i].capacity}명</div>\n` +
-                                        `          <div class=\"col-2\"><input type=\"number\" id=\"a${data[i].id}" max=\"${data[i].capacity}\" min=\"0\" value=\"0\" oninput=\"fn('a', ${data[i].id}, ${data[i].capacity}, ${data[i].standardPerson})\"/></div>\n` +
-                                        `          <div class=\"col-2\"><input type=\"number\" id=\"b${data[i].id}" max=\"${data[i].capacity}\" min=\"0\" value=\"0\" oninput=\"fn('b', ${data[i].id}, ${data[i].capacity}, ${data[i].standardPerson})\"/></div>\n` +
-                                        `          <div class=\"col-2\"><input type=\"number\" id=\"c${data[i].id}" max=\"${data[i].capacity}\" min=\"0\" value=\"0\" oninput=\"fn('c', ${data[i].id}, ${data[i].capacity}, ${data[i].standardPerson})\"/></div>\n` +
-                                        "    <div class='col text-end'>\n" +
-                                        `      <button class='btn btn-primary' onclick=\"reserve_fn(${data[i].id})\">예약</button>\n` +
-                                        "    </div>\n" +
-                                        "        </div>\n" +
-                                        "      </div>\n" +
-                                        "    </div>\n" +
-                                        "    </div>"
-                                    result += "<hr style=\"border: solid 2px\">";
+                                for (let i in data) {
+                                    const room = data[i];
+                                    result += "<div class='row'>";
+                                    result += `<div class='col-3'><img src="/upload/${room.storedFileName}" width="200" height="200" alt=""></div>`;
+                                    result += "<div class='col'>";
+                                    result += "<div class='row'>";
+                                    result += `<div class='col-2'>${room.roomName}(${room.roomType})</div>`;
+                                    result += "<div class='col-2'>성인:</div>";
+                                    result += "<div class='col-2'>아동:</div>";
+                                    result += "<div class='col-2'>유아:</div>";
+                                    result += `<div class='col text-end'>${room.roomPrice}원</div>`;
+                                    result += "</div>";
+                                    result += "<div class='row'>";
+                                    result += "<div class='col text-end'>";
+                                    result += `<p style='display: none;' id='p-standard${room.id}'></p>`;
+                                    result += "</div>";
+                                    result += "</div>";
+                                    result += "<div class='row'>";
+                                    result += `<div class='col-2'>기준 ${room.standardPerson}명/최대${room.capacity}명</div>`;
+                                    result += `<div class='col-2'><input type='number' id='a${room.id}' max='${room.capacity}' min='0' value='0' oninput='fn("a", ${room.id}, ${room.capacity}, ${room.standardPerson})'/></div>`;
+                                    result += `<div class='col-2'><input type='number' id='b${room.id}' max='${room.capacity}' min='0' value='0' oninput='fn("b", ${room.id}, ${room.capacity}, ${room.standardPerson})'/></div>`;
+                                    result += `<div class='col-2'><input type='number' id='c${room.id}' max='${room.capacity}' min='0' value='0' oninput='fn("c", ${room.id}, ${room.capacity}, ${room.standardPerson})'/></div>`;
+                                    // $.ajax({
+                                    //     type: "get",
+                                    //     url: `/reserve/${room.id}`,
+                                    //     data:{
+                                    //         checkInDate: dt_start, checkOutDate: dt_end,
+                                    //     },
+                                    //     success: function (reserveData) {
+                                    //         console.log(reserveData + " success");
+                                    //         result += "<div class='col text-end'>";
+                                    //         result += `<button class='btn btn-secondary' onclick='wait_fn()'>예약대기</button>`;
+                                    //         result += "</div>";
+                                    //     },
+                                    //     error: function (reserveData) {
+                                    //         console.log(reserveData + " error");
+                                            result += "<div class='col text-end'>";
+                                            result += `<button class='btn btn-primary' onclick='reserve_fn(${room.id})'>예약</button>`;
+                                            result += `    <input id="input-price${room.id}" value="0" type="hidden">`;
+                                            result += "</div>";
+                                        // }
+                                    // });
+                                    result += "</div>";
+                                    result += "</div>";
+                                    result += "</div>";
+                                    result += "<hr style='border: solid 2px'>";
                                 }
                                 roomList.innerHTML = result;
                             }
@@ -167,11 +184,11 @@
                 }
             }
         }
-        const pstandard = document.getElementById("p-standard"); // 추가인원 표시
+        const pstandard = document.getElementById("p-standard"+id); // 추가인원 표시
         if(standard < parseInt(document.getElementById("a"+id).value) + parseInt(document.getElementById("b"+id).value) + parseInt(document.getElementById("c"+id).value)){ // 추가인원이 있으면
             const staNum = (parseInt(document.getElementById("a"+id).value) + parseInt(document.getElementById("b"+id).value) + parseInt(document.getElementById("c"+id).value)) - standard; // 추가인원 구하는공식
             const staPrice = 20000 * staNum; // 추가인원당 2만원
-            document.getElementById("input-price").value = staPrice;
+            document.getElementById("input-price"+id).value = staPrice;
             pstandard.innerHTML = "추가인원 +" + staPrice;
             pstandard.style.display = "block";
         }else{
@@ -184,7 +201,7 @@
         let persons = document.getElementById("input-total").value = parseInt(document.getElementById("a"+roomId).value) + parseInt(document.getElementById("b"+roomId).value) + parseInt(document.getElementById("c"+roomId).value);
         const checkInDate = document.getElementById("input-start").value;
         const checkOutDate = document.getElementById("input-end").value;
-        const addPrice = document.getElementById("input-price").value; // 추가금액
+        const addPrice = document.getElementById("input-price"+roomId).value; // 추가금액
         location.href="/reserve/save?roomId=" + roomId +"&checkInDate=" + checkInDate +"&checkOutDate=" + checkOutDate + "&persons=" + persons + "&addPrice=" + addPrice;
     }
 </script>
