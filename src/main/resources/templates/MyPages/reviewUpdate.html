@@ -12,7 +12,7 @@
   <h2 class="text-center mb-3">리뷰 수정</h2>
   <form action="/myPages/review/update/" method="post" class="form-control">
     <input type="hidden" name="id" th:value="${review.id}"><br>
-    작성자 : <input class="rounded" type="text" name="reviewWriter" th:value="${review.reviewWriter}"><br>
+    작성자 : <input class="rounded" type="text" name="reviewWriter" th:value="${review.reviewWriter}" readonly><br>
     제목 : <input class="rounded" type="text" name="reviewTitle" th:value="${review.reviewTitle}"><br>
     평점 : <input class="rounded" type="number" name="reviewStar" th:value="${review.reviewStar}"><br>
     <textarea name="reviewContents"  cols="30" rows="10" th:text="${review.reviewContents}"></textarea><br>

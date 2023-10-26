@@ -14,7 +14,7 @@
             <div class="fw-bold fs-5">제목 : <span  th:text="${review.reviewTitle}"></span></div>
             <div class="fw-bold fs-5">작성자 : <span th:text="${review.reviewWriter}"></span></div>
             <div class="fw-bold fs-5">조회수 : <span th:text="${review.hits}"></span></div>
-            <div class="fw-bold fs-5">내용 : <span th:text="${review.reviewContents}"></span></div>
+            <div class="fw-bold fs-5">내용 : <span th:utext="${review.reviewContents}"></span></div>
         </div>
         <!-- 사진 표시 (사진이 있을 경우) -->
         <div th:if="${review.fileAttached == 1}" th:each="fileName: ${review.storedFileName}">

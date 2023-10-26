@@ -13,6 +13,7 @@
             <div class="col-2">
                 <div class="input-group">
                     <select class="form-select" name="type">
+                        <option value=""></option>
                         <option value="createdAt">등록일</option>
                         <option value="hits">조회수</option>
                     </select>
@@ -28,7 +29,7 @@
             <tr>
                 <th scope="col">작성자</th>
                 <th scope="col">제목</th>
-                <th scope="col">내용</th>
+<!--                <th scope="col">내용</th>-->
                 <th scope="col">별점</th>
                 <th scope="col">작성일</th>
                 <th scope="col">조회수</th>
@@ -36,7 +37,7 @@
             <tr th:each="review :${reviewList}">
                 <td><a th:href="@{|/myPages/review/${review.id}|}" th:text="${review.reviewWriter}"></a></td>
                 <td th:text="${review.reviewTitle}"></td>
-                <td th:text="${review.reviewContents}"></td>
+<!--                <td th:text="${review.reviewContents}"></td>-->
                 <td th:text="${review.reviewStar}"></td>
                 <td th:text="${review.createdAt}"></td>
                 <td th:text="${review.hits}"></td>

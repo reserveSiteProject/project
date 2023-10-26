@@ -23,11 +23,16 @@ public class MyPagesController {
     // 마이페이지 리뷰목록 출력
     @GetMapping("/review")
     public String review(HttpSession session, Model model,
-                         @RequestParam(value = "type", required = false, defaultValue = "createdAt") String type){
+                         @RequestParam(value = "type", required = false, defaultValue ="") String type){
         System.out.println(type);
-        Object memberDTO1 = session.getAttribute("memberDTO");
-        MemberDTO memberDTO = (MemberDTO) memberDTO1;
-        List<ReviewDTO> reviewList = myPagesService.findAllByType(memberDTO, type);
+        Object memberDTO = session.getAttribute("memberDTO");
+        MemberDTO memberDTO1 = (MemberDTO) memberDTO;
+        List<ReviewDTO> reviewList = null;
+        if(type.equals("")){
+            reviewList = myPagesService.findAll(memberDTO1);
+        }else{
+            reviewList = myPagesService.findAllByType(memberDTO, type);
+        }
         System.out.println("reviewList = " + reviewList);
         model.addAttribute("reviewList", reviewList);
         return "MyPages/review";
@@ -35,6 +40,7 @@ public class MyPagesController {
     // 마이페이지 리뷰 상세페이지 화면 출력
     @GetMapping("/review/{id}")
     public String reviewDetail(@PathVariable("id") Long id, Model model){
+        myPagesService.increaseHits(id);
         ReviewDTO reviewDTO = myPagesService.findById(id);
         model.addAttribute("review",reviewDTO);
         return "MyPages/reviewDetail";
