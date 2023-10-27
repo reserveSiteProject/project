@@ -22,22 +22,12 @@ public interface ReserveRepository extends JpaRepository<ReserveEntity, Long> {
 
     Page<ReserveEntity> findByCheckInDate(String checkInDate, Pageable pageable);
 
-
-    ReserveEntity findByCheckInDateLessThanEqualAndCheckOutDateGreaterThanEqualAndRoomEntity(String checkInDate, String checkOutDate, RoomEntity entity);
-
-
-
-
-
-
-    ReserveEntity findByCheckInDateAndCheckOutDateAndRoomEntity(String checkInDate, String checkOutDate, RoomEntity roomEntity);
-
     @Query("SELECT r FROM ReserveEntity r " +
             "WHERE " +
             "((r.checkInDate <= :checkOutDate AND r.checkOutDate >= :checkInDate AND r.roomEntity = :roomEntity) " +
             "OR " +
-            "(r.checkInDate LIKE %:checkInDatePattern% AND r.checkOutDate LIKE %:checkOutDatePattern%))")
-    ReserveEntity findDate(
+            "(r.checkInDate LIKE :checkInDatePattern AND r.checkOutDate LIKE :checkOutDatePattern AND r.roomEntity = :roomEntity))")
+            ReserveEntity findDate(
             @Param("checkInDate") String checkInDate,
             @Param("checkOutDate") String checkOutDate,
             @Param("roomEntity") RoomEntity roomEntity,
