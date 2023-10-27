@@ -28,7 +28,7 @@ public class PaymentEntity {
     @JoinColumn(name = "reserve_id")
     private ReserveEntity reserveEntity;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private MemberEntity memberEntity;
 

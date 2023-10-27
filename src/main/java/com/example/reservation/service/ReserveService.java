@@ -83,10 +83,11 @@ public class ReserveService {
 
     @Transactional
     public ReserveDTO find(Long roomId, String checkInDate, String checkOutDate) {
-        System.out.println("응애");
+        String checkInDatePattern = "%" + checkInDate + "%";
+        String checkOutDatePattern = "%" + checkOutDate + "%";
         RoomEntity roomEntity = roomRepository.findById(roomId).orElseThrow(() -> new NoSuchElementException());
-        System.out.println("음메" + roomEntity);
-        ReserveEntity reserveEntity = reserveRepository.findByCheckInDateLessThanEqualAndCheckOutDateGreaterThanEqualAndRoomEntity(checkInDate, checkOutDate, roomEntity);
+//        ReserveEntity reserveEntity = reserveRepository.findByCheckInDateLessThanEqualAndCheckOutDateGreaterThanEqualAndRoomEntity(checkInDate, checkOutDate, roomEntity);
+        ReserveEntity reserveEntity  = reserveRepository.findDate(checkInDate, checkOutDate, roomEntity, checkInDatePattern, checkOutDatePattern);
         System.out.println("여기가는지" + reserveEntity);
         return ReserveDTO.toDTO(reserveEntity);
     }

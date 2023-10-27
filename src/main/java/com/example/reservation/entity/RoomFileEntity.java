@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @Setter(AccessLevel.PRIVATE)
 @Getter
-@ToString
+//@ToString
 @Entity
 
 @Table(name = "room_file_table")

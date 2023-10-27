@@ -99,7 +99,7 @@
                 <div class='col-3'><img src="/upload/${room.storedFileName}" width="200" height="200" alt=""></div>
                 <div class='col'>
                     <div class='row'>
-                        <div class='col-2'>${room.roomName}(${room.roomType})</div>
+                        <div class='col-4'>${room.roomName}(${room.roomType})</div>
                         <div class='col-2'>성인:</div>
                         <div class='col-2'>아동:</div>
                         <div class='col-2'>유아:</div>
@@ -111,7 +111,7 @@
                         </div>
                     </div>
                     <div class='row'>
-                        <div class='col-2'>기준 ${room.standardPerson}명/최대${room.capacity}명</div>
+                        <div class='col-4'>기준 ${room.standardPerson}명/최대${room.capacity}명</div>
                         <div class='col-2'><input type='number' id='a${room.id}' max='${room.capacity}' min='0' value='0' oninput='fn("a", ${room.id}, ${room.capacity}, ${room.standardPerson})'/></div>
                         <div class='col-2'><input type='number' id='b${room.id}' max='${room.capacity}' min='0' value='0' oninput='fn("b", ${room.id}, ${room.capacity}, ${room.standardPerson})'/></div>
                         <div class='col-2'><input type='number' id='c${room.id}' max='${room.capacity}' min='0' value='0' oninput='fn("c", ${room.id}, ${room.capacity}, ${room.standardPerson})'/></div>
@@ -121,7 +121,6 @@
 
                                     const reserveButtonDiv = document.createElement("div");
                                     reserveButtonDiv.className = "col text-end";
-
                                     $.ajax({
                                         type: "get",
                                         url: `/reserve/${room.id}`,
@@ -210,6 +209,10 @@
         const checkOutDate = document.getElementById("input-end").value;
         const addPrice = document.getElementById("input-price"+roomId).value; // 추가금액
         location.href="/reserve/save?roomId=" + roomId +"&checkInDate=" + checkInDate +"&checkOutDate=" + checkOutDate + "&persons=" + persons + "&addPrice=" + addPrice;
+    }
+    
+    const wait_fn = () => {
+
     }
 </script>
 </html>
