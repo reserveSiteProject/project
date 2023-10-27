@@ -56,7 +56,7 @@
             select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
                 // 예약일, 투데이 Format
                 let dt_start = moment(arg.start).format('YYYYMMDD'); // ajax으로 보낼 예약 시작값
-                let dt_end = moment(arg.end).format('YYYYMMDD'); // ajax으로 보낼 예약 종료값
+                let dt_end = moment(arg.end).format('YYYYMMDD')-1; // ajax으로 보낼 예약 종료값
 
                 let year = today.getFullYear().toString(); // 년도
                 let month = today.getMonth() +1;  // 월 getMonth 는 0~11월 출력하기때문에 +1

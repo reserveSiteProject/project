@@ -18,10 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -86,9 +83,8 @@ public class ReserveService {
         String checkInDatePattern = "%" + checkInDate + "%";
         String checkOutDatePattern = "%" + checkOutDate + "%";
         RoomEntity roomEntity = roomRepository.findById(roomId).orElseThrow(() -> new NoSuchElementException());
-//        ReserveEntity reserveEntity = reserveRepository.findByCheckInDateLessThanEqualAndCheckOutDateGreaterThanEqualAndRoomEntity(checkInDate, checkOutDate, roomEntity);
-        ReserveEntity reserveEntity  = reserveRepository.findDate(checkInDate, checkOutDate, roomEntity, checkInDatePattern, checkOutDatePattern);
-        System.out.println("여기가는지" + reserveEntity);
+
+        ReserveEntity reserveEntity = reserveRepository.findDate(checkInDate, checkOutDate, roomEntity, checkInDatePattern, checkOutDatePattern);
         return ReserveDTO.toDTO(reserveEntity);
     }
 }
