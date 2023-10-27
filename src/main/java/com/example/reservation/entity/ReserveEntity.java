@@ -13,7 +13,7 @@ import java.util.List;
 
 @Setter(AccessLevel.PRIVATE)
 @Getter
-@ToString
+//@ToString
 @Entity
 
 @Table(name = "reserve_table")

@@ -2,6 +2,7 @@ package com.example.reservation.dto;
 
 import com.example.reservation.entity.ReserveStatusEntity;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 @Data
 public class ReserveStatusDTO {
