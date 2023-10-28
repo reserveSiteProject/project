@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KakaoPay Payment</title>
+</head>
+<body>
+
+    <button id="startPaymentBtn">카카오페이로 결제하기</button>
+
+</body>
+
+<script>
+    window.addEventListener("DOMContentLoaded", function() {
+        const paymentButton = document.getElementById("startPaymentBtn");
+
+        paymentButton.addEventListener("click", function() {
+            fetch("http://localhost:8084/kakaoPay/ready", {
+            // fetch("https://kapi.kakao.com/v1/payment/ready", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(console.log(data));
+                    if(data.next_redirect_pc_url) {
+                        // Redirect to KakaoPay payment page
+                        window.location.href = data.next_redirect_pc_url;
+                    } else {
+                        console.error('결제 페이지 URL을 가져오지 못했습니다.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    });
+
+</script>
+
+</html>

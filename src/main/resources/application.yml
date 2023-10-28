@@ -11,6 +11,11 @@ spring:
     username: user_reservation
     password: 1234
 
+    # i'mport 결제 api 키 관리
+import:
+  apiKey:
+  secretKey:
+
   # thymeleaf
   thymeleaf:
     cache: false
