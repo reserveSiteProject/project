@@ -1,63 +1,127 @@
+/*body {*/
+/*    font-family: Arial, sans-serif;*/
+/*    background-color: #a8dbd9; !* 바다를 연상시키는 색상 *!*/
+/*}*/
+
+/*!* Search Section *!*/
+/*.search-section {*/
+/*    margin-bottom: 20px;*/
+/*}*/
+
+/*.search-input {*/
+/*    padding: 10px;*/
+/*    border: none;*/
+/*    border-radius: 4px;*/
+/*    outline: none;*/
+/*}*/
+
+/*.search-btn {*/
+/*    padding: 10px 15px;*/
+/*    border: none;*/
+/*    background-color: #ffa62b; !* 귤색 *!*/
+/*    border-radius: 4px;*/
+/*    cursor: pointer;*/
+/*    margin-left: 10px;*/
+/*    transition: background-color 0.3s;*/
+/*}*/
+
+/*.search-btn:hover {*/
+/*    background-color: #ff8c00; !* 귤색 (더 어두운 색조) *!*/
+/*}*/
+
+/*!* Review Table *!*/
+/*.jeju-table {*/
+/*    width: 100%;*/
+/*    border-collapse: collapse;*/
+/*    margin: 25px 0;*/
+/*    font-size: 18px;*/
+/*    text-align: left;*/
+/*}*/
+
+/*!* Pagination *!*/
+/*.pagination {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    margin-top: 20px;*/
+/*}*/
+
+/*.pagination a {*/
+/*    padding: 8px 12px;*/
+/*    margin: 0 4px;*/
+/*    border-radius: 4px;*/
+/*    background-color: #ffa62b; !* 귤색 *!*/
+/*    text-decoration: none;*/
+/*    transition: background-color 0.3s;*/
+/*}*/
+
+/*.pagination a:hover {*/
+/*    background-color: #ff8c00; !* 귤색 (더 어두운 색조) *!*/
+/*}*/
+
+/*.pagination .active {*/
+/*    background-color: #ff8c00; !* 현재 페이지를 나타내는 더 어두운 귤색 *!*/
+/*}*/
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #a8dbd9; /* 바다를 연상시키는 색상 */
+    font-family: 'Arial', sans-serif;
+    background-color: #f6f6f6;
 }
 
-/* Search Section */
-.search-section {
-    margin-bottom: 20px;
+.container-fluid {
+    background-color: #ffffff;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.search-input {
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    outline: none;
+.form-control {
+    border-radius: 20px;
+    border: 1px solid #d1d1d1;
+    transition: box-shadow 0.3s;
 }
 
-.search-btn {
-    padding: 10px 15px;
-    border: none;
-    background-color: #ffa62b; /* 귤색 */
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 10px;
-    transition: background-color 0.3s;
+.form-control:focus {
+    box-shadow: 0 0 5px #00aaff;
+    border-color: #00aaff;
 }
 
-.search-btn:hover {
-    background-color: #ff8c00; /* 귤색 (더 어두운 색조) */
+.btn-outline-success {
+    border-radius: 20px;
+    border-color: #00aaff;
+    color: #00aaff;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-/* Review Table */
-.jeju-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 25px 0;
-    font-size: 18px;
-    text-align: left;
+.btn-outline-success:hover {
+    background-color: #00aaff;
+    color: white;
 }
 
-/* Pagination */
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
+table {
+    animation: fadeIn 1s;
 }
 
-.pagination a {
-    padding: 8px 12px;
-    margin: 0 4px;
-    border-radius: 4px;
-    background-color: #ffa62b; /* 귤색 */
-    text-decoration: none;
-    transition: background-color 0.3s;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
-.pagination a:hover {
-    background-color: #ff8c00; /* 귤색 (더 어두운 색조) */
+.pagination .page-link {
+    border-radius: 20px;
 }
 
-.pagination .active {
-    background-color: #ff8c00; /* 현재 페이지를 나타내는 더 어두운 귤색 */
+.pagination .page-item.active .page-link {
+    background-color: #00aaff;
+    border-color: #00aaff;
+    color: white;
 }
+
+.pagination .page-item .page-link:hover {
+    background-color: #0099cc;
+    color: white;
+}
+
