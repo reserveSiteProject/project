@@ -29,6 +29,10 @@
     <input id="input-total" value="0" type="hidden">
     <input id="input-start" value="0" type="hidden">
     <input id="input-end" value="0" type="hidden">
+    <input id="member-name" th:value="${session.memberDTO.memberName}" type="hidden">
+    <input id="member-id" th:value="${session.memberDTO.id}" type="hidden">
+    <input id="member-mobile" th:value="${session.memberDTO.memberMobile}" type="hidden">
+
 </div>
 
 <!--<div th:replace="~{component/footer :: footer}"></div>-->
@@ -119,7 +123,12 @@
                 </div>
             `;
 
+
                                     const reserveButtonDiv = document.createElement("div");
+                                    const reserveDiv = document.createElement("div");
+                                    reserveDiv.className = "row";
+                                    const reserveModalDiv = document.createElement("div");
+
                                     reserveButtonDiv.className = "col text-end";
                                     $.ajax({
                                         type: "get",
@@ -128,9 +137,53 @@
                                             checkInDate: dt_start,
                                             checkOutDate: dt_end,
                                         },
-                                        success: function (reserveData) {
-                                            reserveButtonDiv.innerHTML = `<button class='btn btn-secondary' onclick='wait_fn()'>예약대기</button>`;
-                                            console.log(reserveData + " success");
+                                        success: function (data) {
+                                            const memberName = document.getElementById("member-name").value;
+                                            const memberMobile = document.getElementById("member-mobile").value;
+                                            reserveButtonDiv.innerHTML = `<button class='btn btn-secondary' onclick="wait_fn(${data.id})">예약대기</button>`;
+                                            reserveDiv.innerHTML = `<div class="modal fade" id="modal-reserve${data.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="staticBackdropLabel" style="font-weight: bold;">예약대기 신청</h5>
+                                                        </div>
+                                                        <div class="modal-body p-5">
+                                                            <div class="row">
+                                                                <div class="col-3 ms-3">
+                                                                    객실명
+                                                                </div>
+                                                                <div class="col-5">${data.roomName}(${data.roomType})</div>
+                                                            </div>
+                                                            <div class="row ms-1">
+                                                                <div class="col-3 ms-1">예약일</div>
+                                                                <div class="col-3 ms-1">${data.checkInDate}~${data.checkOutDate}</div>
+                                                            </div>
+                                                            <div class="row mt-2">
+                                                                <div class="col-3 ms-3">성명</div>
+                                                                <div class="col me-5"><input class="col-12" value="${memberName}" readonly></div>
+                                                                <div class="col">인원 수 <input type="text" maxlength="10" class="col-4" id="wait-persons${data.id}"  oninput='isNumber(this);'></div>
+                                                            </div>
+                                                            <div class="row mt-2">
+                                                                <div class="col-3 ms-3">연락처</div>
+                                                                <div class="col"><input value="${memberMobile}"  readonly></div>
+                                                            </div>
+                                                            <div class="row mt-2">
+                                                                <div class="col-3 ms-3">요청사항</div>
+                                                                <div class="col"><textarea rows="6" cols="30"></textarea></div>
+                                                            </div>
+                                                            <div class="row mt-2 text-center">
+                                                                <p id="reserve-p${data.id}"></p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer justify-content-center">
+                                                            <div class="text-center">
+                                                                <button type="button" style="border-radius: 0px" class="btn btn-danger me-3 px-5" data-bs-dismiss="modal">닫기</button>
+                                                                <button type="button" style="border-radius: 0px" class="btn btn-danger ms-3 px-2" onclick="wait_save_fn(${data.id}, ${room.id}, ${room.capacity})">예약대기 신청</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>`;
                                         },
                                         error: function (reserveData) {
                                             reserveButtonDiv.innerHTML = `<button class='btn btn-primary' onclick='reserve_fn(${room.id})'>예약</button>`;
@@ -140,7 +193,9 @@
                                     });
 
                                     roomDiv.appendChild(reserveButtonDiv);
+                                    reserveDiv.appendChild(reserveModalDiv);
                                     roomList.appendChild(roomDiv);
+                                    roomList.appendChild(reserveDiv);
                                 }
                             }
                         });
@@ -153,7 +208,6 @@
         });
         calendar.render(); // 캘린더 다시불러오기
     });
-
 
 
     const fn = (inputId, id, max, standard) => {
@@ -211,8 +265,40 @@
         location.href="/reserve/save?roomId=" + roomId +"&checkInDate=" + checkInDate +"&checkOutDate=" + checkOutDate + "&persons=" + persons + "&addPrice=" + addPrice;
     }
     
-    const wait_fn = () => {
-
+    const wait_fn = (id) => {
+        $("#modal-reserve"+id).modal("show")
     }
+
+    const wait_save_fn = (id, roomId, persons) => {
+        const reserveP = document.getElementById("reserve-p"+id);
+        const memberId = document.getElementById("member-id").value;
+        const waitPersons = document.getElementById("wait-persons"+id).value;
+        if(waitPersons > persons || waitPersons<= 0){
+            reserveP.innerHTML = "인원 수가 확인바람";
+            reserveP.style.color = "red";
+        }else{
+            reserveP.innerHTML = "";
+            $.ajax({
+                url:"/reserve/wait",
+                data:{
+                    reserveId : id,
+                    memberId,
+                    persons: waitPersons
+                },
+                type:"post",
+                success:function (data){
+                    console.log(data)
+                    $("#modal-reserve"+id).modal("hide")
+                }
+            })
+        }
+    }
+
+
+
+    function isNumber(item){
+        item.value=item.value.replace(/[^0-9]/g,'');
+    }
+
 </script>
 </html>
