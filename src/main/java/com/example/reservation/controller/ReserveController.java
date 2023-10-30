@@ -3,6 +3,7 @@ package com.example.reservation.controller;
 import com.example.reservation.dto.ReserveDTO;
 import com.example.reservation.dto.ReserveWaitDTO;
 import com.example.reservation.dto.RoomDTO;
+import com.example.reservation.service.MessageService;
 import com.example.reservation.entity.ReserveWaitEntity;
 import com.example.reservation.service.ReserveService;
 import com.example.reservation.service.ReserveWaitService;
@@ -23,6 +24,9 @@ public class ReserveController {
     private final ReserveService reserveService;
     private final ReserveWaitService reserveWaitService;
     private final RoomService roomService;
+
+    private final MessageService messageService;  // 추가
+
 
     @GetMapping
     public String book() {
@@ -69,4 +73,5 @@ public class ReserveController {
         model.addAttribute("addPrice", addPrice);
         return "reservePages/pay";
     }
+
 }

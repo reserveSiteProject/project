@@ -263,6 +263,7 @@
         const checkOutDate = document.getElementById("input-end").value;
         const addPrice = document.getElementById("input-price"+roomId).value; // 추가금액
         location.href="/reserve/save?roomId=" + roomId +"&checkInDate=" + checkInDate +"&checkOutDate=" + checkOutDate + "&persons=" + persons + "&addPrice=" + addPrice;
+        // location.href="/reserve/trigger-message";
     }
     
     const wait_fn = (id) => {
