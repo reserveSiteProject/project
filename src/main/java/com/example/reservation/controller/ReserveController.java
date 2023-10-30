@@ -2,6 +2,7 @@ package com.example.reservation.controller;
 
 import com.example.reservation.dto.ReserveDTO;
 import com.example.reservation.dto.RoomDTO;
+import com.example.reservation.service.MessageService;
 import com.example.reservation.service.ReserveService;
 import com.example.reservation.service.RoomService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,9 @@ import java.util.List;
 public class ReserveController {
     private final ReserveService reserveService;
     private final RoomService roomService;
+
+    private final MessageService messageService;  // 추가
+
 
     @GetMapping
     public String book() {
@@ -59,4 +63,5 @@ public class ReserveController {
         model.addAttribute("addPrice", addPrice);
         return "reservePages/pay";
     }
+
 }
