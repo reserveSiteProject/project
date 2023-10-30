@@ -1,9 +1,12 @@
 package com.example.reservation.controller;
 
 import com.example.reservation.dto.ReserveDTO;
+import com.example.reservation.dto.ReserveWaitDTO;
 import com.example.reservation.dto.RoomDTO;
 import com.example.reservation.service.MessageService;
+import com.example.reservation.entity.ReserveWaitEntity;
 import com.example.reservation.service.ReserveService;
+import com.example.reservation.service.ReserveWaitService;
 import com.example.reservation.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +22,7 @@ import java.util.List;
 @RequestMapping("/reserve")
 public class ReserveController {
     private final ReserveService reserveService;
+    private final ReserveWaitService reserveWaitService;
     private final RoomService roomService;
 
     private final MessageService messageService;  // 추가
@@ -41,9 +45,15 @@ public class ReserveController {
                                    @RequestParam("checkOutDate") String checkOutDate) {
         System.out.println("roomId = " + roomId + ", checkInDate = " + checkInDate + ", checkOutDate = " + checkOutDate);
         ReserveDTO reserveDTO = reserveService.find(roomId, checkInDate, checkOutDate);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(reserveDTO, HttpStatus.OK);
     }
 
+    @PostMapping("/wait")
+    public ResponseEntity waitSave(@ModelAttribute ReserveWaitDTO reserveWaitDTO){
+        System.out.println("reserveWaitDTO = " + reserveWaitDTO);
+        reserveWaitService.save(reserveWaitDTO);
+        return new ResponseEntity<>(reserveWaitDTO, HttpStatus.OK);
+    }
 
 
     @GetMapping("/save")
