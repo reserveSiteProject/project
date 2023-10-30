@@ -37,6 +37,9 @@ public class ReserveEntity extends BaseEntity{
     @OneToOne(mappedBy = "reserveEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private ReserveStatusEntity reserveStatusEntity;
 
+    @OneToOne(mappedBy = "reserveEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private ReserveStatusEntity reserveWaitEntity;
+
     @ManyToOne(fetch = FetchType.LAZY) // 지금 클래스 기준
     @JoinColumn(name="member_id")
     private MemberEntity memberEntity;
