@@ -18,10 +18,10 @@
 
         #top-section {
             height: 70vh;
-            background-image: url('https://image.harpersbazaar.co.kr/wp-content/uploads/2019/07/%EC%98%AC%EB%9D%BC%EC%9A%B4%EB%93%9C%EC%9B%90-12.jpg');
+            background-image: url('/images/헤더 배경사진.jpg'); /* 여기에 원하는 이미지의 URL을 넣어주세요 */
             background-size: cover;
             background-position: center;
-            overflow: hidden;
+            /*overflow: hidden;*/
             clip-path: polygon(
                     0% 0%,
                     100% 0%,
@@ -37,30 +37,38 @@
             z-index: 1;
         }
 
-        h1 {
-            font-size: 24px;
-            background-color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: relative;
-            margin-bottom: 20px;
-            transition: opacity 1s 1s;
-            z-index: 2; /* 이 값을 중간 값으로 조정합니다. */
-        }
 
+
+        h1 {
+            font-family: 'Helvetica Neue', sans-serif; /* 인스타그램에서 사용하는 폰트 스타일 */
+            font-size: 26px;
+            color: #333; /* 조금 더 빈티지한 감성의 글씨 색 */
+            background-color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08); /* 약간의 그림자 효과 강화 */
+            position: relative;
+            margin-bottom: 25px;
+            text-align: center; /* 중앙 정렬로 조금 더 모던한 느낌 부여 */
+            transition: opacity 1s;
+        }
 
         #visit-info {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 10px 20px;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 2;
-            opacity: 0;
-            transition: opacity 1.5s 1.5s;
-            z-index: 3; /* 이 값을 중간 값으로 조정합니다. */
-
+            font-family: 'Helvetica Neue', sans-serif; /* 인스타그램에서 사용하는 폰트 스타일 */
+            color: #666; /* 조금 더 부드러운 글씨 색 */
+            background-color: rgba(255, 255, 255, 0.9); /* 투명도 조금 높여서 내용이 더 잘 보이게 */
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 8px rgba(0, 0, 0, 0.08); /* 약간의 그림자 효과 강화 */
+            text-align: left; /* 왼쪽 정렬 */
+            transition: opacity 1.5s;
         }
+
+        #visit-info .label {
+            font-weight: bold; /* 텍스트를 굵게 표시 */
+        }
+
+
 
         #content {
             width: 1200px;  /* 추가 */
@@ -100,10 +108,11 @@
 <div id="top-section"></div>
 <h1>혼저옵서예 오시는 길</h1>
 <div id="visit-info">
-    상세주소 : 제주특별자치도 제주시 애월읍 해안로 152<br>
-    네비게이션 검색어 : 제주 애월해안로 팬션<br>
-    대중교통 이용 시 : 제주시외버스터미널에서 702번 버스 이용, 애월해안로 하차
+    <span class="label">상세주소</span> : 제주특별자치도 제주시 애월읍 해안로 152<br>
+    <span class="label">네비게이션 검색어</span> : 제주 애월해안로 팬션<br>
+    <span class="label">대중교통 이용 시</span> : 제주시외버스터미널에서 702번 버스 이용, 애월해안로 하차
 </div>
+
 <div id="content">
     <div id="staticMap" style="width:1200px;height:650px;"></div>
 </div>
@@ -113,7 +122,7 @@
 <script>
     var marker = {
         position: new kakao.maps.LatLng(33.4565, 126.3087),
-        text: '애월 해변 팬션 위치!'
+        text: '혼저옵서예는 여기!'
     };
 
     var staticMapContainer = document.getElementById('staticMap'),

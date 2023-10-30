@@ -2,9 +2,148 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>펜션 근처 관광지 추천</title>
+
 </head>
 <body>
-<h1>관광지 소개 페이지</h1>
+<style>
+    /*한라산:*/
+    /*![한라산](1.한라산: ~~~~)*/
+
+    /*한라산은 제주도의 중심에 위치한 화산이며, 4계절 간의 다양한 풍경을 자랑합니다. 봄에는 아름다운 꽃들로 가득하고, 겨울에는 눈으로 덮여 환상적인 풍경을 보여줍니다.*/
+    /*성산일출봉:*/
+    /*![성산일출봉](2.성산일출봉: ~~~~)*/
+
+    /*성산일출봉은 세계 자연 유산으로 지정된 제주의 대표적인 명소 중 하나입니다. 일출을 볼 수 있는 최적의 장소로 알려져 있습니다.*/
+    /*만장굴:*/
+    /*![만장굴](3.만장굴: ~~~~)*/
+
+    /*만장굴은 지하에 형성된 용암 동굴로, 다양한 동굴 특성과 아름다운 자연의 모습을 감상할 수 있습니다.*/
+    /*올레길:*/
+    /*![올레길](4.올레길: ~~~~)*/
+
+    /*제주 올레길은 제주의 아름다운 해안선을 따라 연결된 여러 트레킹 코스로 구성되어 있습니다. 각길마다 독특한 풍경과 스토리를 가지고 있습니다.*/
+    /*정방폭포:*/
+
+    /*제주도 시내 중심부에 위치한 폭포로, 제주 3대 폭포 중 하나입니다. 그 아름다운 모습 때문에 많은 관광객들이 찾습니다.*/
+    /*                         비자림:*/
+
+    /*                         나무들로 둘러싸인 숲길로, 조용한 산책을 즐기기에 좋은 장소입니다. 자연의 아름다움과 힐링을 경험할 수 있습니다.*/
+    /*헬로키티 아일랜드:*/
+
+    /*헬로키티를 주제로 한 테마파크로, 아이들을 동반한 가족들에게 인기가 많습니다. 다양한 체험 프로그램과 전시를 즐길 수 있습니다.*/
+    /*우도:*/
+
+    /*제주도에서 배로 단 15분 거리에 있는 작은 섬입니다. 해변의 아름다운 풍경과 바다 위를 달리는 자전거 길이 유명합니다.*/
+
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    header, nav, main, footer {
+        padding: 20px;
+    }
+
+
+    img {
+        border: solid 2px;
+        border-bottom-color: #ffe;
+        border-left-color: #eed;
+        border-right-color: #eed;
+        border-top-color: #ccb;
+        max-height: 100%;
+        max-width: 100%;
+    }
+
+    .frame {
+        background-color: #ddc;
+        border: solid 5vmin #eee;
+        border-bottom-color: #fff;
+        border-left-color: #eee;
+        border-radius: 2px;
+        border-right-color: #eee;
+        border-top-color: #ddd;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25) inset, 0 5px 10px 5px rgba(0, 0, 0, 0.25);
+        box-sizing: border-box;
+        display: inline-block;
+        margin: 10vh 10vw;
+        height: 50vh;
+        padding: 2vmin;
+        position: relative;
+        text-align: center;
+    }
+
+    .frame:before {
+        border-radius: 2px;
+        bottom: -2vmin;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.25) inset;
+        content: "";
+        left: -2vmin;
+        position: absolute;
+        right: -2vmin;
+        top: -2vmin;
+    }
+
+    .frame:after {
+        border-radius: 2px;
+        bottom: -2.5vmin;
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.25);
+        content: "";
+        left: -2.5vmin;
+        position: absolute;
+        right: -2.5vmin;
+        top: -2.5vmin;
+    }
+
+</style>
+<header>펜션 근처 관광지 추천</header>
+<nav>...카테고리나 필터링 옵션...</nav>
+<main>
+    <div class="frame">
+        <img src="https://cdn.pixabay.com/photo/2016/12/11/18/10/apartment-1899964_1280.jpg" alt="Mona Lisa" />
+    </div>
+    <div class="frame">
+        <img src="https://media.istockphoto.com/id/1282830922/ko/%EC%82%AC%EC%A7%84/%ED%95%9C%EA%B5%AD%EC%9D%98-%EA%B0%80%EC%9D%84-%ED%95%9C%EB%9D%BC%EC%82%B0-%EA%B5%AD%EB%A6%BD%EA%B3%B5%EC%9B%90.jpg?s=2048x2048&w=is&k=20&c=5fa-rYdf_EUvexT5gK7B9KNqko-xjLy_IIQhn9jy86w=" alt="Mona Lisa" />
+    </div>
+    <div class="frame">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/71829/mona-lisa.jpg" alt="Mona Lisa" />
+    </div>
+    <div class="frame">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/71829/mona-lisa.jpg" alt="Mona Lisa" />
+    </div>
+    <div class="frame">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/71829/mona-lisa.jpg" alt="Mona Lisa" />
+    </div>
+    <div class="frame">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/71829/mona-lisa.jpg" alt="Mona Lisa" />
+    </div>
+    <div class="frame">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/71829/mona-lisa.jpg" alt="Mona Lisa" />
+    </div>
+    <div class="frame">
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/71829/mona-lisa.jpg" alt="Mona Lisa" />
+    </div>
+    <!-- 나머지 4곳도 추가 -->
+</main>
+<footer>펜션 연락처 및 기타 정보</footer>
+<script>
+    window.addEventListener('scroll', function() {
+    let scrollPos = window.scrollY;
+    let boxes = document.querySelectorAll('.box');
+
+    boxes.forEach(box => {
+    let boxPos = box.offsetTop;
+
+    if (scrollPos + window.innerHeight > boxPos + box.offsetHeight / 2) {
+    box.classList.add('centered');
+    } else {
+    box.classList.remove('centered');
+    }
+    });
+    });
+</script>
 </body>
 </html>
