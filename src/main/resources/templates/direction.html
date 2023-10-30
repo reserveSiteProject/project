@@ -1,10 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <title>혼저옵서예 오시는 길</title>
+    <style>
+        body, html {
+            display: flex; /* 추가 */
+            flex-direction: column; /* 추가 */
+            align-items: center; /* 추가 */
+            justify-content: center; /* 추가 */
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        #top-section {
+            height: 70vh;
+            background-image: url('https://image.harpersbazaar.co.kr/wp-content/uploads/2019/07/%EC%98%AC%EB%9D%BC%EC%9A%B4%EB%93%9C%EC%9B%90-12.jpg');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+            clip-path: polygon(
+                    0% 0%,
+                    100% 0%,
+                    100% 80%,
+                    85% 85%,
+                    70% 80%,
+                    55% 85%,
+                    40% 80%,
+                    25% 85%,
+                    10% 80%,
+                    0% 85%
+            );
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 24px;
+            background-color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            margin-bottom: 20px;
+            transition: opacity 1s 1s;
+            z-index: 2; /* 이 값을 중간 값으로 조정합니다. */
+        }
+
+
+        #visit-info {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 1.5s 1.5s;
+            z-index: 3; /* 이 값을 중간 값으로 조정합니다. */
+
+        }
+
+        #content {
+            width: 1200px;  /* 추가 */
+            background-color: #f6f6f6;
+            padding: 20px 0 50px 0;   /* padding을 조절합니다 */
+            position: relative;
+            z-index: 4;
+        }
+
+
+        #staticMap {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 1s 0.5s;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+
+    </style>
 </head>
+
 <body>
-<h1>오시는길 페이지</h1>
+
+<div id="top-section"></div>
+<h1>혼저옵서예 오시는 길</h1>
+<div id="visit-info">
+    상세주소 : 제주특별자치도 제주시 애월읍 해안로 152<br>
+    네비게이션 검색어 : 제주 애월해안로 팬션<br>
+    대중교통 이용 시 : 제주시외버스터미널에서 702번 버스 이용, 애월해안로 하차
+</div>
+<div id="content">
+    <div id="staticMap" style="width:1200px;height:650px;"></div>
+</div>
+
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8b03857291ccb65cafd06f6e07359e84"></script>
+<script>
+    var marker = {
+        position: new kakao.maps.LatLng(33.4565, 126.3087),
+        text: '애월 해변 팬션 위치!'
+    };
+
+    var staticMapContainer = document.getElementById('staticMap'),
+        staticMapOption = {
+            center: new kakao.maps.LatLng(33.4565, 126.3087),
+            level: 3,
+            marker: marker
+        };
+
+    var staticMap = new kakao.maps.StaticMap(staticMapContainer, staticMapOption);
+
+    window.onload = function() {
+
+        // h1Element.style.transform = "translateX(-50%)";
+        document.getElementById("staticMap").style.opacity = "1";
+        document.querySelector("h1").style.opacity = "1";
+        document.getElementById("visit-info").style.opacity = "1";
+    };
+
+</script>
+
 </body>
+
 </html>
