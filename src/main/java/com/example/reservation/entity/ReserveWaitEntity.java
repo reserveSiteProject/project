@@ -10,6 +10,7 @@ import javax.persistence.*;
 
 @Setter(AccessLevel.PRIVATE)
 @Getter
+@ToString
 @Entity
 
 @Table(name = "reserve_wait_table")

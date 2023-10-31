@@ -2,6 +2,7 @@ package com.example.reservation.service;
 
 import com.example.reservation.dto.ReserveDTO;
 import com.example.reservation.dto.ReserveStatusDTO;
+import com.example.reservation.dto.ReserveWaitDTO;
 import com.example.reservation.dto.RoomDTO;
 import com.example.reservation.entity.*;
 import com.example.reservation.repository.*;
@@ -22,6 +23,8 @@ public class ReserveService {
     private final RoomFileRepository roomFileRepository;
     private final MemberRepository memberRepository;
     private final ReserveStatusRepository reserveStatusRepository;
+
+
 
     @Transactional
     public Page<ReserveDTO> findAll(int page, String q, String type, int list, String checkInDate) {
@@ -74,10 +77,12 @@ public class ReserveService {
         String checkInDatePattern = "%" + checkInDate + "%";
         String checkOutDatePattern = "%" + checkOutDate + "%";
         RoomEntity roomEntity = roomRepository.findById(roomId).orElseThrow(() -> new NoSuchElementException());
-
         ReserveEntity reserveEntity = reserveRepository.findDate(checkInDate, checkOutDate, roomEntity, checkInDatePattern, checkOutDatePattern);
+        System.out.println("zz" + reserveEntity);
         return ReserveDTO.toDTO(reserveEntity);
+
     }
+
     @Transactional
     public void update(Long id) {
         ReserveEntity reserveEntity = reserveRepository.findById(id).get();
@@ -98,4 +103,19 @@ public class ReserveService {
         reserveStatusRepository.save(reserveStatusEntity);
     }
 
+
+    @Transactional
+    public ReserveDTO findByIdAndMemberEntity(Long id, Long memberId) {
+        MemberEntity memberEntity = memberRepository.findById(memberId).orElseThrow(() -> new NoSuchElementException());
+        return ReserveDTO.toDTO(reserveRepository.findByIdAndMemberEntity(id, memberEntity)
+                .orElseThrow(() -> new NoSuchElementException()));
+
+    }
+
+
+    @Transactional
+    public ReserveDTO findById(Long reserveId) {
+        System.out.println("reserveId = " + reserveId);
+        return ReserveDTO.toDTO(reserveRepository.findById(reserveId).orElseThrow(() -> new NoSuchElementException()));
+    }
 }

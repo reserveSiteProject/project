@@ -3,6 +3,8 @@ package com.example.reservation.controller;
 import com.example.reservation.dto.ReserveDTO;
 import com.example.reservation.dto.ReserveWaitDTO;
 import com.example.reservation.dto.RoomDTO;
+import com.example.reservation.entity.ReserveEntity;
+import com.example.reservation.repository.ReserveRepository;
 import com.example.reservation.service.MessageService;
 import com.example.reservation.entity.ReserveWaitEntity;
 import com.example.reservation.service.ReserveService;
@@ -16,12 +18,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/reserve")
 public class ReserveController {
     private final ReserveService reserveService;
+    private final ReserveRepository reserveRepository;
     private final ReserveWaitService reserveWaitService;
     private final RoomService roomService;
 
@@ -48,17 +52,20 @@ public class ReserveController {
         return new ResponseEntity<>(reserveDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/wait")
-    public ResponseEntity waitSave(@ModelAttribute ReserveWaitDTO reserveWaitDTO){
-        ReserveWaitEntity reserveWaitEntity = reserveWaitService.findByReserveEntityAndMemberEntity(reserveWaitDTO);
-        if(reserveWaitEntity!=null){
-            reserveWaitService.save(reserveWaitDTO);
-            return new ResponseEntity<>(reserveWaitDTO, HttpStatus.OK);
-        }else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
+    @GetMapping("/find")
+    public ResponseEntity findByIdAndMemberEntity(@RequestParam("id") Long id, @RequestParam("memberId") Long memberId) {
+        ReserveDTO reserveDTO = reserveService.findByIdAndMemberEntity(id, memberId);
+        return new ResponseEntity<>(reserveDTO, HttpStatus.OK);
     }
+
+    @GetMapping("/wait")
+    public ResponseEntity wait(@ModelAttribute ReserveWaitDTO reserveWaitDTO) {
+        System.out.println("reserveWaitDTO123123123123 = " + reserveWaitDTO);
+        reserveWaitDTO = reserveWaitService.findBy(reserveWaitDTO);
+
+        return new ResponseEntity<>(reserveWaitDTO, HttpStatus.OK);
+    }
+
 
 
     @GetMapping("/save")
