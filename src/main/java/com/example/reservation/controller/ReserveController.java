@@ -50,9 +50,14 @@ public class ReserveController {
 
     @PostMapping("/wait")
     public ResponseEntity waitSave(@ModelAttribute ReserveWaitDTO reserveWaitDTO){
-        System.out.println("reserveWaitDTO = " + reserveWaitDTO);
-        reserveWaitService.save(reserveWaitDTO);
-        return new ResponseEntity<>(reserveWaitDTO, HttpStatus.OK);
+        ReserveWaitEntity reserveWaitEntity = reserveWaitService.findByReserveEntityAndMemberEntity(reserveWaitDTO);
+        if(reserveWaitEntity!=null){
+            reserveWaitService.save(reserveWaitDTO);
+            return new ResponseEntity<>(reserveWaitDTO, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
 
 
