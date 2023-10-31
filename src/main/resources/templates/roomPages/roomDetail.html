@@ -1,10 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap" rel="stylesheet">
+    <th:block th:replace="~{component/config :: config}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/imageSlide/imageSlide.css}">
+
 </head>
 <body>
-
+<div class="container">
+    <h1>room</h1>
+    <h2>디럭스 룸</h2>
+</div>
+<main id="main">
+    <div class="slider__wrap">
+        <div class="slider__img"></div>
+        <div class="slider__thumb"></div>
+        <div class="slider__btn">
+            <a href="#" class="prev" title="이전이미지"><</a>
+            <a href="#" class="next" title="다음이미지">></a>
+        </div>
+    </div>
+</main>
+<h3>ㅎㅎㅎㅎㅎㅎ</h3>
 </body>
+<script th:inline="javascript">
+    var images = [];
+    let currentIndex = 0;
+
+    [[${roomDTO.storedFileName}]].forEach(function (fileName) {
+        images.push(fileName);
+    });
+
+    function imageSlider(parent, images) {
+        let currentIndex = 0;
+
+        let slider = {
+            parent: parent,
+            images: parent.querySelector(".slider__img"),
+            thumbnails: parent.querySelector(".slider__thumb"),
+            prevBtn: parent.querySelector(".slider__btn .prev"),
+            nextBtn: parent.querySelector(".slider__btn .next")
+        };
+
+        // 이미지 출력하기
+        slider.images.innerHTML = images.map((image, index) => {
+            return `<img src="/upload/${image}" alt="이미지${index}">`;
+        }).join("");
+
+        // 이미지 활성화(active)하기
+        let imageNodes = slider.images.querySelectorAll("img");
+        imageNodes[currentIndex].classList.add("active");
+
+// 썸네일 이미지 출력하기
+        slider.thumbnails.innerHTML = images.map((image, index) => {
+            return `<img src="/upload/${image}" alt="썸네일${index}">`;
+        }).join("");
+
+        // 썸네일 활성화(active)하기
+        let thumbnailNodes = slider.thumbnails.querySelectorAll("img");
+        thumbnailNodes[currentIndex].classList.add("active");
+
+        thumbnailNodes.forEach((thumb, index) => {
+            thumb.addEventListener("click", function () {
+                thumbnailNodes[currentIndex].classList.remove("active");
+                thumbnailNodes[index].classList.add("active");
+
+                imageNodes[currentIndex].classList.remove("active");
+                currentIndex = index;
+                imageNodes[currentIndex].classList.add("active");
+            });
+        });
+
+        // 왼쪽 버튼 클릭하기
+        slider.prevBtn.addEventListener("click", () => {
+            imageNodes[currentIndex].classList.remove("active");
+            currentIndex--;
+
+            if (currentIndex < 0) currentIndex = images.length - 1;
+
+            imageNodes[currentIndex].classList.add("active");
+
+            thumbnailNodes[currentIndex].classList.remove("active");
+            thumbnailNodes[currentIndex].classList.add("active");
+        });
+
+        // 오른쪽 버튼 클릭하기
+        slider.nextBtn.addEventListener("click", () => {
+            imageNodes[currentIndex].classList.remove("active");
+            thumbnailNodes[currentIndex].classList.remove("active");
+
+            currentIndex = (currentIndex + 1) % images.length;
+
+            imageNodes[currentIndex].classList.add("active");
+            thumbnailNodes[currentIndex].classList.add("active");
+        });
+    }
+
+    imageSlider(document.querySelector(".slider__wrap"), images);
+</script>
 </html>
+
+<!--    <table border="1" cellspacing="0" cellpadding="7" style="border-collapse:collapse" bordercolor="CCCCCC"-->
+<!--           width="100%">-->
+<!--        <tbody>-->
+<!--        <tr>-->
+<!--            <td id="app_td1" style="width:25%;">내부시설</td>-->
+<!--            <td style="font-family:돋움;font-size:12px;color:#555555;">* 퀸 사이즈 라텍스 매트리스와 오리 털 이불, 100% 순 면 침구류<br> *-->
+<!--                제습기<br> * 70인치 대형TV 와 넷플릭스<br> * 원두와 핸드드립 세트<br> * 빌트인 세탁기, 밥솥 및 식기류<br> * 커피포트 와 토스트기<br> * 블루투스-->
+<!--                스피커<br> * 소금, 후추, 설탕, 간장, 오일등 조미료 세트<br> * 샴푸, 린스, 바디오일, 치약등 욕실비품(칫솔, 로션등은 구비되어 있지 않습니다.)-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td id="app_td1">내부구조</td>-->
+<!--            <td style="font-family:돋움;font-size:12px;color:555555">3층 건물 중 1층 원룸 형 객실에 마당을 함께 사용할 수 있는 룸 입니다.</td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->

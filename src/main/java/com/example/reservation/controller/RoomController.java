@@ -29,7 +29,7 @@ public class RoomController {
     public String detail(Model model,
                          @PathVariable("id") Long id){
         RoomDTO roomDTO = roomService.findById(id);
-        model.addAttribute("room", roomDTO);
+        model.addAttribute("roomDTO", roomDTO);
         return "roomPages/roomDetail";
     }
 }

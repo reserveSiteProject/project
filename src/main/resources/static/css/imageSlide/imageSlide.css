@@ -1,0 +1,103 @@
+.h1 {
+    font-family: 'Hi Melody', sans-serif;
+}
+
+.h2 {
+    font-family: 'Hi Melody', sans-serif;
+}
+
+.container {
+    text-align: center;
+    margin-top: 10px;
+}
+/* slider__wrap */
+.slider__wrap {
+    position: absolute; /* 절대 위치로 설정 */
+    left: 50%; /* 가로 가운데 정렬 */
+    top: 50%; /* 세로 가운데 정렬 */
+    transform: translate(-50%, -50%); /* 가운데 정렬을 위한 트랜스폼 */
+    width: 1000px; /* 가로 너비 800px */
+    height: 600px; /* 세로 높이 450px */
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.4); /* 그림자 효과 */
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/* slider__img */
+.slider__img {
+    position: relative; /* 상대 위치로 설정 */
+    width: 100%; /* 가로 너비 100%로 화면에 꽉 차도록 설정 */
+    height: 100%; /* 세로 높이 100%로 화면에 꽉 차도록 설정 */
+    overflow: hidden; /* 넘치는 부분 숨기기 */
+    display: flex; /* 내부 요소들을 가운데 정렬하기 위해 Flexbox를 사용합니다. */
+    justify-content: center; /* 가로 가운데 정렬 */
+    align-items: center; /* 세로 가운데 정렬 */
+}
+
+/* slider__img img */
+.slider__img img {
+    position: absolute; /* 절대 위치로 설정 */
+    width: 100%; /* 이미지 크기를 1.5배 확대 */
+    height: 100%; /* 이미지 크기를 1.5배 확대 */
+    object-fit: cover; /* 이미지 비율 유지하며 컨테이너에 맞게 조절 */
+    opacity: 0; /* 초기에 이미지는 투명 */
+    transform: scale(1.1); /* 초기에 이미지 크기를 약간 확대 */
+    transition: all 500ms ease-in-out; /* 모든 변화에 0.5초 동안 부드러운 효과 적용 */
+}
+
+/* slider__img img.active */
+.slider__img img.active {
+    opacity: 1; /* 활성 이미지의 투명도를 1로 설정하여 표시 */
+    transform: scale(1); /* 활성 이미지의 크기를 기본 크기로 설정 */
+}
+
+/* slider__thumb */
+.slider__thumb {
+    position: absolute; /* 절대 위치로 설정 */
+    left: 50%; /* 가로 가운데 정렬 */
+    top: 97%; /* 세로 가운데 정렬 (아래로 90% 위치) */
+    transform: translate(-50%, -50%); /* 가운데 정렬을 위한 트랜스폼 */
+    width: 100px; /* 가로 너비 100px */
+    display: flex; /* 내부 요소들을 가로로 나란히 배치 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    gap: 10px; /* 내부 요소 사이의 간격 10px */
+}
+
+/* slider__thumb img */
+.slider__thumb img {
+    cursor: pointer; /* 커서를 포인터로 변경 */
+    border: 2px solid transparent; /* 초기에 투명한 테두리 설정 */
+    max-width: 100%; /* 이미지 최대 너비 100% */
+    height: auto; /* 이미지 높이를 가로 비율에 맞게 조절 */
+}
+
+/* slider__thumb img.active */
+.slider__thumb img.active {
+    border: 2px solid #fff; /* 활성 이미지에 흰색 테두리 적용 */
+}
+
+/* slider__btn a */
+.slider__btn a {
+    position: absolute; /* 절대 위치로 설정 */
+    top: 50%; /* 세로 가운데 정렬 */
+    width: 50px; /* 가로 너비 50px */
+    height: 50px; /* 세로 높이 50px */
+    border-radius: 50%; /* 원 모양으로 만듭니다. */
+    display: flex; /* 내부 요소들을 가로로 나란히 배치 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    font-size: 12px; /* 글꼴 크기 12px */
+    color: #fff; /* 글꼴 색상을 흰색으로 설정 */
+    background-color: rgba(0, 0, 0, 0.2); /* 배경색 지정 (알파값을 사용한 반투명 효과) */
+    transition: all 300ms ease-in-out; /* 모든 변화에 0.3초 동안 부드러운 효과 적용 */
+}
+
+/* slider__btn a.next */
+.slider__btn a.next {
+    right: 0; /* 다음 버튼을 오른쪽에 배치 */
+}
+
+/* slider__btn a:hover */
+.slider__btn a:hover {
+    background-color: rgba(0, 0, 0, 0.5); /* 버튼에 마우스를 올리면 배경색이 더 어두워지도록 설정 */
+}
