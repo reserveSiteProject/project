@@ -33,10 +33,12 @@
 
     .frame-description {
         position: absolute;
+        /*padding-top: 30px; !* 상단에 30px의 패딩 추가 (값은 조절 가능) *!*/
         bottom: 10px; /* Adjust based on your text length or style */
         width: calc(100% - 4vmin); /* 프레임의 padding과 border 크기만큼 빼줍니다 */
         background: #f9f9f9; /* Optional: Add a background to make the text readable */
         padding: -100px;
+        /*padding: 30px 0; !* 상단과 하단에 30px의 패딩 추가 *!*/
         text-align: center;
         border-radius: 5px;
         transform: translateY(30px); /* 시작 시 아래로 30px 내려가 있게 설정 */
@@ -56,6 +58,7 @@
     .label {
         font-weight: bold;
         font-size: 25px;
+        margin-bottom: 15px; /* 아래 마진을 추가해주었습니다. */
     }
 
     .frame {
@@ -115,7 +118,6 @@
     }
 
 </style>
-<header>펜션 근처 관광지 추천</header>
 
 <main>
     <div class="frame-container">
@@ -201,7 +203,6 @@
     </div>
                             </div>
 </main>
-<footer>펜션 연락처 및 기타 정보</footer>
 <script>
 
     window.addEventListener('scroll', function() {
