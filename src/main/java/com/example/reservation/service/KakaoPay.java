@@ -4,21 +4,15 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.NoSuchElementException;
 
-import com.example.reservation.dto.KakaoPayApprovalVO;
-import com.example.reservation.dto.KakaoPayCancelVO;
-import com.example.reservation.dto.KakaoPayReadyVO;
-import com.example.reservation.dto.ReserveDTO;
-import com.example.reservation.entity.MemberEntity;
-import com.example.reservation.entity.ReserveEntity;
-import com.example.reservation.entity.RoomEntity;
-import com.example.reservation.repository.MemberRepository;
-import com.example.reservation.repository.ReserveRepository;
-import com.example.reservation.repository.RoomRepository;
+import com.example.reservation.dto.*;
+import com.example.reservation.entity.*;
+import com.example.reservation.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
@@ -39,18 +33,22 @@ public class KakaoPay {
     private final ReserveRepository reserveRepository;
     private final MemberRepository memberRepository;
     private final RoomRepository roomRepository;
-
+    private final ReserveStatusRepository reserveStatusRepository;
+    private final PaymentRepository paymentRepository;
+    @Transactional
     public String kakaoPayReady(ReserveDTO reserveDTO) {
-        System.out.println("reserveDTO = " + reserveDTO);
+        // 예약테이블에 저장처리
         Long memberId = (Long) reserveDTO.getMemberId();
         Long roomId = (Long) reserveDTO.getRoomId();
         RoomEntity roomEntity = roomRepository.findById(roomId).orElseThrow(() -> new NoSuchElementException());
         MemberEntity memberEntity = memberRepository.findById(memberId).orElseThrow(() -> new NoSuchElementException());
-        System.out.println(roomEntity.getId());
-        System.out.println(memberEntity.getId());
         ReserveEntity reserveEntity = ReserveEntity.toSaveEntity(reserveDTO, memberEntity, roomEntity);
-        System.out.println("reserveEntity = " + reserveEntity);
         ReserveEntity save = reserveRepository.save(reserveEntity);
+
+        //예약 상태 테이블 저장 처리
+        ReserveStatusEntity reserveStatusEntity = ReserveStatusEntity.toEntity(save);
+        reserveStatusRepository.save(reserveStatusEntity);
+
         RestTemplate restTemplate = new RestTemplate();
         // 서버로 요청할 Header
         HttpHeaders headers = new HttpHeaders();
@@ -112,7 +110,7 @@ public class KakaoPay {
         params.add("partner_order_id", "1001");
         params.add("partner_user_id", "gorany");
         params.add("pg_token", pg_token);
-        params.add("total_amount", "2100");
+        params.add("total_amount", "20000");
 
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
 
@@ -167,5 +165,12 @@ public class KakaoPay {
         }
 
         return null;
+    }
+
+    public Long paymentSave(PaymentDTO paymentDTO) {
+        ReserveEntity reserveEntity = reserveRepository.findById(paymentDTO.getMemberId()).orElseThrow(() -> new NoSuchElementException());
+        MemberEntity memberEntity = memberRepository.findById(paymentDTO.getMemberId()).orElseThrow(() -> new NoSuchElementException());
+        PaymentEntity paymentEntity = PaymentEntity.toEntity(paymentDTO, reserveEntity, memberEntity);
+        return paymentRepository.save(paymentEntity).getId();
     }
 }

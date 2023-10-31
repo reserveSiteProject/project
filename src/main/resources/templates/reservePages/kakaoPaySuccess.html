@@ -1,23 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+  <th:block th:replace="~{component/config :: config}"></th:block>
 </head>
 <body>
 카카오페이 결제가 정상적으로 완료되었습니다.
 
-결제일시:     [[${info.approved_at}]]<br/>
-주문번호:    [[${info.partner_order_id}]]<br/>
-상품명:    [[${info.item_name}]]<br/>
-상품수량:    [[${info.quantity}]]<br/>
-결제금액:    [[${info.amount.total}]]<br/>
-결제방법:    [[${info.payment_method_type}]]<br/>
-<form method="post" action="/KakaoPayCancle">
-  <button>카카오페이 취소하기</button>
-</form>
+<!--결제일시:     [[${info.approved_at}]]<br/>-->
+<!--주문번호:    [[${info.partner_order_id}]]<br/>-->
+<!--상품명:    [[${info.item_name}]]<br/>-->
+<!--상품수량:    [[${info.quantity}]]<br/>-->
+<!--결제금액:    [[${info.amount.total}]]<br/>-->
+<!--결제방법:    [[${info.payment_method_type}]]<br/>-->
+<!--<form method="post" action="/payment/save">-->
+<!--  <input type="hidden" name="totalPrice" th:value="${info.amount.total}">-->
+<!--  <input type="hidden" name="paymentAt" th:value="${info.approved_at}">-->
+<!--  <input type="hidden" name="paymentBy" th:value="${info.payment_method_type}">-->
+<!--  <input type="hidden" name="memberId" th:value="${session.memberDTO.getId()}">-->
+<!--  -->
+<!--</form>-->
+<!--<h2>[[${info}]]</h2>-->
+<input type="button" th:onclick="paymentSave_fn()" th:value="메인으로">
 
 
-<h2>[[${info}]]</h2>
 </body>
+<script th:inline="javascript">
+  const paymentSave_fn = () =>{
+    const totalPrice = [[${info.amount.total}]];
+    const paymentAt = [[${info.approved_at}]];
+    const paymentBy = [[${info.payment_method_type}]];
+    const id = [[${session.memberDTO.getId()}]];
+    console.log(totalPrice);
+    console.log(paymentBy);
+    console.log(paymentAt);
+
+    $.ajax({
+      type : "post",
+      url : "/payment/save",
+      data : {
+        memberId: id,
+        totalPrice : totalPrice,
+        paymentAt : paymentAt,
+        paymentBy : paymentBy
+      },
+      success : function (data){
+        location.href="/";
+      },
+      error : function (error){
+        alert((error));
+      }
+
+    });
+  }
+</script>
 </html>
