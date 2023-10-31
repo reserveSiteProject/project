@@ -38,7 +38,7 @@ public class ReserveEntity extends BaseEntity{
     private ReserveStatusEntity reserveStatusEntity;
 
     @OneToOne(mappedBy = "reserveEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-    private ReserveStatusEntity reserveWaitEntity;
+    private ReserveWaitEntity reserveWaitEntity;
 
     @ManyToOne(fetch = FetchType.LAZY) // 지금 클래스 기준
     @JoinColumn(name="member_id")
@@ -58,6 +58,18 @@ public class ReserveEntity extends BaseEntity{
         reserveEntity.setCheckInDate(reserveDTO.getCheckInDate());
         reserveEntity.setCheckOutDate(reserveDTO.getCheckOutDate());
         reserveEntity.setPersons(reserveDTO.getPersons());
+        return reserveEntity;
+    }
+
+
+    public static ReserveEntity toUpdateEntity(ReserveDTO reserveDTO, MemberEntity memberEntity, RoomEntity roomEntity){
+        ReserveEntity reserveEntity = new ReserveEntity();
+        reserveEntity.setMemberEntity(memberEntity);
+        reserveEntity.setRoomEntity(roomEntity);
+        reserveEntity.setCheckInDate(reserveDTO.getCheckInDate());
+        reserveEntity.setCheckOutDate(reserveDTO.getCheckOutDate());
+        reserveEntity.setPersons(reserveDTO.getPersons());
+        reserveEntity.setId(reserveDTO.getId());
         return reserveEntity;
     }
 

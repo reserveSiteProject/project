@@ -4,10 +4,7 @@ import com.example.reservation.dto.ReserveDTO;
 import com.example.reservation.dto.ReserveStatusDTO;
 import com.example.reservation.dto.RoomDTO;
 import com.example.reservation.entity.*;
-import com.example.reservation.repository.MemberRepository;
-import com.example.reservation.repository.ReserveRepository;
-import com.example.reservation.repository.RoomFileRepository;
-import com.example.reservation.repository.RoomRepository;
+import com.example.reservation.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +21,7 @@ public class ReserveService {
     private final RoomRepository roomRepository;
     private final RoomFileRepository roomFileRepository;
     private final MemberRepository memberRepository;
+    private final ReserveStatusRepository reserveStatusRepository;
 
     @Transactional
     public Page<ReserveDTO> findAll(int page, String q, String type, int list, String checkInDate) {
@@ -70,10 +68,6 @@ public class ReserveService {
         return reserveRepository.save(reserveEntity).getId();
     }
 
-    public void deleteById(Long id) {
-        reserveRepository.deleteById(id);
-
-    }
 
     @Transactional
     public ReserveDTO find(Long roomId, String checkInDate, String checkOutDate) {
@@ -83,6 +77,25 @@ public class ReserveService {
 
         ReserveEntity reserveEntity = reserveRepository.findDate(checkInDate, checkOutDate, roomEntity, checkInDatePattern, checkOutDatePattern);
         return ReserveDTO.toDTO(reserveEntity);
+    }
+    @Transactional
+    public void update(Long id) {
+        ReserveEntity reserveEntity = reserveRepository.findById(id).get();
+        ReserveStatusDTO reserveStatusDTO = ReserveStatusDTO.toDTO(reserveEntity.getReserveStatusEntity());
+
+
+        System.out.println(ReserveDTO.toDTO(reserveEntity));
+        System.out.println(reserveStatusDTO);
+
+
+        reserveStatusDTO.setStatus(3);
+
+
+        ReserveStatusEntity reserveStatusEntity = ReserveStatusEntity.toUpdateEntity(reserveStatusDTO, reserveEntity);
+
+
+        System.out.println(reserveStatusDTO);
+        reserveStatusRepository.save(reserveStatusEntity);
     }
 
 }

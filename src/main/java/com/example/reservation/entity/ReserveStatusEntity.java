@@ -28,11 +28,19 @@ public class ReserveStatusEntity {
 
 
 
-    public ReserveStatusEntity toSaveEntity(ReserveStatusDTO reserveStatusDTO, ReserveEntity reserveEntity){
+    public static ReserveStatusEntity toSaveEntity(ReserveStatusDTO reserveStatusDTO, ReserveEntity reserveEntity){
         ReserveStatusEntity reserveStatusEntity = new ReserveStatusEntity();
         reserveStatusEntity.setStatus(reserveStatusDTO.getStatus());
         reserveStatusEntity.setReserveEntity(reserveEntity);
         return reserveStatusEntity;
     }
 
+
+    public static ReserveStatusEntity toUpdateEntity(ReserveStatusDTO reserveStatusDTO, ReserveEntity reserveEntity){
+        ReserveStatusEntity reserveStatusEntity = new ReserveStatusEntity();
+        reserveStatusEntity.setId(reserveStatusDTO.getId());
+        reserveStatusEntity.setStatus(reserveStatusDTO.getStatus());
+        reserveStatusEntity.setReserveEntity(reserveEntity);
+        return reserveStatusEntity;
+    }
 }

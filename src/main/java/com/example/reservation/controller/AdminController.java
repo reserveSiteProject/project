@@ -5,12 +5,15 @@ import com.example.reservation.dto.MemberDTO;
 import com.example.reservation.dto.ReserveDTO;
 import com.example.reservation.dto.RoomDTO;
 import com.example.reservation.entity.MemberEntity;
+import com.example.reservation.entity.ReserveEntity;
 import com.example.reservation.service.CouponService;
 import com.example.reservation.service.MemberService;
 import com.example.reservation.service.ReserveService;
 import com.example.reservation.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +34,7 @@ public class AdminController {
                           @RequestParam(value = "page", required = false, defaultValue = "1") int page,
                           @RequestParam(value = "q", required = false, defaultValue = "") String q,
                           @RequestParam(value = "type", required = false, defaultValue = "") String type,
-                          @RequestParam(value = "listCount", required = false, defaultValue = "5") int list,
+                          @RequestParam(value = "listCount", required = false, defaultValue = "10") int list,
                           @RequestParam(value = "checkInDate", required = false, defaultValue = "") String checkInDate) {
         System.out.println(checkInDate + "날짜");
         Page<ReserveDTO> reserveDTOList = reserveService.findAll(page, q, type, list , checkInDate);
@@ -52,11 +55,11 @@ public class AdminController {
         return "adminPages/reserve";
     }
 
-    @PostMapping("/reserve")
-    public String reserve(@ModelAttribute ReserveDTO reserveDTO) {
-        reserveService.deleteById(reserveDTO.getId());
-        System.out.println(reserveDTO.getId());
-        return "redirect:/admin/reserve";
+    @PutMapping("/reserve/{id}")
+    public ResponseEntity reserve(@PathVariable("id")Long id) {
+        System.out.println(id);
+        reserveService.update(id);
+        return new ResponseEntity<>("취소가 완료되었습니다.",HttpStatus.OK);
     }
 
     @GetMapping("/manage")

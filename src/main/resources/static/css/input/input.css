@@ -1,0 +1,88 @@
+/** {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    box-sizing: border-box;*/
+/*}*/
+
+#div {
+    position: relative;
+    width: 300px;
+    margin-left: 0px;
+    margin-top: 70px;
+    margin-bottom: 15px;
+}
+
+.search-container {
+    display: flex;
+}
+
+#q {
+    font-size: 15px;
+    color: #222222;
+    width: 88%;
+    border: none;
+    border-bottom: solid #aaaaaa 1px;
+    padding-bottom: 8px;
+    text-align: center;
+    position: relative;
+    background: none;
+    z-index: 5;
+}
+
+input::placeholder {
+    color: #aaaaaa;
+}
+
+input:focus {
+    outline: none;
+}
+
+span {
+    display: block;
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    background-color: #666;
+    width: 0;
+    height: 2px;
+    border-radius: 2px;
+    transform: translateX(-50%);
+    transition: 0.5s;
+}
+
+label {
+    position: absolute;
+    color: #aaa;
+    left: 12%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    bottom: 8px;
+    transition: all .2s;
+}
+
+input:focus ~ label, input:valid ~ label {
+    font-size: 16px;
+    bottom: 40px;
+    color: #666;
+    font-weight: bold;
+}
+
+input:focus ~ span, input:valid ~ span {
+    width: 73%;
+    left: 35.8%;
+}
+
+/* 검색 버튼 스타일 */
+input[type="submit"] {
+    font-size: 16px;
+    margin-left: 5px;
+    margin-bottom: 10px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.info{
+    text-align: center;
+}
