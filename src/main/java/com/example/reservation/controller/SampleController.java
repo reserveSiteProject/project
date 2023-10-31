@@ -1,10 +1,12 @@
 package com.example.reservation.controller;
 
+import com.example.reservation.dto.ReserveDTO;
 import com.example.reservation.service.KakaoPay;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -25,10 +27,11 @@ public class SampleController {
     }
 
     @PostMapping("/kakaoPay")
-    public String kakaoPay() {
+    public String kakaoPay(@ModelAttribute ReserveDTO reserveDTO) {
+        System.out.println("reserveDTO = " + reserveDTO);
         log.info("kakaoPay post............................................");
 
-        return "redirect:" + kakaopay.kakaoPayReady();
+        return "redirect:" + kakaopay.kakaoPayReady(reserveDTO);
 
     }
 
@@ -41,4 +44,9 @@ public class SampleController {
         return "reservePages/kakaoPaySuccess";
     }
 
+    @GetMapping("/kakaoPayCancel")
+    public String KakaoPayCancle(){
+        System.out.println(kakaopay.KakaoCancle());
+        return "index";
+    }
 }
