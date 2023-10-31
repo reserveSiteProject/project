@@ -62,8 +62,9 @@ public class ReserveController {
                        @RequestParam("checkOutDate") String checkOutDate,
                        @RequestParam("persons") String persons,
                        @RequestParam("addPrice") String addPrice,
+                       @RequestParam("price") String price,
                        Model model) {
-        System.out.println("roomId = " + roomId + ", checkInDate = " + checkInDate + ", checkOutDate = " + checkOutDate + ", persons = " + persons + ", addPrice = " + addPrice + ", model = " + model);
+        System.out.println("roomId = " + roomId + ", checkInDate = " + checkInDate + ", checkOutDate = " + checkOutDate + ", persons = " + persons + ", addPrice = " + addPrice + ", price = " + price + ", model = " + model);
         RoomDTO roomDTO = roomService.findById(roomId);
         System.out.println("roomDTO = " + roomDTO);
         model.addAttribute("room", roomDTO);

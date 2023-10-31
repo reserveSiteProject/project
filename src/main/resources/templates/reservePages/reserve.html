@@ -186,7 +186,7 @@
                                             </div>`;
                                         },
                                         error: function (reserveData) {
-                                            reserveButtonDiv.innerHTML = `<button class='btn btn-primary' onclick='reserve_fn(${room.id})'>예약</button>`;
+                                            reserveButtonDiv.innerHTML = `<button class='btn btn-primary' onclick='reserve_fn(${room.id}, ${room.roomPrice})'>예약</button>`;
                                             reserveButtonDiv.innerHTML += `<input id="input-price${room.id}" value="0" type="hidden">`;
                                             console.log(reserveData + " error");
                                         }
@@ -257,12 +257,13 @@
     };
 
 
-    const reserve_fn = (roomId) => {
+    const reserve_fn = (roomId, pp) => {
         let persons = document.getElementById("input-total").value = parseInt(document.getElementById("a"+roomId).value) + parseInt(document.getElementById("b"+roomId).value) + parseInt(document.getElementById("c"+roomId).value);
         const checkInDate = document.getElementById("input-start").value;
         const checkOutDate = document.getElementById("input-end").value;
         const addPrice = document.getElementById("input-price"+roomId).value; // 추가금액
-        location.href="/reserve/save?roomId=" + roomId +"&checkInDate=" + checkInDate +"&checkOutDate=" + checkOutDate + "&persons=" + persons + "&addPrice=" + addPrice;
+        const price = parseInt(addPrice) + pp;
+        location.href="/reserve/save?roomId=" + roomId +"&checkInDate=" + checkInDate +"&checkOutDate=" + checkOutDate + "&persons=" + persons + "&addPrice=" + addPrice + "&price=" + price;
         // location.href="/reserve/trigger-message";
     }
     
