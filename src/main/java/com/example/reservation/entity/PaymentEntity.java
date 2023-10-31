@@ -1,5 +1,6 @@
 package com.example.reservation.entity;
 
+import com.example.reservation.dto.PaymentDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -36,4 +37,13 @@ public class PaymentEntity {
     private List<ReviewEntity> reviewEntityList = new ArrayList<>();
 
 
+    public static PaymentEntity toEntity(PaymentDTO paymentDTO, ReserveEntity reserveEntity, MemberEntity memberEntity) {
+        PaymentEntity paymentEntity = new PaymentEntity();
+        paymentEntity.setMemberEntity(memberEntity);
+        paymentEntity.setReserveEntity(reserveEntity);
+        paymentEntity.setTotalPrice(paymentDTO.getTotalPrice());
+        paymentEntity.setPaymentAt(paymentDTO.getCreatedAt());
+        paymentEntity.setPaymentBy(paymentDTO.getPaymentBy());
+        return paymentEntity;
+    }
 }

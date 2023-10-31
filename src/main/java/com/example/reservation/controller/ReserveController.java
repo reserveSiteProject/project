@@ -72,6 +72,7 @@ public class ReserveController {
         model.addAttribute("checkOutDate", checkOutDate);
         model.addAttribute("persons", persons);
         model.addAttribute("addPrice", addPrice);
+        model.addAttribute("totalPrice", price);
         return "reservePages/pay";
     }
 

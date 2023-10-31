@@ -262,7 +262,7 @@
         const checkInDate = document.getElementById("input-start").value;
         const checkOutDate = document.getElementById("input-end").value;
         const addPrice = document.getElementById("input-price"+roomId).value; // 추가금액
-        const price = parseInt(addPrice) + pp;
+        const price = parseInt(addPrice) + parseInt(pp);
         location.href="/reserve/save?roomId=" + roomId +"&checkInDate=" + checkInDate +"&checkOutDate=" + checkOutDate + "&persons=" + persons + "&addPrice=" + addPrice + "&price=" + price;
         // location.href="/reserve/trigger-message";
     }

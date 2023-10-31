@@ -26,6 +26,12 @@ public class ReserveStatusEntity {
     @JoinColumn(name="reserve_id")
     private ReserveEntity reserveEntity;
 
+    public static ReserveStatusEntity toEntity(ReserveEntity save) {
+        ReserveStatusEntity reserveStatusEntity = new ReserveStatusEntity();
+        reserveStatusEntity.setReserveEntity(save);
+        reserveStatusEntity.setStatus(0);
+        return reserveStatusEntity;
+    }
 
 
     public ReserveStatusEntity toSaveEntity(ReserveStatusDTO reserveStatusDTO, ReserveEntity reserveEntity){

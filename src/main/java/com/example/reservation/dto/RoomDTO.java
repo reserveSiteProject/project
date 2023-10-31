@@ -39,13 +39,12 @@ public class RoomDTO {
 
 
     public static RoomDTO toDTO(RoomEntity roomEntity){
-        DecimalFormat df = new DecimalFormat("###,###");
         RoomDTO roomDTO = new RoomDTO();
         roomDTO.setId(roomEntity.getId());
         roomDTO.setRoomInfo(roomEntity.getRoomInfo());
         roomDTO.setRoomItems(roomEntity.getRoomItems());
         roomDTO.setRoomName(roomEntity.getRoomName());
-        roomDTO.setRoomPrice(df.format(Integer.parseInt(roomEntity.getRoomPrice())));
+        roomDTO.setRoomPrice(roomEntity.getRoomPrice());
         roomDTO.setStandardPerson((roomEntity.getStandardPerson()));
         roomDTO.setRoomType(roomEntity.getRoomType());
         roomDTO.setCapacity(roomEntity.getCapacity());
