@@ -34,4 +34,7 @@ public interface ReserveRepository extends JpaRepository<ReserveEntity, Long> {
             @Param("checkInDatePattern") String checkInDatePattern,
             @Param("checkOutDatePattern") String checkOutDatePattern
     );
+
+
+    Optional<ReserveEntity> findByIdAndMemberEntity(Long id, MemberEntity memberEntity);
 }

@@ -14,7 +14,7 @@ public class ReserveWaitDTO {
     private String memberMobile;
     private String memberName;
 
-    public ReserveWaitDTO toDTO(ReserveWaitEntity reserveWaitEntity){
+    public static ReserveWaitDTO toDTO(ReserveWaitEntity reserveWaitEntity){
         ReserveWaitDTO reserveWaitDTO = new ReserveWaitDTO();
         reserveWaitDTO.setId(reserveWaitEntity.getId());
         reserveWaitDTO.setMemberId(reserveWaitEntity.getMemberEntity().getId());

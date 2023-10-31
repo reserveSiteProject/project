@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface ReserveWaitRepository extends JpaRepository<ReserveWaitEntity, Long> {
-    Optional<ReserveWaitEntity> findByReserveEntityAndMemberEntity(ReserveEntity reserveEntity, MemberEntity memberEntity);
+    Optional<ReserveWaitEntity> findByMemberEntityAndReserveEntity(MemberEntity memberEntity, ReserveEntity reserveEntity);
 }

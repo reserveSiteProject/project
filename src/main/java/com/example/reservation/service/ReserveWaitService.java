@@ -1,5 +1,6 @@
 package com.example.reservation.service;
 
+import com.example.reservation.dto.ReserveDTO;
 import com.example.reservation.dto.ReserveWaitDTO;
 import com.example.reservation.entity.MemberEntity;
 import com.example.reservation.entity.ReserveEntity;
@@ -27,16 +28,13 @@ public class ReserveWaitService {
         return reserveWaitRepository.save(reserveWaitEntity).getId();
     }
 
-    public ReserveWaitEntity findById(Long id) {
-        ReserveWaitEntity reserveWaitEntity = reserveWaitRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
-        return reserveWaitEntity;
-    }
-
     @Transactional
-    public ReserveWaitEntity findByReserveEntityAndMemberEntity(ReserveWaitDTO reserveWaitDTO) {
+    public ReserveWaitDTO findBy(ReserveWaitDTO reserveWaitDTO) {
         MemberEntity memberEntity = memberRepository.findById(reserveWaitDTO.getMemberId()).orElseThrow(() -> new NoSuchElementException());
+        System.out.println("memberEntity = " + memberEntity);
         ReserveEntity reserveEntity = reserveRepository.findById(reserveWaitDTO.getReserveId()).orElseThrow(() -> new NoSuchElementException());
-        ReserveWaitEntity reserveWaitEntity = reserveWaitRepository.findByReserveEntityAndMemberEntity(reserveEntity, memberEntity).orElseThrow(() -> new NoSuchElementException());
-        return reserveWaitEntity;
+        System.out.println("reserveEntity = " + reserveEntity);
+        ReserveWaitEntity reserveWaitEntity = reserveWaitRepository.findByMemberEntityAndReserveEntity(memberEntity, reserveEntity).orElseThrow(() -> new NoSuchElementException());
+        return ReserveWaitDTO.toDTO(reserveWaitEntity);
     }
 }

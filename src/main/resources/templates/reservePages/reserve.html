@@ -60,7 +60,8 @@
             select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
                 // 예약일, 투데이 Format
                 let dt_start = moment(arg.start).format('YYYYMMDD'); // ajax으로 보낼 예약 시작값
-                let dt_end = moment(arg.end).format('YYYYMMDD')-1; // ajax으로 보낼 예약 종료값
+                let dt_end = moment(arg.end).subtract(1, 'days').format('YYYYMMDD'); // ajax으로 보낼 예약 종료값
+                // ++ 11월 1일을 1100으로 인식하길래 subtract(1, 'days').format('YYYYMMDD') 추가함
 
                 let year = today.getFullYear().toString(); // 년도
                 let month = today.getMonth() +1;  // 월 getMonth 는 0~11월 출력하기때문에 +1
@@ -286,19 +287,31 @@
         }else{
             reserveP.innerHTML = "";
             $.ajax({
-                url:"/reserve/wait",
+                url:"/reserve/find",
                 data:{
-                    reserveId : id,
+                    id,
                     memberId,
-                    persons: waitPersons
                 },
-                type:"post",
+                type:"get",
                 success:function (data){
-                    alert("예약이 취소되는 대로 연락드리겠습니다.")
+                    alert("이미 예약되었습니다.")
                     $("#modal-reserve"+id).modal("hide")
                 },error: function(data){
-                    $("#modal-reserve"+id).modal("hide")
-                    alert("이미 예약대기 하셨습니다!")
+                    $.ajax({
+                        url:"/reserve/wait",
+                        type:"get",
+                        data:{
+                            reserveId : id,
+                            memberId,
+                        },
+                        success:function (data){
+                            // alert("이미 예약대기 되었습니다.")
+                            // $("#modal-reserve"+id).modal("hide")
+                        },error: function(data) {
+                            // alert("예약이 취소되는 대로 연락드리겠습니다.")
+                            // $("#modal-reserve"+id).modal("hide")
+                        }
+                    })
                 }
             })
         }
