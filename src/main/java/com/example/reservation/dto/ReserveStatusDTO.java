@@ -11,11 +11,12 @@ public class ReserveStatusDTO {
     private Long reserveId;
 
 
-    public ReserveStatusDTO toDTO(ReserveStatusEntity reserveStatusEntity){
+    public static ReserveStatusDTO toDTO(ReserveStatusEntity reserveStatusEntity){
         ReserveStatusDTO reserveStatusDTO = new ReserveStatusDTO();
         reserveStatusDTO.setId(reserveStatusEntity.getId());
         reserveStatusDTO.setStatus(reserveStatusEntity.getStatus());
         reserveStatusDTO.setReserveId(reserveStatusEntity.getReserveEntity().getId());
         return reserveStatusDTO;
     }
+
 }

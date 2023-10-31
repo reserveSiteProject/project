@@ -21,6 +21,7 @@
             </select>
             <input id="q" type="text" name="q" placeholder="이름을 입력하세요">
             <input type="submit" value="검색">
+
         </form>
     </div>
     <table class="table table-hover text-center mt-3">
@@ -39,7 +40,7 @@
             <td th:text="${member.nickName}"></td>
             <!-- 버튼을 클릭하여 모달 표시 -->
             <td>
-                <button class="btn" data-bs-toggle="modal" th:attr="data-bs-target='#modal-'+${member.id}"><span>쿠폰발급</span></button>
+                <button id="jelly" class="btn btn-warning" data-bs-toggle="modal" th:attr="data-bs-target='#modal-'+${member.id}"><span>쿠폰발급</span></button>
             </td>
         </tr>
     </table>
