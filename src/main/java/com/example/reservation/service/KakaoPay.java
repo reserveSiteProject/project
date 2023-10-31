@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
@@ -45,6 +46,7 @@ public class KakaoPay {
         ReserveEntity reserveEntity = ReserveEntity.toSaveEntity(reserveDTO, memberEntity, roomEntity);
         ReserveEntity save = reserveRepository.save(reserveEntity);
 
+
         //예약 상태 테이블 저장 처리
         ReserveStatusEntity reserveStatusEntity = ReserveStatusEntity.toEntity(save);
         reserveStatusRepository.save(reserveStatusEntity);
@@ -65,7 +67,7 @@ public class KakaoPay {
         params.add("quantity", "1");
         params.add("total_amount", "20000");
         params.add("tax_free_amount", "100");
-        params.add("approval_url", "http://localhost:8084/kakaoPaySuccess");
+        params.add("approval_url", "http://localhost:8084/kakaoPaySuccess?reserveId=" + save.getId());
         params.add("cancel_url", "http://localhost:8084/kakaoPayCancel");
         params.add("fail_url", "http://localhost:8084/kakaoPaySuccessFail");
 
@@ -168,7 +170,7 @@ public class KakaoPay {
     }
 
     public Long paymentSave(PaymentDTO paymentDTO) {
-        ReserveEntity reserveEntity = reserveRepository.findById(paymentDTO.getMemberId()).orElseThrow(() -> new NoSuchElementException());
+        ReserveEntity reserveEntity = reserveRepository.findById(paymentDTO.getReserveId()).orElseThrow(() -> new NoSuchElementException());
         MemberEntity memberEntity = memberRepository.findById(paymentDTO.getMemberId()).orElseThrow(() -> new NoSuchElementException());
         PaymentEntity paymentEntity = PaymentEntity.toEntity(paymentDTO, reserveEntity, memberEntity);
         return paymentRepository.save(paymentEntity).getId();

@@ -30,6 +30,7 @@
     const paymentAt = [[${info.approved_at}]];
     const paymentBy = [[${info.payment_method_type}]];
     const id = [[${session.memberDTO.getId()}]];
+    const reserveId = [[${reserveId}]];
     console.log(totalPrice);
     console.log(paymentBy);
     console.log(paymentAt);
@@ -41,7 +42,8 @@
         memberId: id,
         totalPrice : totalPrice,
         paymentAt : paymentAt,
-        paymentBy : paymentBy
+        paymentBy : paymentBy,
+        reserveId
       },
       success : function (data){
         location.href="/";

@@ -37,17 +37,17 @@ public class KakaoController {
     public String kakaoPay(@ModelAttribute ReserveDTO reserveDTO) {
         System.out.println("reserveDTO = " + reserveDTO);
         log.info("kakaoPay post............................................");
-
         return "redirect:" + kakaopay.kakaoPayReady(reserveDTO);
 
     }
 
     @GetMapping("/kakaoPaySuccess")
-    public String kakaoPaySuccess(@RequestParam("pg_token") String pg_token, Model model) {
+    public String kakaoPaySuccess(@RequestParam("pg_token") String pg_token, Model model, @RequestParam("reserveId") Long reserveId) {
         System.out.println("kakaoPaySuccess get............................................");
         System.out.println("kakaoPaySuccess pg_token : " + pg_token);
 
         model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token));
+        model.addAttribute("reserveId", reserveId);
         return "reservePages/kakaoPaySuccess";
     }
 

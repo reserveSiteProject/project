@@ -263,8 +263,13 @@
         const checkOutDate = document.getElementById("input-end").value;
         const addPrice = document.getElementById("input-price"+roomId).value; // 추가금액
         const price = parseInt(addPrice) + parseInt(pp);
-        location.href="/reserve/save?roomId=" + roomId +"&checkInDate=" + checkInDate +"&checkOutDate=" + checkOutDate + "&persons=" + persons + "&addPrice=" + addPrice + "&price=" + price;
-        // location.href="/reserve/trigger-message";
+        console.log(persons)
+        if(persons==0){
+            alert("1명이상 예약해주세요.")
+        }else{
+            location.href="/reserve/save?roomId=" + roomId +"&checkInDate=" + checkInDate +"&checkOutDate=" + checkOutDate + "&persons=" + persons + "&addPrice=" + addPrice + "&price=" + price;
+            // location.href="/reserve/trigger-message";
+        }
     }
     
     const wait_fn = (id) => {
@@ -289,8 +294,11 @@
                 },
                 type:"post",
                 success:function (data){
-                    console.log(data)
+                    alert("예약이 취소되는 대로 연락드리겠습니다.")
                     $("#modal-reserve"+id).modal("hide")
+                },error: function(data){
+                    $("#modal-reserve"+id).modal("hide")
+                    alert("이미 예약대기 하셨습니다!")
                 }
             })
         }

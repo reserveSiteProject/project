@@ -31,4 +31,12 @@ public class ReserveWaitService {
         ReserveWaitEntity reserveWaitEntity = reserveWaitRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
         return reserveWaitEntity;
     }
+
+    @Transactional
+    public ReserveWaitEntity findByReserveEntityAndMemberEntity(ReserveWaitDTO reserveWaitDTO) {
+        MemberEntity memberEntity = memberRepository.findById(reserveWaitDTO.getMemberId()).orElseThrow(() -> new NoSuchElementException());
+        ReserveEntity reserveEntity = reserveRepository.findById(reserveWaitDTO.getReserveId()).orElseThrow(() -> new NoSuchElementException());
+        ReserveWaitEntity reserveWaitEntity = reserveWaitRepository.findByReserveEntityAndMemberEntity(reserveEntity, memberEntity).orElseThrow(() -> new NoSuchElementException());
+        return reserveWaitEntity;
+    }
 }
