@@ -65,8 +65,10 @@
 
                 let year = today.getFullYear().toString(); // 년도
                 let month = today.getMonth() +1;  // 월 getMonth 는 0~11월 출력하기때문에 +1
-                let date = today.getDate().toString();  // 날짜
+                let date = ('0' + today.getDate()).slice(-2);  // 날짜
                 let dt_date = year+month+date;
+                console.log(dt_start)
+                console.log(dt_date)
 
                 if(dt_start>=dt_date){  // 예약 시작일이 투데이보다 크거나 같음
                     var allEvents = calendar.getEvents();
@@ -282,7 +284,7 @@
         const memberId = document.getElementById("member-id").value;
         const waitPersons = document.getElementById("wait-persons"+id).value;
         if(waitPersons > persons || waitPersons<= 0){
-            reserveP.innerHTML = "인원 수가 확인바람";
+            reserveP.innerHTML = "인원 수 확인바람";
             reserveP.style.color = "red";
         }else{
             reserveP.innerHTML = "";
@@ -294,22 +296,20 @@
                 },
                 type:"get",
                 success:function (data){
-                    alert("이미 예약되었습니다.")
+                    alert("이미 예약 또는 예약대기 되었습니다.")
                     $("#modal-reserve"+id).modal("hide")
                 },error: function(data){
                     $.ajax({
                         url:"/reserve/wait",
-                        type:"get",
+                        type:"post",
                         data:{
                             reserveId : id,
                             memberId,
+                            persons
                         },
                         success:function (data){
-                            // alert("이미 예약대기 되었습니다.")
-                            // $("#modal-reserve"+id).modal("hide")
-                        },error: function(data) {
-                            // alert("예약이 취소되는 대로 연락드리겠습니다.")
-                            // $("#modal-reserve"+id).modal("hide")
+                            alert("예약이 취소되는 대로 연락드리겠습니다.")
+                            $("#modal-reserve"+id).modal("hide")
                         }
                     })
                 }
