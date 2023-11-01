@@ -3,20 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>공지사항 상세 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/notice/noticeDetail.css}" />
+
     <!-- 썸머노트 CSS 추가 -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.css" rel="stylesheet">
 </head>
 <body>
+/*추가*/
 
-<h1>공지사항 상세 페이지</h1>
+<div style="text-align: center; margin: 20px auto;">
+    <h1>공지사항 상세 페이지</h1>
 
-<h2 th:text="${notice.noticeTitle}"></h2>
+    <h2 th:text="${notice.noticeTitle}"></h2>
 
-<p th:text="${notice.noticeWriter}"></p>
+    <p th:text="${notice.noticeWriter}"></p>
 
-<!-- 썸머노트에서 작성한 내용 출력 -->
-<div th:utext="${notice.noticeContents}"></div>
-<!-- th:utext를 사용하는 이유는 HTML 태그가 포함된 문자열을 안전하게 출력하기 위함. -->
+    <!-- 썸머노트에서 작성한 내용 출력 -->
+    <div th:utext="${notice.noticeContents}" style="margin: 20px 0;"></div>
+    <!-- th:utext를 사용하는 이유는 HTML 태그가 포함된 문자열을 안전하게 출력하기 위함. -->
+
+    <button onclick="window.location.href='/board/notice'">목록으로 돌아가기</button>
+</div>
 
 </body>
 </html>
+
