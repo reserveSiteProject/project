@@ -1,9 +1,6 @@
 package com.example.reservation.controller;
 
-import com.example.reservation.dto.CouponDTO;
-import com.example.reservation.dto.MemberDTO;
-import com.example.reservation.dto.ReserveDTO;
-import com.example.reservation.dto.ReviewDTO;
+import com.example.reservation.dto.*;
 import com.example.reservation.service.MyPagesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -115,7 +112,11 @@ public class MyPagesController {
     public String book(HttpSession session, Model model){
         Object memberDTO = session.getAttribute("memberDTO");
         List<ReserveDTO> reserveDTOList = myPagesService.findReserve((MemberDTO) memberDTO);
+        System.out.println("reserveDTOList = " + reserveDTOList);
+        List<RoomFileDTO> roomFileDTOList = myPagesService.findFile((MemberDTO) memberDTO);
+        System.out.println("roomFileDTOList = " + roomFileDTOList);
         model.addAttribute("reserveList", reserveDTOList);
+        model.addAttribute("fileList", roomFileDTOList);
         return "MyPages/book";
     }
 }

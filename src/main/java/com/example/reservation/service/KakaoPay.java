@@ -66,9 +66,9 @@ public class KakaoPay {
         params.add("partner_user_id", "gorany");
         params.add("item_name", save.getRoomEntity().getRoomName());
         params.add("quantity", "1");
-        params.add("total_amount", "20000");
+        params.add("total_amount", String.valueOf(save.getTotalPrice()));
         params.add("tax_free_amount", "100");
-        params.add("approval_url", "http://localhost:8084/kakaoPaySuccess?reserveId=" + save.getId());
+        params.add("approval_url", "http://localhost:8084/kakaoPaySuccess?reserveId=" + save.getId() +"&totalPrice=" + save.getTotalPrice());
         params.add("cancel_url", "http://localhost:8084/kakaoPayCancel");
         params.add("fail_url", "http://localhost:8084/kakaoPaySuccessFail");
 
@@ -93,7 +93,7 @@ public class KakaoPay {
 
     }
 
-    public Object kakaoPayInfo(String pg_token) {
+    public Object kakaoPayInfo(String pg_token, Long totalPrice) {
 
         log.info("KakaoPayInfoVO............................................");
         log.info("-----------------------------");
@@ -113,7 +113,7 @@ public class KakaoPay {
         params.add("partner_order_id", "1001");
         params.add("partner_user_id", "gorany");
         params.add("pg_token", pg_token);
-        params.add("total_amount", "20000");
+        params.add("total_amount", String.valueOf(totalPrice));
 
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
 

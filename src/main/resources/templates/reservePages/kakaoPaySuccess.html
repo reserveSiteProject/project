@@ -4,23 +4,25 @@
   <th:block th:replace="~{component/config :: config}"></th:block>
 </head>
 <body>
-카카오페이 결제가 정상적으로 완료되었습니다.
-
+<div class="container">
+  <h2 class="text-center mt-5">결제가 완료 되었습니다.</h2>
+  <div class="row">
+    <form action="" class="card form-control">
+      <p class="fw-bold">객실 이름 : [[${info.item_name}]]</p><br/>
+      <p class="fw-bold">결제 금액 : [[${info.amount.total}]]</p><br/>
+      <p class="fw-bold"> 결제 일시 : [[${info.approved_at}]]</p><br/>
+      <input type="button" class="btn btn-dark" th:onclick="paymentSave_fn()" th:value="메인으로">
+    </form>
+  </div>
+</div>
 <!--결제일시:     [[${info.approved_at}]]<br/>-->
 <!--주문번호:    [[${info.partner_order_id}]]<br/>-->
 <!--상품명:    [[${info.item_name}]]<br/>-->
 <!--상품수량:    [[${info.quantity}]]<br/>-->
 <!--결제금액:    [[${info.amount.total}]]<br/>-->
 <!--결제방법:    [[${info.payment_method_type}]]<br/>-->
-<!--<form method="post" action="/payment/save">-->
-<!--  <input type="hidden" name="totalPrice" th:value="${info.amount.total}">-->
-<!--  <input type="hidden" name="paymentAt" th:value="${info.approved_at}">-->
-<!--  <input type="hidden" name="paymentBy" th:value="${info.payment_method_type}">-->
-<!--  <input type="hidden" name="memberId" th:value="${session.memberDTO.getId()}">-->
-<!--  -->
-<!--</form>-->
-<!--<h2>[[${info}]]</h2>-->
-<input type="button" th:onclick="paymentSave_fn()" th:value="메인으로">
+
+
 
 
 </body>

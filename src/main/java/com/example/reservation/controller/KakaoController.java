@@ -42,11 +42,12 @@ public class KakaoController {
     }
 
     @GetMapping("/kakaoPaySuccess")
-    public String kakaoPaySuccess(@RequestParam("pg_token") String pg_token, Model model, @RequestParam("reserveId") Long reserveId) {
+    public String kakaoPaySuccess(@RequestParam("pg_token") String pg_token, Model model, @RequestParam("reserveId") Long reserveId,
+                                  @RequestParam("totalPrice") Long totalPrice) {
         System.out.println("kakaoPaySuccess get............................................");
         System.out.println("kakaoPaySuccess pg_token : " + pg_token);
 
-        model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token));
+        model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token, totalPrice));
         model.addAttribute("reserveId", reserveId);
         return "reservePages/kakaoPaySuccess";
     }
