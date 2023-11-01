@@ -70,6 +70,7 @@ public class ReviewController {
     @GetMapping("/review/{id}")
     public String reviewDetail(@PathVariable("id") Long id, Model model) throws IOException {
         System.out.println("id" + id);
+        reviewService.increaseHits(id);
         ReviewDTO reviewDTO = reviewService.findById(id);
         System.out.println(reviewDTO);
         model.addAttribute("review", reviewDTO);
