@@ -1,9 +1,6 @@
 package com.example.reservation.controller;
 
-import com.example.reservation.dto.CouponDTO;
-import com.example.reservation.dto.MemberDTO;
-import com.example.reservation.dto.ReserveDTO;
-import com.example.reservation.dto.RoomDTO;
+import com.example.reservation.dto.*;
 import com.example.reservation.entity.MemberEntity;
 import com.example.reservation.entity.ReserveEntity;
 import com.example.reservation.service.CouponService;
@@ -28,6 +25,7 @@ public class AdminController {
     private final MemberService memberService;
     private final RoomService roomService;
     private final ReserveService reserveService;
+//    private final ReserveWaitService reserveWaitService;
 
     @GetMapping("/reserve")
     public String reserve(Model model,
@@ -54,13 +52,17 @@ public class AdminController {
         System.out.println(reserveDTOList);
         return "adminPages/reserve";
     }
-
-    @PutMapping("/reserve/{id}")
-    public ResponseEntity reserve(@PathVariable("id")Long id) {
-        System.out.println(id);
-        reserveService.update(id);
-        return new ResponseEntity<>("취소가 완료되었습니다.",HttpStatus.OK);
-    }
+//
+//    @PutMapping("/reserve/{id}")
+//    public ResponseEntity reserve(@PathVariable("id")Long id) {
+////        ReserveWaitDTO reserveWaitDTO = reserveWaitService.findByReserveEntity(id);
+//        if(reserveWaitDTO==null){
+//            reserveService.update(id);
+//        }else{
+//
+//        }
+//        return new ResponseEntity<>("취소가 완료되었습니다.",HttpStatus.OK);
+//    }
 
     @GetMapping("/manage")
     public String manage(Model model,

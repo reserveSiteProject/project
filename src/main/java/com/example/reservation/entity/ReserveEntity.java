@@ -31,6 +31,9 @@ public class ReserveEntity extends BaseEntity{
     @Column(nullable = false)
     private int persons;
 
+    @Column(nullable = false)
+    private Long totalPrice;
+
     @OneToOne(mappedBy = "reserveEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private PaymentEntity paymentEntity;
 
@@ -56,6 +59,7 @@ public class ReserveEntity extends BaseEntity{
         reserveEntity.setMemberEntity(memberEntity);
         reserveEntity.setRoomEntity(roomEntity);
         reserveEntity.setCheckInDate(reserveDTO.getCheckInDate());
+        reserveEntity.setTotalPrice(reserveDTO.getTotalPrice());
         reserveEntity.setCheckOutDate(reserveDTO.getCheckOutDate());
         reserveEntity.setPersons(reserveDTO.getPersons());
         return reserveEntity;
@@ -66,6 +70,7 @@ public class ReserveEntity extends BaseEntity{
         ReserveEntity reserveEntity = new ReserveEntity();
         reserveEntity.setMemberEntity(memberEntity);
         reserveEntity.setRoomEntity(roomEntity);
+        reserveEntity.setTotalPrice(reserveDTO.getTotalPrice());
         reserveEntity.setCheckInDate(reserveDTO.getCheckInDate());
         reserveEntity.setCheckOutDate(reserveDTO.getCheckOutDate());
         reserveEntity.setPersons(reserveDTO.getPersons());
