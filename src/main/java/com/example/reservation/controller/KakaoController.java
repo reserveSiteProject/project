@@ -3,6 +3,9 @@ package com.example.reservation.controller;
 import com.example.reservation.dto.PaymentDTO;
 import com.example.reservation.dto.ReserveDTO;
 import com.example.reservation.service.KakaoPay;
+import com.example.reservation.service.MemberService;
+import com.example.reservation.service.MessageService;
+import com.example.reservation.service.ReserveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +26,12 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequiredArgsConstructor
 public class KakaoController {
+
+    private final MessageService messageService;
+
+    private final MemberService memberService;
+
+    private final ReserveService reserveService;
 
     @Setter(onMethod_ = @Autowired)
     private KakaoPay kakaopay;
@@ -49,6 +58,14 @@ public class KakaoController {
 
         model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token, totalPrice));
         model.addAttribute("reserveId", reserveId);
+
+        //예약 완료 문자 보내기
+        ReserveDTO reserveDTO = reserveService.findById(reserveId);
+        Long memberId = reserveDTO.getMemberId();
+        String memberMobile = memberService.findById(memberId).getMemberMobile();
+        //문자 발송 메서드 호출
+        messageService.sendOneReservationComplete(memberMobile, reserveId);
+
         return "reservePages/kakaoPaySuccess";
     }
 
