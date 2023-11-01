@@ -18,6 +18,8 @@ public class MyPagesService {
     private final PaymentRepository paymentRepository;
     private final CouponRepository couponRepository;
     private final ReserveRepository reserveRepository;
+    private final RoomRepository roomRepository;
+    private final RoomFileRepository roomFileRepository;
     /*
     Entity, dto 변환 매서드 활성화가 되어있지 않아 주석처리 하였음
      */
@@ -122,7 +124,7 @@ public class MyPagesService {
     @Transactional
     public List<ReserveDTO> findReserve(MemberDTO memberDTO) {
         MemberEntity memberEntity = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new NoSuchElementException());
-        List<ReserveEntity> reserveEntityList = reserveRepository.findByMemberEntity(memberEntity);
+        List<ReserveEntity> reserveEntityList = reserveRepository.findAllByMemberEntity(memberEntity);
         List<ReserveDTO> reserveDTOList = new ArrayList<>();
         for (ReserveEntity reserveEntity : reserveEntityList) {
             ReserveDTO reserveDTO = ReserveDTO.toDTO(reserveEntity);
@@ -134,5 +136,17 @@ public class MyPagesService {
     @Transactional
     public void increaseHits(Long id) {
         reviewRepository.increaseHits(id);
+    }
+    @Transactional
+    public List<RoomFileDTO> findFile(MemberDTO memberDTO) {
+        ReserveEntity reserveEntity = reserveRepository.findById(memberDTO.getId()).orElseThrow(() -> new NoSuchElementException());
+        RoomEntity roomEntity = roomRepository.findById(reserveEntity.getId()).orElseThrow(() -> new NoSuchElementException());
+        List<RoomFileEntity> byRoomEntity = roomFileRepository.findByRoomEntity(roomEntity);
+        List<RoomFileDTO> roomFileDTOList = new ArrayList<>();
+        for(RoomFileEntity roomFileEntity : byRoomEntity){
+            RoomFileDTO roomFileDTO = RoomFileDTO.toDTO(roomFileEntity, roomEntity.getId());
+            roomFileDTOList.add(roomFileDTO);
+        }
+        return roomFileDTOList;
     }
 }

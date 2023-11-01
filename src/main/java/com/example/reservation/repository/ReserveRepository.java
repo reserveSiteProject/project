@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReserveRepository extends JpaRepository<ReserveEntity, Long> {
-    List<ReserveEntity> findByMemberEntity(MemberEntity memberEntity);
+    List<ReserveEntity> findAllByMemberEntity(MemberEntity memberEntity);
 
     Page<ReserveEntity> findByMemberEntityMemberNameContaining(String q, Pageable pageable);
 
