@@ -36,6 +36,7 @@ public class MessageService {
         // 반드시 계정 내 등록된 유효한 API 키, API Secret Key를 입력해주셔야 합니다!
         this.nurigoMessageService = NurigoApp.INSTANCE.initialize("NCSGYUYPMCBURYWS", "PMLISVFX12TRF8GE2AREJ0OXHVECY7QR", "https://api.coolsms.co.kr");
     }
+    //이번엔 되겠지??
 
     //예약 성공시 발송 문자
     public SingleMessageSentResponse sendOneReservationComplete(String memberMobile, Long reserveId) {
