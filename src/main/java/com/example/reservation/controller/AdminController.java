@@ -72,6 +72,12 @@ public class AdminController {
 
         // 예약 취소한 사람에게 문자 보내기
         messageService.sendOneReservationCancel(memberId, reserveId);
+        //해당 예약 건에 대해 다른사람이 예약대기를 한건수가 있으면 예약대기 신청을 한
+        //사람에게 결제를 완료하라고 알림 문자 보내기
+
+        if(reserveWaitService.findByReserveEntity(reserveId) != null) {
+            messageService.sendOneReservationWaitEnd(reserveId);
+        }
 
         return new ResponseEntity<>("취소가 완료되었습니다.",HttpStatus.OK);
     }

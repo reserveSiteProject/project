@@ -44,4 +44,8 @@ public class ReserveWaitService {
         ReserveWaitEntity reserveWaitEntity = reserveWaitRepository.findByReserveEntity(reserveEntity).orElseThrow(() -> new NoSuchElementException());
         return ReserveWaitDTO.toDTO(reserveWaitEntity);
     }
+
+//    public ReserveWaitDTO findById(Long reserveId) {
+//
+//    }
 }

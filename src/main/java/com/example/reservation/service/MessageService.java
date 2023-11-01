@@ -28,6 +28,9 @@ public class MessageService {
     private ReserveService reserveService;
 
     @Autowired
+    private ReserveWaitService reserveWaitService;
+
+    @Autowired
     private RoomService roomService;
 
     public MessageService() {
@@ -95,13 +98,30 @@ public class MessageService {
         return response;
     }
 
-    //예약대기 발송문자
-    public SingleMessageSentResponse sendOneReservationWait() {
+    //예약대기 끝나서 예약이 가능하다는 알림문자
+    public SingleMessageSentResponse sendOneReservationWaitEnd(Long id) {
         Message message = new Message();
         // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+        Long memberId = reserveWaitService.findByReserveEntity(id).getMemberId();
+        String memberMobile = memberService.findById(memberId).getMemberMobile();
         message.setFrom("01088657126");
-        message.setTo("01088657126");
-        message.setText("이거는 입에서 나는 소리가 아니여");
+        String setTo = memberMobile;
+        message.setTo(setTo);
+
+        //고객 이름 가져오기
+        String memberName = memberService.findByMemberMobile(memberMobile).getMemberName();
+        // 예약 정보 가져오기 (날짜)
+        String checkInDate  = reserveService.findById(id).getCheckInDate();
+        String checkOutDate = reserveService.findById(id).getCheckOutDate();
+
+        //예약 정보 가져오기 (roomType)
+        Long roomId = reserveService.findById(id).getRoomId();
+        String roomType = roomService.findById(roomId).getRoomType();
+
+
+        message.setText("[혼저옵서예] 예약 대기 신청한 방이 드디어 비었네요!"
+                + memberName + "고객님, " + roomType + "(" + checkInDate + " ~ " + checkOutDate + ")" +
+                "예약 취소 되셨습니다! ");
 
         SingleMessageSentResponse response = this.nurigoMessageService.sendOne(new SingleMessageSendingRequest(message));
         System.out.println(response);
