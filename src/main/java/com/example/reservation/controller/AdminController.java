@@ -2,6 +2,7 @@ package com.example.reservation.controller;
 
 import com.example.reservation.dto.*;
 import com.example.reservation.entity.MemberEntity;
+import com.example.reservation.entity.ReserveCancelEntity;
 import com.example.reservation.entity.ReserveEntity;
 import com.example.reservation.service.*;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class AdminController {
     private final RoomService roomService;
     private final ReserveService reserveService;
     private final ReserveWaitService reserveWaitService;
+    private final ReserveCancelService reserveCancelService;
 
     @GetMapping("/reserve")
     public String reserve(Model model,
@@ -53,14 +55,18 @@ public class AdminController {
     @PutMapping("/reserve/{id}")
     public ResponseEntity reserve(@PathVariable("id")Long id) {
         System.out.println("id = " + id);
-        ReserveWaitDTO reserveWaitDTO = reserveWaitService.findByReserveEntity(id);
-        System.out.println("reserveWaitDTO = " + reserveWaitDTO);
-        if(reserveWaitDTO!=null){
-            MemberDTO memberDTO = memberService.findById(reserveWaitDTO.getMemberId());
-            reserveService.update(id);
-        }else{
-            reserveService.update(id);
-        }
+        ReserveDTO reserveDTO = reserveService.findById(id);  // 리저브 아이디찾기
+        // 캔슬테이블 저장
+        ReserveCancelDTO reserveCancelDTO = new ReserveCancelDTO();
+        reserveCancelDTO.setReserveId(reserveDTO.getId());
+        reserveCancelDTO.setMemberId(reserveDTO.getMemberId());
+        reserveCancelService.save(reserveCancelDTO);
+
+//        <----------예약대기 찾은 후 null이 아니라면 문자 발송 ---------->
+
+
+        // 마지막에 삭제
+        reserveService.delete(id);
         return new ResponseEntity<>("취소가 완료되었습니다.",HttpStatus.OK);
     }
 

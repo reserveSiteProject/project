@@ -118,7 +118,8 @@ public class ReserveService {
         return ReserveDTO.toDTO(reserveRepository.findById(reserveId).orElseThrow(() -> new NoSuchElementException()));
     }
 
-//    public void delete(Long id) {
-//        reserveRepository.deleteById(id);
-//    }
+    public void delete(Long id) {
+        System.out.println("idazzzz = " + id);
+        reserveRepository.deleteById(id);
+    }
 }
