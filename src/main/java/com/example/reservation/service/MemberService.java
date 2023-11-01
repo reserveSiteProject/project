@@ -14,7 +14,6 @@ import java.util.NoSuchElementException;
 @Service
 @RequiredArgsConstructor
 public class MemberService {
-    //풀퀘 되라
     public final MemberRepository memberRepository;
 
     public Long save(MemberDTO memberDTO) {

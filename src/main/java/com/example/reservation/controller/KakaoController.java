@@ -58,7 +58,6 @@ public class KakaoController {
 
         model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token, totalPrice));
         model.addAttribute("reserveId", reserveId);
-        //왜 머지 안됨
         //예약 완료 문자 보내기
         ReserveDTO reserveDTO = reserveService.findById(reserveId);
         Long memberId = reserveDTO.getMemberId();
