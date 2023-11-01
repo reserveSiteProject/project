@@ -290,26 +290,40 @@
             reserveP.innerHTML = "";
             $.ajax({
                 url:"/reserve/find",
+                type:"get",
                 data:{
                     id,
                     memberId,
                 },
-                type:"get",
                 success:function (data){
-                    alert("이미 예약 또는 예약대기 되었습니다.")
+                    alert("이미 예약 되었습니다.")
                     $("#modal-reserve"+id).modal("hide")
                 },error: function(data){
                     $.ajax({
                         url:"/reserve/wait",
-                        type:"post",
+                        type:"get",
                         data:{
                             reserveId : id,
                             memberId,
                             persons
                         },
                         success:function (data){
-                            alert("예약이 취소되는 대로 연락드리겠습니다.")
+                            alert("이미 예약대기 되었습니다.")
                             $("#modal-reserve"+id).modal("hide")
+                        },error:function(data){
+                            $.ajax({
+                                url: "/reserve/wait",
+                                type: "post",
+                                data: {
+                                    reserveId: id,
+                                    memberId,
+                                    persons
+                                },
+                                success: function (data) {
+                                    alert("예약 취소 시 연락드리겠습니다.")
+                                    $("#modal-reserve" + id).modal("hide")
+                                }
+                            })
                         }
                     })
                 }
