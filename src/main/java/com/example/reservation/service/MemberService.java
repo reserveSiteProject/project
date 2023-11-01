@@ -69,4 +69,9 @@ public class MemberService {
         MemberEntity memberEntity = MemberEntity.toUpdateEntity(memberDTO);
         memberRepository.save(memberEntity);
     }
+
+    public MemberDTO findById(Long memberId) {
+        MemberEntity memberEntity = memberRepository.findById(memberId).orElseThrow(() -> new NoSuchElementException());
+        return MemberDTO.toDTO(memberEntity);
+    }
 }

@@ -20,8 +20,6 @@ public class ReserveWaitDTO {
         reserveWaitDTO.setMemberId(reserveWaitEntity.getMemberEntity().getId());
         reserveWaitDTO.setReserveId(reserveWaitEntity.getReserveEntity().getId());
         reserveWaitDTO.setPersons(reserveWaitEntity.getPersons());
-        reserveWaitDTO.setCheckInDate(reserveWaitEntity.getReserveEntity().getCheckInDate());
-        reserveWaitDTO.setCheckOutDate(reserveWaitEntity.getReserveEntity().getCheckOutDate());
         reserveWaitDTO.setMemberMobile(reserveWaitEntity.getMemberEntity().getMemberMobile());
         reserveWaitDTO.setMemberName(reserveWaitEntity.getMemberEntity().getMemberName());
         return reserveWaitDTO;
