@@ -9,4 +9,6 @@ import java.util.Optional;
 
 public interface ReserveWaitRepository extends JpaRepository<ReserveWaitEntity, Long> {
     Optional<ReserveWaitEntity> findByMemberEntityAndReserveEntity(MemberEntity memberEntity, ReserveEntity reserveEntity);
+
+    Optional<ReserveWaitEntity> findByReserveEntity(ReserveEntity reserveEntity);
 }

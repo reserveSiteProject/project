@@ -56,6 +56,7 @@ public class ReserveController {
     public ResponseEntity findByIdAndMemberEntity(@RequestParam("id") Long id, @RequestParam("memberId") Long memberId) {
         System.out.println("id = " + id + ", memberId = " + memberId);
         ReserveDTO reserveDTO = reserveService.findByIdAndMemberEntity(id, memberId);
+
         if(reserveDTO!=null) {
             return new ResponseEntity<>(HttpStatus.OK);
         }else{

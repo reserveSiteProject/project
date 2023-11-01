@@ -55,7 +55,7 @@ public class ReserveService {
                         .roomName(reserveEntity.getRoomEntity().getRoomName())
                         .checkInDate(reserveEntity.getCheckInDate())
                         .checkOutDate(reserveEntity.getCheckOutDate())
-                        .totalPrice(reserveEntity.getPaymentEntity().getTotalPrice())
+                        .totalPrice(reserveEntity.getTotalPrice())
                         .persons(reserveEntity.getPersons())
                         .status(reserveEntity.getReserveStatusEntity().getStatus())
                         .build());
@@ -117,4 +117,8 @@ public class ReserveService {
         System.out.println("reserveId = " + reserveId);
         return ReserveDTO.toDTO(reserveRepository.findById(reserveId).orElseThrow(() -> new NoSuchElementException()));
     }
+
+//    public void delete(Long id) {
+//        reserveRepository.deleteById(id);
+//    }
 }
