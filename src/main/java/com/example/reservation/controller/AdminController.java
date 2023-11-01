@@ -25,6 +25,7 @@ public class AdminController {
     private final ReserveService reserveService;
     private final ReserveWaitService reserveWaitService;
     private final ReserveCancelService reserveCancelService;
+    private final MessageService messageService;
 
     @GetMapping("/reserve")
     public String reserve(Model model,
@@ -56,17 +57,22 @@ public class AdminController {
     public ResponseEntity reserve(@PathVariable("id")Long id) {
         System.out.println("id = " + id);
         ReserveDTO reserveDTO = reserveService.findById(id);  // 리저브 아이디찾기
+        Long reserveId = reserveDTO.getId();
+        Long memberId = reserveDTO.getMemberId();
         // 캔슬테이블 저장
         ReserveCancelDTO reserveCancelDTO = new ReserveCancelDTO();
-        reserveCancelDTO.setReserveId(reserveDTO.getId());
-        reserveCancelDTO.setMemberId(reserveDTO.getMemberId());
+        reserveCancelDTO.setReserveId(reserveId);
+        reserveCancelDTO.setMemberId(memberId);
         reserveCancelService.save(reserveCancelDTO);
 
 //        <----------예약대기 찾은 후 null이 아니라면 문자 발송 ---------->
 
-
         // 마지막에 삭제
         reserveService.delete(id);
+
+        // 예약 취소한 사람에게 문자 보내기
+        messageService.sendOneReservationCancel(memberId, reserveId);
+
         return new ResponseEntity<>("취소가 완료되었습니다.",HttpStatus.OK);
     }
 

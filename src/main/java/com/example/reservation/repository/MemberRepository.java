@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
-    //풀퀘 왜 안떠
     Optional<MemberEntity> findByMemberEmail(String memberEmail);
 
     Optional<MemberEntity> findByNickName(String nickName);
