@@ -1,15 +1,10 @@
 package com.example.reservation.controller;
 
-import com.example.reservation.dto.ReserveDTO;
-import com.example.reservation.dto.ReserveWaitDTO;
-import com.example.reservation.dto.RoomDTO;
+import com.example.reservation.dto.*;
 import com.example.reservation.entity.ReserveEntity;
 import com.example.reservation.repository.ReserveRepository;
-import com.example.reservation.service.MessageService;
+import com.example.reservation.service.*;
 import com.example.reservation.entity.ReserveWaitEntity;
-import com.example.reservation.service.ReserveService;
-import com.example.reservation.service.ReserveWaitService;
-import com.example.reservation.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -28,6 +24,8 @@ public class ReserveController {
     private final ReserveRepository reserveRepository;
     private final ReserveWaitService reserveWaitService;
     private final RoomService roomService;
+    private final MemberService memberService;
+    private final CouponService couponService;
 
     private final MessageService messageService;  // 추가
 
@@ -75,11 +73,18 @@ public class ReserveController {
                        @RequestParam("persons") String persons,
                        @RequestParam("addPrice") String addPrice,
                        @RequestParam("price") String price,
+                       HttpSession httpSession,
                        Model model) {
         System.out.println("roomId = " + roomId + ", checkInDate = " + checkInDate + ", checkOutDate = " + checkOutDate + ", persons = " + persons + ", addPrice = " + addPrice + ", price = " + price + ", model = " + model);
         RoomDTO roomDTO = roomService.findById(roomId);
-        System.out.println("roomDTO = " + roomDTO);
+        Object loginEmail = httpSession.getAttribute("loginEmail");
+        String email = (String)loginEmail;
+        MemberDTO memberDTO = memberService.findByMemberEmail(email);
+        List<CouponDTO> couponDTOList = couponService.findByCoupon(memberDTO.getId());
+        System.out.println(couponDTOList);
+        model.addAttribute("member", memberDTO);
         model.addAttribute("room", roomDTO);
+        model.addAttribute("couponList", couponDTOList);
         model.addAttribute("checkInDate", checkInDate);
         model.addAttribute("checkOutDate", checkOutDate);
         model.addAttribute("persons", persons);
@@ -88,4 +93,10 @@ public class ReserveController {
         return "reservePages/pay";
     }
 
+
+    @PostMapping("/coupon/{id}")
+    public ResponseEntity coupon(@PathVariable("id")Long id){
+        CouponDTO couponDTO = couponService.findByCouponId(id);
+        return new ResponseEntity<>(couponDTO, HttpStatus.OK);
+    }
 }

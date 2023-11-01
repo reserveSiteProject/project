@@ -1,3 +1,18 @@
+#jelly{
+    box-shadow: inset 0px 1px 0px rgba(255,255,255,.5),0px 1px 3px rgba(0,0,0,0.3);
+    border-color: #111;
+    color: white;
+    background-image: -webkit-repeating-linear-gradient(left, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0)   6%, hsla(0,0%,100%, .1) 7.5%),
+    -webkit-repeating-linear-gradient(left, hsla(0,0%,  0%,0) 0%, hsla(0,0%,  0%,0)   4%, hsla(0,0%,  0%,.03) 4.5%),
+    -webkit-repeating-linear-gradient(left, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0) 1.2%, hsla(0,0%,100%,.15) 2.2%),
+
+    linear-gradient(180deg, hsl(0,0%,0%)  0%,
+            hsl(0,0%,10%) 47%,
+            hsl(0,0%,0%) 53%,
+            hsl(0,0%,10%)100%);
+    /* 크기 조정 */
+    transform: scale(1.1, 1.1); /* 위로 10% 확장 및 양 옆으로 10% 확장 */
+}
 .jelly {
     &:hover {
         animation: jelly 0.5s;
@@ -17,3 +32,4 @@
         transform: scale(0.95, 1.05);
     }
 }
+

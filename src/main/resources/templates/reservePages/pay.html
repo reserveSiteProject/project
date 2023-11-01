@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" th:href="@{/css/input/payStyle.css}">
     <th:block th:replace="~{component/config :: config}"></th:block>
 </head>
 <body>
@@ -45,11 +46,37 @@
             <tr>
                 <td>바베큐 전기 그릴 셋트</td>
                 <td>야외테라스 및 동앞 마당에서 이용 가능한 전기그릴 셋트입니다.</td>
-                <td id="extra"></td>
+                <td id="samkyup"></td>
                 <td>
-                    <select name="option" id="" >
-                        <option value="0">0</option>
-                        <option value="1">1</option>
+                    <select id="select" onchange="samkyup_fn(this.value)">
+                        <option value="0" selected>없음</option>
+                        <option value="20000">추가</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <div class="mt-4"><h2>사용가능쿠폰</h2></div>
+        <table class="table table-striped">
+            <tr>
+                <th scope="col" class="col-fixed">쿠폰명</th>
+                <th scope="col" class="col-fixed">할인가격</th>
+                <th scope="col" class="col-fixed">사용가능기간</th>
+                <th scope="col" class="col-fixed">쿠폰 선택</th>
+            </tr>
+            <tr>
+                <td id="couponName" class="col-fixed"></td>
+                <td id="couponSale" class="col-fixed"></td>
+                <td id="couponDate" class="col-fixed"></td>
+                <td>
+                    <select id="couponSelect" onchange="coupon_fn(this.value)">
+                        <option value="">사용가능한 쿠폰 선택</option>
+                        <th:block th:if="${#lists.isEmpty(couponList)}">
+                            <option>사용가능한 쿠폰이 없습니다.</option>
+                        </th:block>
+                        <th:block th:each="coupon : ${couponList}">
+                            <option th:if="${coupon.id > 0}" th:value="${coupon.id}"
+                                    th:text="${coupon.couponName}"></option>
+                        </th:block>
                     </select>
                 </td>
             </tr>
@@ -97,7 +124,7 @@
     <div class="row">
         <button class="btn btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample2"
                 aria-expanded="false" aria-controls="collapseExample2">
-            에베베 약관서
+            조준상 성욕 감퇴 주사 동의 약관서
         </button>
         </p>
         <div class="collapse" id="collapseExample2">
@@ -137,36 +164,32 @@
                     <th scope="col"></th>
                     <th scope="col">추가인원</th>
                     <th scope="col"></th>
-                    <th scope="col">부가서비스</th>
+                    <th scope="col">쿠폰할인</th>
                     <th scope="col"></th>
+                    <th scope="col">총금액</th>
+
+
                 </tr>
                 <tr>
-                    <td th:text="${room.roomPrice}"></td>
+                    <td type="hidden" ></td>
+                    <td id="roomPrice" th:text="${room.roomPrice}" th:value="${room.roomPrice}"></td>
                     <td>+</td>
-                    <td th:text="${addPrice}"></td>
-                    <td>+</td>
-                    <td id="extra2"></td>
+                    <td id="addPerson" th:text="${addPrice}" th:value="${addPrice}"></td>
+                    <td>-</td>
+                    <td id="sale"></td>
                     <td>=</td>
+                    <td id="sum" th:text="${room.roomPrice+addPrice}" th:value="${room.roomPrice+addPrice}"></td>
+
+
+
                 </tr>
             </table>
-        </div>
-        <div class="col-4">
             <table class="table table-hover">
                 <tr>
-                    <th scope="col"></th>
-                    <th scope="col">최종 이용 금액</th>
+                    <th scope="col">부가서비스(현장결제)</th>
                 </tr>
                 <tr>
-                    <td>총금액</td>
-                    <td th:text="${totalPrice}"></td>
-                </tr>
-                <tr>
-                    <td>즉시결제</td>
-                    <td th:text="${room.roomPrice}"></td>
-                </tr>
-                <tr>
-                    <td>현장결제</td>
-                    <td th:text="${addPrice}"></td>
+                    <td id="add"></td>
                 </tr>
             </table>
         </div>
@@ -187,17 +210,72 @@
             <input type="hidden" name="totalPrice" th:value="${totalPrice}">
             <button>카카오페이로 결제하기</button>
         </form>
-
     </div>
 </div>
 
 
 </body>
 <script th:inline="javascript">
-    const selectElement = document.getElementById("mySelect");
+    // 방값
+    const roomPriceAny = [[${room.roomPrice}]]
+    const roomPriceString = roomPriceAny.toString();
+    const roomPriceInt = parseInt(roomPriceString);
+    // 추가인원
+    const addPerson = document.getElementById("addPerson");
+    // 바베큐값
+    const samkyup = document.getElementById("samkyup");
+    // 쿠폰값
+    const couponName = document.getElementById("couponName");
+    const couponSale = document.getElementById("couponSale");
+    const couponDate = document.getElementById("couponDate");
+    // 총값
+    const add = document.getElementById("add");
+    const sale = document.getElementById("sale");
+    const sum = document.getElementById("sum");
+
+
+
+    const samkyup_fn = (id) => {
+
+        add.innerHTML = id;
+        samkyup.innerHTML = id;
+        if (sale.textContent != "") {
+            sum.innerHTML = parseInt(addPerson.textContent) + roomPriceInt - parseInt(couponSale.textContent);
+        } else {
+            sum.innerHTML = parseInt(addPerson.textContent) + roomPriceInt;
+        }
+    }
+
+
+    const coupon_fn = (id) => {
+        if (id == "") {
+            couponName.innerHTML = "";
+            couponSale.innerHTML = "";
+            couponDate.innerHTML = "";
+            sale.innerHTML = "";
+        } else {
+            axios({
+                url: `/reserve/coupon/${id}`,
+                method: "post",
+            }).then(res => {
+                couponName.innerHTML = res.data.couponName;
+                couponSale.innerHTML = res.data.couponSale;
+                couponDate.innerHTML = res.data.startDate + "~" + res.data.endDate;
+                sale.innerHTML = res.data.couponSale;
+
+                sum.innerHTML = parseInt(addPerson.textContent) + roomPriceInt - parseInt(couponSale.textContent);
+
+            }).catch(err => {
+                alert(err);
+            });
+        }
+    }
+
+    t
+    const selectElemen = document.getElementById("mySelect");
 
     // <select> 요소에 대한 변경 이벤트를 추가합니다.
-    selectElement.addEventListener("change", function() {
+    selectElement.addEventListener("change", function () {
         // 선택한 옵션의 값을 가져옵니다.
         const selectedOption = selectElement.value;
 
@@ -216,8 +294,8 @@
         // 이곳에 원하는 작업을 수행하는 코드를 추가합니다.
         const extra = document.getElementById("extra");
         const extra2 = document.getElementById("extra2");
-        extra.innerHTML="0";
-        extra2.innerHTML="0";
+        extra.innerHTML = "0";
+        extra2.innerHTML = "0";
     }
 
     // 선택한 옵션이 1일 때 실행할 함수
@@ -225,9 +303,15 @@
         // 이곳에 원하는 작업을 수행하는 코드를 추가합니다.
         const extra = document.getElementById("extra");
         const extra2 = document.getElementById("extra2");
-        extra.innerHTML="20000";
-        extra2.innerHTML="20000";
+        extra.innerHTML = "20000";
+        extra2.innerHTML = "20000";
     }
+
+    // const coupon_fn = (id) => {
+    //     console.log(id);
+    //
+    // }
+
 
 </script>
 </html>

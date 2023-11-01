@@ -62,14 +62,14 @@ label {
 
 input:focus ~ label, input:valid ~ label {
     font-size: 16px;
-    bottom: 40px;
+    bottom: 45px;
     color: #666;
     font-weight: bold;
 }
 
 input:focus ~ span, input:valid ~ span {
     width: 73%;
-    left: 35.8%;
+    left: 37%;
 }
 
 /* 검색 버튼 스타일 */
