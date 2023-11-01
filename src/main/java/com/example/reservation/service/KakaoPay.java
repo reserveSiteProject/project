@@ -45,6 +45,7 @@ public class KakaoPay {
         MemberEntity memberEntity = memberRepository.findById(memberId).orElseThrow(() -> new NoSuchElementException());
         ReserveEntity reserveEntity = ReserveEntity.toSaveEntity(reserveDTO, memberEntity, roomEntity);
         ReserveEntity save = reserveRepository.save(reserveEntity);
+        System.out.println("save.getTotalPrice() = " + save.getTotalPrice());
 
 
         //예약 상태 테이블 저장 처리

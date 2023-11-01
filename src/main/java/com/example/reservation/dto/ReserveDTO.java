@@ -58,7 +58,7 @@ public class ReserveDTO {
         reserveDTO.setCheckInDate(reserveEntity.getCheckInDate());
         reserveDTO.setCheckOutDate(reserveEntity.getCheckOutDate());
         reserveDTO.setPersons(reserveEntity.getPersons());
-        reserveDTO.setTotalPrice(reserveEntity.getPaymentEntity().getTotalPrice());
+        reserveDTO.setTotalPrice(reserveEntity.getTotalPrice());
         System.out.println("reserveDTO = " + reserveDTO);
         return reserveDTO;
     }
