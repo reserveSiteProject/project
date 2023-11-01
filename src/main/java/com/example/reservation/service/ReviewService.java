@@ -95,6 +95,7 @@ public class ReviewService {
                         .hits(reviewEntity.getHits())
                         .createdAt(UtilClass.dateTimeFormat(reviewEntity.getCreatedAt()))
                         .build());
+        System.out.println("reviewService의  reviewList = " + reviewList);
         return reviewList;
     }
 
@@ -105,5 +106,9 @@ public class ReviewService {
         System.out.println("reviewEntity = " + reviewEntity);
         return ReviewDTO.toDTO(reviewEntity);
 
+    }
+    @Transactional
+    public void increaseHits(Long id) {
+        reviewRepository.increaseHits(id);
     }
 }
