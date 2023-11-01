@@ -14,6 +14,7 @@ import java.util.NoSuchElementException;
 @Service
 @RequiredArgsConstructor
 public class MemberService {
+    //풀퀘 되라
     public final MemberRepository memberRepository;
 
     public Long save(MemberDTO memberDTO) {
@@ -72,6 +73,11 @@ public class MemberService {
 
     public MemberDTO findById(Long memberId) {
         MemberEntity memberEntity = memberRepository.findById(memberId).orElseThrow(() -> new NoSuchElementException());
+        return MemberDTO.toDTO(memberEntity);
+    }
+
+    public MemberDTO findByMemberMobile(String memberMobile) {
+        MemberEntity memberEntity = memberRepository.findByMemberMobile(memberMobile).orElseThrow(() -> new NoSuchElementException());
         return MemberDTO.toDTO(memberEntity);
     }
 }

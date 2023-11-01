@@ -61,9 +61,10 @@ public class ReviewController {
         Long id = reviewService.save(reviewDTO);
         String memberMobile = memberService.findByMemberEmail(reviewDTO.getReviewWriter()).getMemberMobile();
         //문자 발송 메서드 호출
-        messageService.sendOneReservationComplete(memberMobile);
+        //왜 안되냗고
+//        messageService.sendOneReservationComplete(memberMobile);
         System.out.println(" 컨트롤러 id = " + id);
-        System.out.println("memberMobile = " + memberMobile);
+//        System.out.println("memberMobile = " + memberMobile);
         return "redirect:/board/review";
     }
 
