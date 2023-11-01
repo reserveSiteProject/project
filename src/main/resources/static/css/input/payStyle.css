@@ -1,0 +1,8 @@
+.table th.col-fixed {
+    width: 20%;
+}
+
+/* 테이블 데이터 셀(열) 스타일 */
+.table td.col-fixed {
+    width: 20%;
+}
