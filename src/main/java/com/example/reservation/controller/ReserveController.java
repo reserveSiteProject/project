@@ -54,9 +54,9 @@ public class ReserveController {
 
     @GetMapping("/find")
     public ResponseEntity findByIdAndMemberEntity(@RequestParam("id") Long id, @RequestParam("memberId") Long memberId) {
+        System.out.println("id = " + id + ", memberId = " + memberId);
         ReserveDTO reserveDTO = reserveService.findByIdAndMemberEntity(id, memberId);
-        ReserveWaitDTO reserveWaitDTO = reserveWaitService.findByMemberEntityAndReserveEntity(memberId, id);
-        if(reserveDTO!=null || reserveWaitDTO!=null) {
+        if(reserveDTO!=null) {
             return new ResponseEntity<>(HttpStatus.OK);
         }else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -64,8 +64,20 @@ public class ReserveController {
     }
 
 
-    @PostMapping("/wait")
+    @GetMapping("/wait")
     public ResponseEntity wait(@ModelAttribute ReserveWaitDTO reserveWaitDTO) {
+        ReserveWaitDTO find = reserveWaitService.findByMemberEntityAndReserveEntity(reserveWaitDTO);
+        if(find!=null){
+            return new ResponseEntity<>(reserveWaitDTO, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+
+    @PostMapping("/wait")
+    public ResponseEntity waitSave(@ModelAttribute ReserveWaitDTO reserveWaitDTO) {
         reserveWaitService.save(reserveWaitDTO);
         return new ResponseEntity<>(reserveWaitDTO, HttpStatus.OK);
     }
