@@ -22,18 +22,18 @@ public class ReserveWaitService {
 
     @Transactional
     public Long save(ReserveWaitDTO reserveWaitDTO) {
+        System.out.println("reserveWaitDTO = " + reserveWaitDTO);
         MemberEntity memberEntity = memberRepository.findById(reserveWaitDTO.getMemberId()).orElseThrow(() -> new NoSuchElementException());
         ReserveEntity reserveEntity = reserveRepository.findById(reserveWaitDTO.getReserveId()).orElseThrow(() -> new NoSuchElementException());
+        System.out.println("reserveEntity = " + reserveEntity.getId());
         ReserveWaitEntity reserveWaitEntity = ReserveWaitEntity.toSaveEntity(reserveWaitDTO, reserveEntity, memberEntity);
         return reserveWaitRepository.save(reserveWaitEntity).getId();
     }
 
     @Transactional
-    public ReserveWaitDTO findBy(ReserveWaitDTO reserveWaitDTO) {
-        MemberEntity memberEntity = memberRepository.findById(reserveWaitDTO.getMemberId()).orElseThrow(() -> new NoSuchElementException());
-        System.out.println("memberEntity = " + memberEntity);
-        ReserveEntity reserveEntity = reserveRepository.findById(reserveWaitDTO.getReserveId()).orElseThrow(() -> new NoSuchElementException());
-        System.out.println("reserveEntity = " + reserveEntity);
+    public ReserveWaitDTO findByMemberEntityAndReserveEntity(Long memberId, Long id) {
+        MemberEntity memberEntity = memberRepository.findById(memberId).orElseThrow(() -> new NoSuchElementException());
+        ReserveEntity reserveEntity = reserveRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
         ReserveWaitEntity reserveWaitEntity = reserveWaitRepository.findByMemberEntityAndReserveEntity(memberEntity, reserveEntity).orElseThrow(() -> new NoSuchElementException());
         return ReserveWaitDTO.toDTO(reserveWaitEntity);
     }

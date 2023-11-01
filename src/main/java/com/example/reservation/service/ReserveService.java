@@ -78,7 +78,6 @@ public class ReserveService {
         String checkOutDatePattern = "%" + checkOutDate + "%";
         RoomEntity roomEntity = roomRepository.findById(roomId).orElseThrow(() -> new NoSuchElementException());
         ReserveEntity reserveEntity = reserveRepository.findDate(checkInDate, checkOutDate, roomEntity, checkInDatePattern, checkOutDatePattern);
-        System.out.println("zz" + reserveEntity);
         return ReserveDTO.toDTO(reserveEntity);
 
     }
