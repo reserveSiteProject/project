@@ -13,6 +13,7 @@ h1, h2 {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
     animation: slideInFromTop 0.5s ease-out;
 }
+/*추가*/
 
 p {
     color: #777;
