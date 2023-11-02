@@ -55,7 +55,7 @@ public class AdminController {
 
     @PutMapping("/reserve/{id}")
     public ResponseEntity reserve(@PathVariable("id")Long id) {
-        System.out.println("id = " + id);
+        System.out.println("여기냐 = " + id);
         ReserveDTO reserveDTO = reserveService.findById(id);  // 리저브 아이디찾기
         Long reserveId = reserveDTO.getId();
         Long memberId = reserveDTO.getMemberId();
@@ -66,19 +66,17 @@ public class AdminController {
         reserveCancelService.save(reserveCancelDTO);
 
 //        <----------예약대기 찾은 후 null이 아니라면 문자 발송 ---------->
-
-        // 마지막에 삭제
-        reserveService.delete(id);
+        messageService.sendOneReservationCancel(memberId, reserveId);
 
         // 예약 취소한 사람에게 문자 보내기
-        messageService.sendOneReservationCancel(memberId, reserveId);
-        //해당 예약 건에 대해 다른사람이 예약대기를 한건수가 있으면 예약대기 신청을 한
+        //해당 예약 건에 대해 다른사람이 예약대기를 한건수가 있으면 예약대기 신청을 한다.
         //사람에게 결제를 완료하라고 알림 문자 보내기
 
         if(reserveWaitService.findByReserveEntity(reserveId) != null) {
             messageService.sendOneReservationWaitEnd(reserveId);
         }
-
+        // 마지막에 삭제
+        reserveService.delete(id);
         return new ResponseEntity<>("취소가 완료되었습니다.",HttpStatus.OK);
     }
 
@@ -117,7 +115,4 @@ public class AdminController {
         roomService.save(roomDTO);
         return "/index";
     }
-
-
-
 }
