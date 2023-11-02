@@ -14,14 +14,13 @@ import java.util.List;
 @ToString
 @Getter
 @Table(name="payment_table")
-public class PaymentEntity {
+public class PaymentEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private Long totalPrice;
-    @Column
-    private String paymentAt;
+
     @Column(nullable = false)
     private String paymentBy;
 
@@ -42,7 +41,6 @@ public class PaymentEntity {
         paymentEntity.setMemberEntity(memberEntity);
         paymentEntity.setReserveEntity(reserveEntity);
         paymentEntity.setTotalPrice(paymentDTO.getTotalPrice());
-        paymentEntity.setPaymentAt(paymentDTO.getCreatedAt());
         paymentEntity.setPaymentBy(paymentDTO.getPaymentBy());
         return paymentEntity;
     }
