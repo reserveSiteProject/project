@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <th:block th:replace="~{component/config :: config}"></th:block>
+    <th:block th:replace="~{component/config :: config}"></th:block>
 </head>
 <body>
-<div class="container">
-  <h2 class="text-center mt-5">결제가 완료 되었습니다.</h2>
-  <div class="row">
-    <form action="" class="card form-control">
-      <p class="fw-bold">객실 이름 : [[${info.item_name}]]</p><br/>
-      <p class="fw-bold">결제 금액 : [[${info.amount.total}]]</p><br/>
-      <p class="fw-bold"> 결제 일시 : [[${info.approved_at}]]</p><br/>
-      <input type="button" class="btn btn-dark" th:onclick="paymentSave_fn()" th:value="메인으로">
-    </form>
-  </div>
+<div class="card mb-3 mt-5 text-center">
+    <img src="/images/logo.png" class="card-img-top" width="100" height="300" alt="...">
+    <div class="card-body">
+        <h5 class="card-title fw-bold">결제가 완료 되었습니다!</h5>
+        <p class="card-text fw-bold">예약자 : [[${session.memberDTO.getMemberName}]]</p>
+        <p class="card-text fw-bold" >객실 이름 : [[${info.item_name}]]</p>
+        <p class="card-text fw-bold">결제 금액 : [[${info.amount.total}]]</p>
+        <p class="card-text fw-bold" id="date">결제 일시 : [[${info.approved_at}]]</p>
+        <p class="card-text fw-bold"><small class="text-body-secondary">
+            <input type="button" class="btn btn-dark" th:onclick="paymentSave_fn()" th:value="메인으로">
+        </small></p>
+    </div>
 </div>
 <!--결제일시:     [[${info.approved_at}]]<br/>-->
 <!--주문번호:    [[${info.partner_order_id}]]<br/>-->
@@ -23,38 +25,51 @@
 <!--결제방법:    [[${info.payment_method_type}]]<br/>-->
 
 
-
-
 </body>
 <script th:inline="javascript">
-  const paymentSave_fn = () =>{
-    const totalPrice = [[${info.amount.total}]];
-    const paymentAt = [[${info.approved_at}]];
-    const paymentBy = [[${info.payment_method_type}]];
-    const id = [[${session.memberDTO.getId()}]];
-    const reserveId = [[${reserveId}]];
-    console.log(totalPrice);
-    console.log(paymentBy);
-    console.log(paymentAt);
+    const paymentSave_fn = () => {
+        const totalPrice = [[${info.amount.total}]];
+        const paymentAt = [[${info.approved_at}]];
+        const paymentBy = [[${info.payment_method_type}]];
+        const id = [[${session.memberDTO.getId()}]];
+        const reserveId = [[${reserveId}]];
+        console.log(totalPrice);
+        console.log(paymentBy);
+        console.log(paymentAt);
 
-    $.ajax({
-      type : "post",
-      url : "/payment/save",
-      data : {
-        memberId: id,
-        totalPrice : totalPrice,
-        paymentAt : paymentAt,
-        paymentBy : paymentBy,
-        reserveId
-      },
-      success : function (data){
-        location.href="/";
-      },
-      error : function (error){
-        alert((error));
-      }
+        $.ajax({
+            type: "post",
+            url: "/payment/save",
+            data: {
+                memberId: id,
+                totalPrice: totalPrice,
+                paymentAt: paymentAt,
+                paymentBy: paymentBy,
+                reserveId
+            },
+            success: function (data) {
+                location.href = "/";
+            },
+            error: function (error) {
+                alert((error));
+            }
 
-    });
-  }
+        });
+    }
+    var dateStr = "${info.approved_at}";
+
+    // JavaScript Date 객체로 변환
+    var date = new Date(dateStr);
+
+    // 날짜를 원하는 형식으로 포맷
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더합니다.
+    var day = date.getDate();
+
+    // 원하는 형식으로 조합
+    var formattedDate = year + '년 ' + month + '월 ' + day + '일';
+
+    // 결과를 HTML 엘리먼트에 삽입
+    document.getElementById('payment-date').textContent = "결제 일시 : " + formattedDate;
 </script>
 </html>
