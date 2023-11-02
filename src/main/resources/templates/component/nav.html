@@ -18,41 +18,55 @@
 <nav role="navigation" id="id-nav">
   <p style="position: fixed; left: 1px ">
     <a href="/">
-      <img src="./images/logo.png" style="width: 60%">
+      <img src="./images/logo.png" style="width: 25%">
     </a>
   </p>
 
   <header class="nav-down">
-  <ul id="main-menu" class="stretch">
-    <li class="str"><a href="#">MENU1</a></li>
-    <li class="str"><a href="#">MENU2</a>
+
+    <ul id="main-menu" class="stretch">
+    <li class="str"><a href="/">PROLOGUE</a>
       <ul class="sub-menu">
-        <li><a href="/member/login" aria-label="login">login</a></li>
+        <li><a href="/" aria-label="MAIN PAGE">MAIN PAGE</a></li>
+        <li><a href="/introduction" aria-label="INTRODUCTION">펜션 소개</a></li>
+        <li><a href="/direction" aria-label="direction">오시는 길</a></li>
+        <li><a href="/spot" aria-label="spot">관광지 소개</a></li>
+      </ul>
+    </li>
+    <li class="str"><a href="/member/login">MEMBER MENU</a>
+      <ul class="sub-menu">
+        <li><a href="/member/login" aria-label="login">로그인</a></li>
+        <li><a href="/member/save" aria-label="save">회원가입</a></li>
+        <li><a href="#" aria-label="subemnu">submenu</a></li>
+        <li><a href="#" aria-label="subemnu">submenu</a></li>
+      </ul>
+    </li>
+    <li class="str"><a href="/board/review">BULLETIN BOARD</a>
+      <ul class="sub-menu">
+        <li><a href="/board/review" aria-label="review">리뷰</a></li>
+        <li><a href="/board/notice" aria-label="notice">공지사항</a></li>
+      </ul>
+    </li>
+    <li class="str"><a href="/reserve">RESERVATION</a>
+      <ul class="sub-menu">
+        <li><a href="/reserve" aria-label="reserve">예약하기</a></li>
+        <li><a href="#" aria-label="subemnu">submenu</a></li>
         <li><a href="#" aria-label="subemnu">submenu</a></li>
         <li><a href="#" aria-label="subemnu">submenu</a></li>
         <li><a href="#" aria-label="subemnu">submenu</a></li>
       </ul>
     </li>
-    <li class="str"><a href="#">MENU3</a>
+    <li class="str"><a href="#">MENU5</a>
       <ul class="sub-menu">
+        <li><a href="#" aria-label="subemnu">예약하기</a></li>
         <li><a href="#" aria-label="subemnu">submenu</a></li>
         <li><a href="#" aria-label="subemnu">submenu</a></li>
         <li><a href="#" aria-label="subemnu">submenu</a></li>
         <li><a href="#" aria-label="subemnu">submenu</a></li>
       </ul>
     </li>
-    <li class="str"><a href="#">MENU4</a>
-      <ul class="sub-menu">
-        <li><a href="#" aria-label="subemnu">submenu</a></li>
-        <li><a href="#" aria-label="subemnu">submenu</a></li>
-        <li><a href="#" aria-label="subemnu">submenu</a></li>
-        <li><a href="#" aria-label="subemnu">submenu</a></li>
-        <li><a href="#" aria-label="subemnu">submenu</a></li>
-      </ul>
-    </li>
-    <li class="str"><a href="#">MENU5</a></li>
-    <li class="str"><a href="#">MENU6</a></li>
   </ul>
+
   </header>
 
   <div th:if ="${session.memberDTO!= null}">
