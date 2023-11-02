@@ -21,8 +21,8 @@
             </tr>
             <tr>
                 <td>
-                    <div th:if="${room.fileAttached == 1}" th:each="fileName: ${room.storedFileName}" class="col-4">
-                        <img th:src="@{|/upload/${fileName}|}" class="img-fluid mb-3" alt="" width="50" height="30">
+                    <div th:if="${room.fileAttached == 1}" th:each="fileName: ${room.storedFileName[0]}" class="col-4">
+                        <img th:src="@{|/upload/${fileName}|}" class="mb-3" alt="" width="100" height="100" style="cursor: pointer" th:onclick="room_fn([[${room.id}]])">
                     </div>
                 </td>
                 <td th:text="${room.roomName}"></td>
@@ -38,16 +38,16 @@
     <div class="row">
         <table class="table table-striped">
             <tr>
-                <th scope="col">부가서비스명</th>
-                <th scope="col">설명</th>
-                <th scope="col">개당 가격</th>
-                <th scope="col">수량</th>
+                <th scope="col" class="col-fixed">부가서비스명</th>
+                <th scope="col" class="col-fixed">설명</th>
+                <th scope="col" class="col-fixed">가격</th>
+                <th scope="col" class="col-fixed">수량</th>
             </tr>
             <tr>
-                <td>바베큐 전기 그릴 셋트</td>
-                <td>야외테라스 및 동앞 마당에서 이용 가능한 전기그릴 셋트입니다.</td>
-                <td id="samkyup"></td>
-                <td>
+                <td class="col-fixed">바베큐 전기 그릴 셋트</td>
+                <td class="col-fixed">야외테라스 및 동앞 마당에서 이용 가능한 전기그릴 셋트입니다.</td>
+                <td id="samkyup" class="col-fixed"></td>
+                <td class="col-fixed">
                     <select id="select" onchange="samkyup_fn(this.value)">
                         <option value="0" selected>없음</option>
                         <option value="20000">추가</option>
@@ -67,7 +67,7 @@
                 <td id="couponName" class="col-fixed"></td>
                 <td id="couponSale" class="col-fixed"></td>
                 <td id="couponDate" class="col-fixed"></td>
-                <td>
+                <td class="col-fixed">
                     <select id="couponSelect" onchange="coupon_fn(this.value)">
                         <option value="">사용가능한 쿠폰 선택</option>
                         <th:block th:if="${#lists.isEmpty(couponList)}">
@@ -142,7 +142,8 @@
     </div>
 
     <div class="row mt-5">
-        <h2>결제수단 선택</h2>
+        <h2>금액 확인 / 결제수단 선택</h2>
+        <br>
         <div class="form-check">
             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
             <label class="form-check-label" for="flexRadioDefault1">
@@ -156,66 +157,102 @@
             </label>
         </div>
     </div>
+    <br>
     <div class="row">
         <div class="col-8">
             <table class="table table-hover">
                 <tr>
-                    <th scope="col">객실</th>
+                    <th scope="col" class="col-fixed">객실</th>
                     <th scope="col"></th>
-                    <th scope="col">추가인원</th>
+                    <th scope="col" class="col-fixed">추가인원</th>
                     <th scope="col"></th>
-                    <th scope="col">쿠폰할인</th>
+                    <th scope="col" class="col-fixed">쿠폰할인</th>
                     <th scope="col"></th>
-                    <th scope="col">총금액</th>
+                    <th scope="col" class="col-fixed">총금액</th>
 
 
                 </tr>
                 <tr>
-                    <td type="hidden" ></td>
-                    <td id="roomPrice" th:text="${room.roomPrice}" th:value="${room.roomPrice}"></td>
+                    <td class="col-fixed" id="roomPrice" th:text="${room.roomPrice}" th:value="${room.roomPrice}"></td>
                     <td>+</td>
-                    <td id="addPerson" th:text="${addPrice}" th:value="${addPrice}"></td>
+                    <td class="col-fixed" id="addPerson" th:text="${addPrice}" th:value="${addPrice}"></td>
                     <td>-</td>
-                    <td id="sale"></td>
+                    <td class="col-fixed" id="sale"></td>
                     <td>=</td>
-                    <td id="sum" th:text="${room.roomPrice+addPrice}" th:value="${room.roomPrice+addPrice}"></td>
-
-
-
+                    <td class="col-fixed" id="sum"></td>
                 </tr>
             </table>
             <table class="table table-hover">
                 <tr>
-                    <th scope="col">부가서비스(현장결제)</th>
+                    <th class="col-fixed" scope="col">부가서비스(현장결제)</th>
                 </tr>
                 <tr>
-                    <td id="add"></td>
+                    <td class="col-fixed" id="add" th:value="0"></td>
                 </tr>
             </table>
         </div>
     </div>
+
     <div class="row">
-        <div class="col-4">
-            <img src="https://t1.daumcdn.net/kakaopay/brand_site/img/og/kakaopay_og_20201217.png" alt=""
-                 class="img-fluid mb-3" width="100" height="50">
-        </div>
-        <form method="post" action="/kakaoPay">
-            <input type="hidden" name="memberId" th:value="${session.memberDTO.getId()}">
-            <input type="hidden" name="memberName" th:value="${session.memberDTO.getMemberName()}">
-            <input type="hidden" name="checkInDate" th:value="${checkInDate}">
-            <input type="hidden" name="checkOutDate" th:value="${checkOutDate}">
-            <input type="hidden" name="roomId" th:value="${room.id}">
-            <input type="hidden" name="persons" th:value="${persons}">
-            <input type="hidden" name="roomName" th:value="${room.roomName}">
-            <input type="hidden" name="totalPrice" th:value="${totalPrice}">
-            <button>카카오페이로 결제하기</button>
-        </form>
+        <table class="table table">
+            <tr>
+                <th scope="col" class="col-fixed">결제수단</th>
+            </tr>
+            <tr>
+                <td class="col-fixed">
+                    <form method="post" action="/kakaoPay" id="kakaoForm">
+                        <input type="hidden" name="memberId" th:value="${session.memberDTO.getId()}">
+                        <input type="hidden" name="memberName" th:value="${session.memberDTO.getMemberName()}">
+                        <input type="hidden" name="checkInDate" th:value="${checkInDate}">
+                        <input type="hidden" name="checkOutDate" th:value="${checkOutDate}">
+                        <input type="hidden" name="roomId" th:value="${room.id}">
+                        <input type="hidden" name="persons" th:value="${persons}">
+                        <input type="hidden" name="roomName" th:value="${room.roomName}">
+                        <input type="hidden" name="totalPrice" th:value="${totalPrice}">
+                        <img style="cursor: pointer"
+                             src="/images/kakaoPay.png" alt=""
+                             class="rounded" height="120" width="150"  th:onclick="is_checked()">
+                    </form>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 
 
 </body>
 <script th:inline="javascript">
+    const is_checked = () => {
+
+        // 1. checkbox element를 찾습니다.
+        const checkbox = document.getElementById('flexCheckDefault');
+        const checkbox1 = document.getElementById('flexCheckDefault1');
+        const checkbox2 = document.getElementById('flexCheckDefault2');
+
+
+        // 2. checked 속성을 체크합니다.
+        const is_checked = checkbox.checked;
+        const is_checked1 = checkbox1.checked;
+        const is_checked2 = checkbox2.checked;
+
+
+        if (is_checked==true && is_checked1==true && is_checked2 == true){
+            alert("결제페이지로 넘어갑니다.");
+            kakao_fn();
+        }else {
+            alert("약관에 동의가 필요합니다.");
+        }
+
+    }
+
+    const room_fn = (id) => {
+        location.href = `/room/detail/${id}`;
+    }
+    const kakao_fn = () => {
+        const kakaoForm = document.getElementById("kakaoForm");
+        kakaoForm.submit();
+    }
+
     // 방값
     const roomPriceAny = [[${room.roomPrice}]]
     const roomPriceString = roomPriceAny.toString();
@@ -233,6 +270,11 @@
     const sale = document.getElementById("sale");
     const sum = document.getElementById("sum");
 
+    window.onload = function () {
+        sum.innerHTML = parseInt(addPerson.textContent) + roomPriceInt;
+        add.innerHTML = "0";
+        samkyup.innerHTML = "0";
+    }
 
 
     const samkyup_fn = (id) => {

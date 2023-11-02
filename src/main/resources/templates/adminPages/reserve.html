@@ -64,25 +64,25 @@
     </div>
     <table class="table table-hover text-center">
         <tr class="bold">
-            <td>예약 번호</td>
-            <td>회원 이름</td>
-            <td>방 이름</td>
-            <td>결제 가격</td>
-            <td>수용인원</td>
-            <td>체크인 일자</td>
-            <td>체크아웃 일자</td>
-            <td>예약진행상태</td>
+            <td class="col-fixed">예약 번호</td>
+            <td class="col-fixed">회원 이름</td>
+            <td class="col-fixed">방 이름</td>
+            <td class="col-fixed">결제 가격</td>
+            <td class="col-fixed">수용인원</td>
+            <td class="col-fixed">체크인 일자</td>
+            <td class="col-fixed">체크아웃 일자</td>
+            <td class="col-fixed">예약진행상태</td>
         </tr>
 
 
         <tr class="info" th:each="reserve : ${memberReserveList}">
-            <td th:text="${reserve.id}"></td>
-            <td th:text="${reserve.memberName}"></td>
-            <td th:text="${reserve.roomName}"></td>
-            <td th:text="${reserve.totalPrice}"></td>
-            <td th:text="${reserve.persons}"></td>
-            <td th:text="${reserve.checkInDate}"></td>
-            <td th:text="${reserve.checkOutDate}"></td>
+            <td class="col-fixed" th:text="${reserve.id}"></td>
+            <td class="col-fixed" th:text="${reserve.memberName}"></td>
+            <td class="col-fixed" th:text="${reserve.roomName}"></td>
+            <td class="col-fixed" th:text="${reserve.totalPrice}"></td>
+            <td class="col-fixed" th:text="${reserve.persons}"></td>
+            <td class="col-fixed" th:text="${reserve.checkInDate}"></td>
+            <td class="col-fixed" th:text="${reserve.checkOutDate}"></td>
 
 
             <td th:if="${reserve.status} == 0" th:text="결제완료"></td>
