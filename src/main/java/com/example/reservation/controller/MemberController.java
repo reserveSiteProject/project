@@ -102,7 +102,9 @@ public class MemberController {
         MemberDTO login = memberService.login(memberDTO);
         if(login!=null){
             session.setAttribute("memberDTO", login);
+            System.out.println("login = " + login);
             session.setAttribute("loginEmail", memberDTO.getMemberEmail());
+            System.out.println("loginEmail = " + memberDTO.getMemberEmail());
             if(keep){
                 Cookie cookie=new Cookie("memberEmail", memberDTO.getMemberEmail());
                 cookie.setMaxAge(60*60*24*7);
