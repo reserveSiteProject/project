@@ -2,6 +2,7 @@ package com.example.reservation.service;
 
 import com.example.reservation.dto.ReserveDTO;
 import com.example.reservation.dto.ReserveWaitDTO;
+import com.example.reservation.dto.RoomDTO;
 import com.example.reservation.entity.MemberEntity;
 import com.example.reservation.entity.ReserveEntity;
 import com.example.reservation.entity.ReserveWaitEntity;
@@ -11,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -43,6 +46,16 @@ public class ReserveWaitService {
         ReserveEntity reserveEntity = reserveRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
         ReserveWaitEntity reserveWaitEntity = reserveWaitRepository.findByReserveEntity(reserveEntity).orElseThrow(() -> new NoSuchElementException());
         return ReserveWaitDTO.toDTO(reserveWaitEntity);
+    }
+
+    @Transactional
+    public List<ReserveWaitDTO> findAll() {
+        List<ReserveWaitEntity> reserveWaitEntityList = reserveWaitRepository.findAll();
+        List<ReserveWaitDTO> reserveWaitDTOList = new ArrayList<>();
+        reserveWaitEntityList.forEach(reserveWait -> {
+            reserveWaitDTOList.add(ReserveWaitDTO.toDTO(reserveWait));
+        });
+        return reserveWaitDTOList;
     }
 
 //    public ReserveWaitDTO findById(Long reserveId) {

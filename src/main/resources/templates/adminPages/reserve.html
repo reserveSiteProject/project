@@ -10,6 +10,14 @@
 <h1>예약관리 화면출력</h1>
 
 <div id="section" class="container mt-5">
+    <div class="text-end">
+        <select onchange="rlist_fn(this.value)">
+            <option value="rlist" selected>예약내역</option>
+            <option value="clist">예약취소내역</option>
+            <option value="wait">예약대기내역</option>
+        </select>
+    </div>
+    <div id="reserve-list">
     <div id="search-area">
         <tr>
             <form action="/admin/reserve" method="get">
@@ -72,6 +80,7 @@
             <td class="col-fixed">체크인 일자</td>
             <td class="col-fixed">체크아웃 일자</td>
             <td class="col-fixed">예약진행상태</td>
+            <td class="col-fixed">예약날짜</td>
         </tr>
 
 
@@ -83,6 +92,7 @@
             <td class="col-fixed" th:text="${reserve.persons}"></td>
             <td class="col-fixed" th:text="${reserve.checkInDate}"></td>
             <td class="col-fixed" th:text="${reserve.checkOutDate}"></td>
+            <td class="col-fixed" th:text="${reserve.createdAt}"></td>
 
 
             <td th:if="${reserve.status} == 0" th:text="결제완료"></td>
@@ -103,8 +113,45 @@
         </tr>
     </table>
 </div>
+</div>
 
-<div class="container">
+    <div style="display: none" id="cancel-list" >
+        <div th:if="${cancelList!=null}">
+            <table class="table" >
+                <tr>
+                    <th>번호</th>
+                    <th>예약번호</th>
+                    <th>회원번호</th>
+                    <th>취소날짜</th>
+                </tr>
+                <tr th:each="cancel :${cancelList}">
+                    <td th:text="${cancel.id}"></td>
+                    <td th:text="${cancel.reserveId}"></td>
+                    <td th:text="${cancel.memberId}"></td>
+                    <td th:text="${cancel.createdAt}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div style="display: none" id="wait-list" >
+        <div th:if="${waitList!=null}">
+            <table class="table" >
+                <tr>
+                    <th>예약번호</th>
+                    <th>인원</th>
+                    <th>대기 날짜</th>
+                </tr>
+                <tr th:each="wait :${waitList}">
+                    <td th:text="${wait.reserveId}"></td>
+                    <td th:text="${wait.persons}"></td>
+                    <td th:text="${wait.createdAt}"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+<div class="container" id="page-list">
     <div class="mt-4">
         <ul class="pagination justify-content-center" id="page">
             <li class="page-item">
@@ -156,7 +203,9 @@
         </ul>
     </div>
 </div>
+
 </body>
+
 <script th:inline="javascript">
     const reserveDelete_fn = (id) => {
         if (confirm("예약취소신청을 승인하시겠습니까?")) {
@@ -175,5 +224,25 @@
     // document.querySelector(".custom-select").addEventListener("click", function() {
     //     this.classList.toggle("open");
     // });
+
+
+    const rlist_fn = (value) => {
+        if(value=="rlist"){
+            document.getElementById("cancel-list").style.display="none";
+            document.getElementById("reserve-list").style.display="block";
+            document.getElementById("wait-list").style.display="none";
+            document.getElementById("page-list").style.display="block";
+        }else if(value=="clist"){
+            document.getElementById("reserve-list").style.display="none";
+            document.getElementById("cancel-list").style.display="block";
+            document.getElementById("wait-list").style.display="none";
+            document.getElementById("page-list").style.display="none";
+        }else{
+            document.getElementById("reserve-list").style.display="none";
+            document.getElementById("cancel-list").style.display="none";
+            document.getElementById("wait-list").style.display="block";
+            document.getElementById("page-list").style.display="block";
+        }
+    }
 </script>
 </html>
