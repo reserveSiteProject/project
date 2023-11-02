@@ -10,6 +10,7 @@
     <title>Title</title>
 </head>
 <body>
+<div th:replace="~{component/nav :: nav}"></div>
 <h1>리뷰 작성 페이지</h1>
 <form action="/board/review/save" method="post" enctype="multipart/form-data">
 <input type="text" name="reviewTitle" placeholder="리뷰 제목" ><br>

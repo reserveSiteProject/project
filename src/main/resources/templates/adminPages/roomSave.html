@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<div th:replace="~{component/nav :: nav}"></div>
 <form action="/admin/room/save" method="post" enctype="multipart/form-data">
     <input type="text" name="roomName" placeholder="방 제목" ><br>
     <input type="text" name="roomPrice" placeholder="방 가격"><br>

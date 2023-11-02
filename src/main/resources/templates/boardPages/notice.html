@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/notice/notice.css}" /> <!-- CSS 파일 링크 추가 -->
 </head>
 <body>
-
+<div th:replace="~{component/nav :: nav}"></div>
 <div class="container">
     <div class="search-container" style="margin-bottom: 10px;">
         <input type="text" id="searchInput" placeholder="검색..." style="margin-bottom: 0px;">
