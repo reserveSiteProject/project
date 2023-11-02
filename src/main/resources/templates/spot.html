@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -118,6 +118,7 @@
 <header>펜션 근처 관광지 추천</header>
 
 <main>
+    <div th:replace="~{component/nav :: nav}"></div>
     <div class="frame-container">
     <div class="frame">
         <img src="https://www.designdb.com/usr/upload/editor/email/2019063016225372f780a1-4963-4a66-a75a-0de2186da60d.jpg" alt="플레이스 캠프 호텔" />

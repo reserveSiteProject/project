@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/input/input.css}">
 </head>
 <body>
+<div th:replace="~{component/nav :: nav}"></div>
 <h1>예약관리 화면출력</h1>
 
 <div id="section" class="container mt-5">
@@ -241,7 +242,7 @@
             document.getElementById("reserve-list").style.display="none";
             document.getElementById("cancel-list").style.display="none";
             document.getElementById("wait-list").style.display="block";
-            document.getElementById("page-list").style.display="block";
+            document.getElementById("page-list").style.display="none";
         }
     }
 </script>

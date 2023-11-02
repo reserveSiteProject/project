@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+<div th:replace="~{component/nav :: nav}"></div>
 <div class="container">
   <div class="row text-center">
     <h3 th:text="${session.loginEmail}">님 결제가 완료 되었습니다.</h3>

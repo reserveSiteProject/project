@@ -55,10 +55,13 @@
   </ul>
   </header>
 
-  <p style="position: fixed; right: 47px " th:if ="${session.memberDTO.memberName != null}">
-    <p th:text="|${session.memberDTO.memberName} 님|">
-    <p class="ms-5"><a href="/member/logout">logout</a></p>
-  </p>
+  <div th:if ="${session.memberDTO!= null}">
+    <span style="position: fixed; right: 47px" th:text="|${session.memberDTO.memberName} 님|"></span>
+      <span style="position: fixed; right: 0px"><a href="/member/logout">logout</a></span>
+  </div>
+  <div th:unless="${session.memberDTO != null}">
+  <p class="ms-5" style="position: fixed; right: 47px"><a href="/member/login">login</a></p>
+  </div>
 
 </nav>
 </div>
