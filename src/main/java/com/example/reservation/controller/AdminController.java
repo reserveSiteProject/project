@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -41,6 +42,13 @@ public class AdminController {
         int startPage = (((int) (Math.ceil((double) page / blockLimit))) - 1) * blockLimit + 1;
         int endPage = ((startPage + blockLimit - 1) < reserveDTOList.getTotalPages()) ? startPage + blockLimit - 1 : reserveDTOList.getTotalPages();
 
+        List<ReserveWaitDTO> ReserveWaitDTOList = reserveWaitService.findAll();
+
+        List<ReserveCancelDTO> reserveCancelDTOList = reserveCancelService.findAll();
+
+
+        model.addAttribute("cancelList", reserveCancelDTOList);
+        model.addAttribute("waitList", ReserveWaitDTOList);
         model.addAttribute("memberReserveList", reserveDTOList);
         model.addAttribute("endPage", endPage);
         model.addAttribute("startPage", startPage);
