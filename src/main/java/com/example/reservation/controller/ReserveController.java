@@ -2,6 +2,7 @@ package com.example.reservation.controller;
 
 import com.example.reservation.dto.*;
 import com.example.reservation.entity.ReserveEntity;
+import com.example.reservation.entity.ReserveStatusEntity;
 import com.example.reservation.repository.ReserveRepository;
 import com.example.reservation.service.*;
 import com.example.reservation.entity.ReserveWaitEntity;
@@ -26,6 +27,7 @@ public class ReserveController {
     private final RoomService roomService;
     private final MemberService memberService;
     private final CouponService couponService;
+    private final ReserveStatusService reserveStatusService;
 
     private final MessageService messageService;  // 추가
 
@@ -115,5 +117,14 @@ public class ReserveController {
     public ResponseEntity coupon(@PathVariable("id")Long id){
         CouponDTO couponDTO = couponService.findByCouponId(id);
         return new ResponseEntity<>(couponDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/request")
+    public ResponseEntity request(Long id){
+        ReserveStatusDTO reserveStatusDTO = reserveStatusService.findByReserveEntity(id);
+        reserveStatusDTO.setStatus(2);
+        System.out.println(reserveStatusDTO);
+        reserveStatusService.save(reserveStatusDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

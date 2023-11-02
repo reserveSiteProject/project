@@ -37,4 +37,5 @@ public interface ReserveRepository extends JpaRepository<ReserveEntity, Long> {
 
 
     Optional<ReserveEntity> findByIdAndMemberEntity(Long id, MemberEntity memberEntity);
+    List<ReserveEntity> findByMemberEntity(MemberEntity memberEntity);
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.lang.model.SourceVersion;
+import java.lang.reflect.Member;
 import java.util.*;
 
 @Service
@@ -20,6 +21,8 @@ public class MyPagesService {
     private final ReserveRepository reserveRepository;
     private final RoomRepository roomRepository;
     private final RoomFileRepository roomFileRepository;
+    private final ReserveCancelRepository reserveCancelRepository;
+    private final ReserveWaitRepository reserveWaitRepository;
     /*
     Entity, dto 변환 매서드 활성화가 되어있지 않아 주석처리 하였음
      */
@@ -123,6 +126,7 @@ public class MyPagesService {
 
     @Transactional
     public List<ReserveDTO> findReserve(MemberDTO memberDTO) {
+        System.out.println("윽윽" + memberDTO.getId());
         MemberEntity memberEntity = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new NoSuchElementException());
         List<ReserveEntity> reserveEntityList = reserveRepository.findAllByMemberEntity(memberEntity);
         List<ReserveDTO> reserveDTOList = new ArrayList<>();
@@ -139,14 +143,43 @@ public class MyPagesService {
     }
     @Transactional
     public List<RoomFileDTO> findFile(MemberDTO memberDTO) {
-        ReserveEntity reserveEntity = reserveRepository.findById(memberDTO.getId()).orElseThrow(() -> new NoSuchElementException());
-        RoomEntity roomEntity = roomRepository.findById(reserveEntity.getId()).orElseThrow(() -> new NoSuchElementException());
-        List<RoomFileEntity> byRoomEntity = roomFileRepository.findByRoomEntity(roomEntity);
+        MemberEntity memberEntity = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new NoSuchElementException());
+        List<ReserveEntity> reserveEntityList = reserveRepository.findByMemberEntity(memberEntity);
         List<RoomFileDTO> roomFileDTOList = new ArrayList<>();
-        for(RoomFileEntity roomFileEntity : byRoomEntity){
-            RoomFileDTO roomFileDTO = RoomFileDTO.toDTO(roomFileEntity, roomEntity.getId());
-            roomFileDTOList.add(roomFileDTO);
+        for (ReserveEntity reserveEntity: reserveEntityList) {
+            RoomEntity roomEntity = roomRepository.findById(reserveEntity.getRoomEntity().getId()).orElseThrow(() -> new NoSuchElementException());
+            List<RoomFileEntity> byRoomEntity = roomFileRepository.findByRoomEntity(roomEntity);
+
+            for(RoomFileEntity roomFileEntity : byRoomEntity){
+                RoomFileDTO roomFileDTO = RoomFileDTO.toDTO(roomFileEntity, roomEntity.getId());
+                roomFileDTOList.add(roomFileDTO);
+            }
+
         }
         return roomFileDTOList;
+    }
+
+    public List<ReserveCancelDTO> findCancel(MemberDTO memberDTO) {
+        Long id = (Long) memberDTO.getId();
+        List<ReserveCancelEntity> reserveCancelEntityList = reserveCancelRepository.findByMemberId(id);
+        List<ReserveCancelDTO> reserveCancelDTOList = new ArrayList<>();
+        for (ReserveCancelEntity reserveCancelEntity : reserveCancelEntityList) {
+            ReserveCancelDTO reserveCancelDTO = ReserveCancelDTO.toDTO(reserveCancelEntity);
+            reserveCancelDTOList.add(reserveCancelDTO);
+        }
+        return reserveCancelDTOList;
+    }
+
+
+    @Transactional
+    public List<ReserveWaitDTO> findWait(MemberDTO memberDTO) {
+        MemberEntity memberEntity = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new NoSuchElementException());
+        List<ReserveWaitEntity> reserveWaitEntitityList = reserveWaitRepository.findByMemberEntity(memberEntity);
+        List<ReserveWaitDTO> reserveWaitDTOList = new ArrayList<>();
+        for (ReserveWaitEntity reserveWaitEntity : reserveWaitEntitityList) {
+            ReserveWaitDTO reserveWaitDTO = ReserveWaitDTO.toDTO(reserveWaitEntity);
+            reserveWaitDTOList.add(reserveWaitDTO);
+        }
+        return reserveWaitDTOList;
     }
 }

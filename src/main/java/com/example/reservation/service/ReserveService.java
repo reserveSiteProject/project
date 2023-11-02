@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.*;
 
@@ -122,4 +123,6 @@ public class ReserveService {
         System.out.println("idazzzz = " + id);
         reserveRepository.deleteById(id);
     }
+
+
 }

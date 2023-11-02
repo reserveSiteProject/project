@@ -142,4 +142,15 @@ public class MemberController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session, HttpServletResponse response){
+        session.removeAttribute("memberDTO");
+        session.removeAttribute("loginEmail");
+        Cookie cookie=new Cookie("memberEmail", "");
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/member/login";
+    }
 }
