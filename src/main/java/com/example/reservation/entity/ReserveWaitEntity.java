@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 
 @Table(name = "reserve_wait_table")
-public class ReserveWaitEntity {
+public class ReserveWaitEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

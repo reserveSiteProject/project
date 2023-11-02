@@ -34,6 +34,7 @@ public class ReserveEntity extends BaseEntity{
     @Column(nullable = false)
     private Long totalPrice;
 
+
     @OneToOne(mappedBy = "reserveEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private PaymentEntity paymentEntity;
 

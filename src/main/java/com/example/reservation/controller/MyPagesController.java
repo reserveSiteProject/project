@@ -111,11 +111,35 @@ public class MyPagesController {
     @GetMapping("/book")
     public String book(HttpSession session, Model model){
         Object memberDTO = session.getAttribute("memberDTO");
+        System.out.println("악악 = " + memberDTO);
+        System.out.println("(MemberDTO) memberDTO) = " + (MemberDTO) memberDTO);
         List<ReserveDTO> reserveDTOList = myPagesService.findReserve((MemberDTO) memberDTO);
+        if(reserveDTOList.size() > 0){
+            model.addAttribute("reserveList", reserveDTOList);
+        }else{
+            model.addAttribute("reserveList", null);
+        }
+
+        List<ReserveCancelDTO> reserveCancelDTOList = myPagesService.findCancel((MemberDTO) memberDTO);
+
+        if(reserveCancelDTOList.size() > 0){
+            model.addAttribute("cancelList", reserveCancelDTOList);
+        }else{
+            model.addAttribute("cancelList", null);
+        }
+
+        List<ReserveWaitDTO> ReserveWaitDTOList = myPagesService.findWait((MemberDTO) memberDTO);
+
+        if(ReserveWaitDTOList.size() > 0){
+            model.addAttribute("waitList", ReserveWaitDTOList);
+        }else{
+            model.addAttribute("waitList", null);
+        }
+
         System.out.println("reserveDTOList = " + reserveDTOList);
         List<RoomFileDTO> roomFileDTOList = myPagesService.findFile((MemberDTO) memberDTO);
         System.out.println("roomFileDTOList = " + roomFileDTOList);
-        model.addAttribute("reserveList", reserveDTOList);
+
         model.addAttribute("fileList", roomFileDTOList);
         return "MyPages/book";
     }
