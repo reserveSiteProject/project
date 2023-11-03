@@ -3,6 +3,7 @@ package com.example.reservation.controller;
 import com.example.reservation.dto.ReviewDTO;
 import com.example.reservation.service.MemberService;
 import com.example.reservation.service.MessageService;
+import com.example.reservation.service.ReserveService;
 import com.example.reservation.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.UrlResource;
@@ -27,6 +28,7 @@ public class ReviewController {
     private final ReviewService reviewService;
     private final MemberService memberService;
     private final MessageService messageService;
+    private final ReserveService reserveService;
 
 
 
@@ -59,6 +61,7 @@ public class ReviewController {
     @PostMapping("/review/save")
     public String reviewSave(@ModelAttribute ReviewDTO reviewDTO) throws IOException {
         Long id = reviewService.save(reviewDTO);
+
         String memberMobile = memberService.findByMemberEmail(reviewDTO.getReviewWriter()).getMemberMobile();
         //문자 발송 메서드 호출
 //        messageService.sendOneReservationComplete(memberMobile);

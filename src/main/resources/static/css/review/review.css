@@ -12,12 +12,12 @@
 .rate label:hover ~ input:checked ~ label { color: #f73c32 !important;  }
 
 .scrollable-content {
-    max-height: 500px; /* 원하는 높이로 조정 가능 */
+    max-height: 1000px; /* 원하는 높이로 조정 가능 */
     overflow: auto;
 }
 
 body {
-    background: #e0e5ec;
+    background: transparent;
     overflow-y: auto;
 
 }
