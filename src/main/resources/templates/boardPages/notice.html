@@ -4,13 +4,18 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <th:block th:replace="~{component/config :: config}"></th:block>
-    <th:block th:replace="~{component/nav :: nav}"></th:block>
-
+    <style>
+        .all{
+            margin-top: 250px;
+        }
+    </style>
     <link rel="stylesheet" th:href="@{/css/nav.css}" /> <!-- CSS 파일 링크 추가 -->
     <link rel="stylesheet" th:href="@{/css/notice/notice.css}" /> <!-- CSS 파일 링크 추가 -->
 </head>
 <body>
 <div th:replace="~{component/nav :: nav}"></div>
+<div class="all">
+</div>
 <div class="container">
     <div class="search-container" style="margin-bottom: 10px;">
         <input type="text" id="searchInput" placeholder="검색..." style="margin-bottom: 0px;">

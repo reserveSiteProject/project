@@ -2,11 +2,192 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block th:replace="~{component/config :: config}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>s
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <style>
+        .all{
+            margin-top: 250px;
+        }
+        .all2{
+            margin-top: 150px;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="~{component/nav :: nav}"></div>
+<div class="all">
+</div>
+<div id="first-slide">
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <iframe width="1500" height="660" src="https://www.youtube.com/embed/uU16OjX0MFI?autoplay=1&mute=1&controls=0&loop=1&playlist=uU16OjX0MFI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <div class="swiper-slide">
+                <img src="./images/img.png" style="width:1500px;height:660px;">
+            </div>
+            <div class="swiper-slide">
+                <img src="./images/55.jpg" style="width:1500px;height:660px;">
+            </div>
+            <div class="swiper-slide">
+                <img src="./images/44.jpg" style="width:1500px;height:660px;">
+            </div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
 
+<div class="all2">
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="works_container">
+            <div class="works_main">
+                <div class="works_front">실내 수영장</div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+<div class="works_container1 ">
+    <div class="works_main1">
+        <div class="works_front1">
+            <img src="./images/room2.jpg">
+        </div>
+        <div class="works_back1">
+            <p>Standard</p>
+        </div>
+    </div>
+</div>
+    </div>
+    <div class="col">
+        <div class="works_container2">
+            <div class="works_main2" onclick="">
+                <div>
+                    <img src="./images/room4.jpg">
+                </div>
+                <p>Deluxe</p>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="works_container">
+            <div class="works_main">
+                <div class="works_front">온수</div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="works_container1 ">
+            <div class="works_main1">
+                <div class="works_front1">
+                    <img src="./images/room6.jpg">
+                </div>
+                <div class="works_back1">
+                    <p>Premium</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="all2">
+</div>
+
+
+<div class="row ms-5">
+    <div class="col animate__animated" id="animationTarget1">
+        <h3>room type</h3>
+        <h1>Poolvilla</h1><br>
+        <h3>독채 풀빌라</h3><br>
+        <h5>사계절 이용 가능한 수영장과 야외 자쿠지, 바비큐, 불멍 등
+            온가족이 즐기실 수 있는 시설이 준비되어있는
+            정원이 넓은 독채 풀빌라입니다.</h5><br>
+            <h5>머무르는 공간의 이야기가 풍부할 수록
+            여행의 기억이 더 특별해집니다.
+            일상에서 무뎌진 감정과 설렘을 다시 깨우는
+            광이멀 풀빌라의 이야기를 만나보세요.</h5>
+</div>
+    <div class="col me-5 animate__animated" id="animationTarget2">
+    <img src="./images/room5.jpg" width="100%">
+    </div>
+    </div>
+
+    <div class="all2">
+    </div>
+
+    <div id="second">
+    </div>
+
+
+
+<script th:inline="javascript">
+
+    var animate1Target = document.getElementById("animationTarget1");
+    var animate2Target = document.getElementById("animationTarget2");
+
+    function checkVisible(element, check = 'above') {
+        const viewportHeight = window.innerHeight; // Viewport Height
+        const scrolltop = window.scrollY; // Scroll Top
+        const y = element.getBoundingClientRect().top;
+        const elementHeight = element.clientHeight;
+
+        if (check === "visible") {
+            return y < viewportHeight + scrolltop && y > scrolltop - elementHeight;
+        }
+
+        if (check === "above") {
+            return y < viewportHeight + scrolltop;
+        }
+    }
+
+    let isVisible = false;
+
+    const func = function () {
+        if (!isVisible && checkVisible(document.getElementById('second'), 'visible')) {
+            animate1Target.classList.add("animate__backInLeft");
+            animate2Target.classList.add("animate__backInRight");
+            isVisible = true;
+        }
+
+        isVisible && window.removeEventListener('scroll', func);
+    };
+
+    window.addEventListener('scroll', func);
+
+
+
+    var swiper = new Swiper(".mySwiper", {
+        spaceBetween: 30,
+        effect: "fade",
+        centeredSlides: true,
+        loop: true,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+    });
+
+    window.addEventListener('scroll', function(){
+      console.log(window.scrollY)
+    });
+
+
+
+
+
+</script>
 </body>
-
 </html>

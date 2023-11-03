@@ -6,9 +6,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Hi+Melody&display=swap" rel="stylesheet">
     <th:block th:replace="~{component/config :: config}"></th:block>
     <link rel="stylesheet" th:href="@{/css/imageSlide/imageSlide.css}">
+    <style>
+        .all{
+            margin-top: 250px;
+        }
+    </style>
 
 </head>
 <body>
+<div th:replace="~{component/nav :: nav}"></div>
+<div class="all">
+</div>
 <div class="container">
     <h1>room</h1>
     <h2>디럭스 룸</h2>
@@ -23,7 +31,6 @@
         </div>
     </div>
 </main>
-<h3>ㅎㅎㅎㅎㅎㅎ</h3>
 </body>
 <script th:inline="javascript">
     var images = [];
