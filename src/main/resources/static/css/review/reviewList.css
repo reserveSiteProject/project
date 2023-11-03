@@ -23,15 +23,26 @@ body {
 }
 
 .btn-outline-success {
-    border-radius: 20px;
-    border-color: #00aaff;
-    color: #00aaff;
-    transition: background-color 0.3s, color 0.3s;
+    margin-left: 0; /* 첫 번째 버튼에는 왼쪽 여백을 주지 않습니다. */
 }
 
 .btn-outline-success:hover {
     background-color: #00aaff;
     color: white;
+}
+
+.btn-outline-success,
+.btn-primary {
+    padding: 0.5rem 1rem; /* 버튼의 패딩을 조정합니다. */
+    font-size: 1rem; /* 텍스트 크기를 조정합니다. */
+    line-height: 1.5; /* 텍스트 라인 높이를 조정합니다. */
+    margin-left: 0.5rem; /* 버튼 사이의 여백을 조정합니다. 첫 번째 버튼에는 적용하지 않도록 주의하세요. */
+    /* 추가적인 스타일 속성 */
+}
+
+.btn-primary:hover {
+    background-color: #28a745; /* 부트스트랩 '성공' 녹색 */
+    border-color: #28a745;
 }
 
 table {
