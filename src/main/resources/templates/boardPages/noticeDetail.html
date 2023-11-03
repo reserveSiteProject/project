@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>공지사항 상세 페이지</title>
+<!--    <th:block th:replace="~{component/config :: config}"></th:block>-->
+
     <link rel="stylesheet" th:href="@{/css/notice/noticeDetail.css}" />
 
     <!-- 썸머노트 CSS 추가 -->
@@ -14,9 +16,7 @@
     </style>
 </head>
 <body>
-<div th:replace="~{component/nav :: nav}"></div>
-<div class="all">
-</div>
+<div th:replace="~{component/sideBar :: sideBar}"></div>
 <div style="text-align: center; margin: 20px auto;">
     <h1>공지사항 상세 페이지</h1>
 

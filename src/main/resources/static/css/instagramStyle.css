@@ -1,0 +1,132 @@
+/* instagramStyle.css */
+body, html {
+    font-family: 'Avenir', 'Helvetica', sans-serif;
+    background: #fafafa;
+    color: #262626;
+}
+
+#all-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.page-title {
+    font-size: 24px;
+    font-weight: bolder;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.form-field, .textarea-field {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+}
+
+.file-input-label {
+    display: block;
+    padding: 8px;
+    text-align: center;
+    background: #0095f6;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 8px;
+    background: #3897f0;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.rating-prompt {
+    margin: 10px 0;
+}
+
+/* instagramStyle.css 수정 버전 - 버튼과 라벨에 애니메이션 추가 */
+
+/* 버튼과 라벨의 공통 스타일 */
+.button-anim {
+    display: block;
+    padding: 8px;
+    text-align: center;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+/* 호버 상태에서의 애니메이션 */
+&:hover {
+     transform: translateY(-2px);
+     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+ }
+/* 클릭 시 액티브 상태의 애니메이션 */
+&:active {
+     transform: translateY(1px);
+     box-shadow: none;
+ }
+}
+
+.file-input-label {
+    background: linear-gradient(45deg, #f06, #a2d, #f6a, #d2f);
+    background-size: 400% 400%;
+    animation: GradientShift 4s ease infinite;
+    margin-bottom: 15px;
+    /* 공통 스타일 상속 */
+    @extend .button-anim;
+}
+
+.submit-btn {
+    background: linear-gradient(45deg, #ff7e5f, #feb47b);
+    background-size: 200% 200%;
+    animation: GradientShift 2s ease infinite;
+    border: none;
+    font-weight: bold;
+    /* 공통 스타일 상속 */
+    @extend .button-anim;
+}
+
+/* 그라데이션 애니메이션을 위한 키프레임 */
+@keyframes GradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 사용자가 상호작용하지 않았을 때 파일 입력의 스타일을 적용 */
+input[type="file"] {
+    opacity: 0;
+    width: 0.1px;
+    height: 0.1px;
+    position: absolute;
+}
+
+input[type="file"] + .file-input-label {
+    text-align: center;
+    margin: auto;
+    /* 필요에 따라 더 많은 스타일을 추가할 수 있습니다 */
+}
+
+/* 사용자가 라벨에 호버했을 때의 파일 입력 스타일 */
+input[type="file"]:focus + .file-input-label,
+input[type="file"]:hover + .file-input-label {
+    background: linear-gradient(45deg, #a2df6, #f6ad2, #d6f2a, #fa6df);
+}
+
+/* 반응형 터치 추가 */
+@media (max-width: 768px) {
+    .file-input-label, .submit-btn {
+        padding: 10px 20px;
+    }
+}
+

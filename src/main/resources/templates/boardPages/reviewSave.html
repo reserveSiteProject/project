@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!-- Head 부분에 아래 내용 추가 -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.js"></script>
+    <th:block th:replace="~{component/config :: config}"></th:block>
     <link rel="stylesheet" th:href="@{/css/review/review.css}" /> <!-- CSS 파일 링크 추가 -->
+    <link rel="stylesheet" th:href="@{/css/instagramStyle.css}" />
+
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
@@ -15,15 +14,16 @@
     </style>
 </head>
 <body>
-<div th:replace="~{component/nav :: nav}"></div>
-<div class="all">
-</div>
-<h1>리뷰 작성 페이지</h1>
-<form action="/board/review/save" method="post" enctype="multipart/form-data">
-<input type="text" name="reviewTitle" placeholder="리뷰 제목" ><br>
-<input type="text" name="reviewWriter" placeholder="리뷰 작성자" th:value="${session.loginEmail}" readonly><br>
+<!--<div th:replace="~{component/nav :: nav}"></div>-->
+<div th:replace="~{component/sideBar :: sideBar}"></div>
 
-    <div>혼저옵서예는 어땠나요??</div>
+<div id="all-container" class="instagram-style-container">
+    <h1 class="page-title">리뷰 작성하기</h1>
+<form action="/board/review/save" method="post" enctype="multipart/form-data" class="review-form">
+<input type="text" name="reviewTitle" placeholder="리뷰 제목" class="form-field"><br>
+<input type="text" name="reviewWriter" placeholder="리뷰 작성자" th:value="${session.loginEmail}" readonly class="form-field"><br>
+
+    <div class="rating-prompt">별점을 선택해주세요:</div>
     <!--별점회색 바탕영역 표시-->
     <div class="rate">
         <span style="width: 50%"></span>
@@ -49,14 +49,23 @@
 
 
     <textarea name="reviewContents" cols="30" rows="10" placeholder="리뷰 내용을 입력하세요"></textarea><br>
-    <input type="file" name="reviewFile" multiple><br>
-    <input type="submit" value="리뷰 작성하기">
+    <!-- File Input -->
+    <label class="file-input-label">
+        <input type="file" name="reviewFile" multiple>
+        <span>사진 업로드</span>
+    </label>    <input type="submit" value="리뷰 게시하기" class="submit-btn">
 </form>
+</div>
+
 </body>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/summernote.min.js}"></script>
+<script th:src="@{/js/reviewPageScript.js}"></script>
 <script>
     $(document).ready(function() {
         $('textarea[name="reviewContents"]').summernote({
-            height: 200,
+            height: 300,
+            width : '100%',
             toolbar: [
                 // [groupName, [list of button]]
                 ['style', ['bold', 'italic', 'underline', 'clear']],

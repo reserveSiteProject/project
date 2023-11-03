@@ -12,12 +12,12 @@
 .rate label:hover ~ input:checked ~ label { color: #f73c32 !important;  }
 
 .scrollable-content {
-    max-height: 500px; /* 원하는 높이로 조정 가능 */
+    max-height: 1000px; /* 원하는 높이로 조정 가능 */
     overflow: auto;
 }
 
 body {
-    background: #e0e5ec;
+    background: transparent;
     overflow-y: auto;
 
 }
@@ -162,7 +162,8 @@ button {
 .container-responsive {
     max-width: 1000px; /* 최대 크기 설정. 필요한 크기로 조정하세요. */
     width: 90%; /* 브라우저 크기에 따라 반응형으로 조절됨 */
-    margin: 0 auto; /* 중앙 정렬 */
+    /*margin: 0 auto; !* 중앙 정렬 *!*/
+    margin-left: 500px;
     display: flex;
     flex-direction: column;  /* 컨텐츠를 세로 방향으로 정렬 */
     justify-content: space-between;  /* 컨텐츠 사이에 공간을 최대화 */

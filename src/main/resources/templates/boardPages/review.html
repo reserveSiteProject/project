@@ -3,31 +3,48 @@
 <head>
     <th:block th:replace="~{component/config :: config}"></th:block>
     <link rel="stylesheet" th:href="@{/css/review/reviewList.css}" /> <!-- CSS 파일 링크 추가 -->
-    <style>
-        .all{
-            margin-top: 250px;
-        }
-    </style>
 </head>
 <body>
 <div th:replace="~{component/nav :: nav}"></div>
 <div class="all">
 </div>
 
+<div id = "all-container" style="margin-top : 280px;">
 <div class="container-fluid mt-5 mb-5">
     <div class="d-flex justify-content-end mb-3">
 
-        <!--검색부분-->
-        <form action="/board/review" method="get">
-            <div class="row">
-                <div class="col">
-                    <input class="form-control w-auto" type="search" name="q" placeholder="검색어를 입력하세요"
-                           aria-label="Search">
-                </div>
-                <div class="col">
-                    <button class="btn btn-outline-success mb-2" type="submit">Search</button>
+<!--        &lt;!&ndash;검색부분&ndash;&gt;-->
+<!--        <form action="/board/review" method="get" class="d-flex justify-content-between">-->
+<!--            <div class="row">-->
+<!--                <div class="col">-->
+<!--                    <input class="form-control w-auto" type="search" name="q" placeholder="검색어를 입력하세요"-->
+<!--                           aria-label="Search">-->
+<!--                </div>-->
+<!--                <div class="col">-->
+<!--                    <button class="btn btn-outline-success mb-2" type="submit">Search</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </form>-->
+
+<!--        <form action="/board/review" method="get" class="d-flex justify-content-between">-->
+<!--            <div class="input-group">-->
+<!--                <input class="form-control" type="search" name="q" placeholder="검색어를 입력하세요" aria-label="Search">-->
+<!--                <div class="input-group-append">-->
+<!--                    <button class="btn btn-outline-success" type="submit">검색</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; 리뷰 작성하기 버튼 추가 &ndash;&gt;-->
+<!--            <a href="/path-to-review-writing" class="btn btn-primary ml-3">리뷰 작성하기</a>-->
+<!--        </form>-->
+
+        <form action="/board/review" method="get" class="d-flex justify-content-between">
+            <div class="input-group">
+                <input class="form-control" type="search" name="q" placeholder="검색어를 입력하세요" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-success" type="submit">검색</button>
                 </div>
             </div>
+            <a href="/board/review/save" class="btn btn-primary ml-3" style="margin-left: 1rem;">리뷰 작성하기</a>
         </form>
         <!--검색부분-->
     </div>
@@ -101,6 +118,7 @@
             </ul>
         </div>
     </div>
+</div>
 </div>
 
 <script>
