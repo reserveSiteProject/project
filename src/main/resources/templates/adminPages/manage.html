@@ -4,9 +4,16 @@
 <head>
     <link rel="stylesheet" th:href="@{/css/button/button.css}">
     <th:block th:replace="~{component/config :: config}"></th:block>
+    <style>
+        .all{
+            margin-top: 250px;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="~{component/nav :: nav}"></div>
+<div class="all">
+</div>
 <h1>회원목록 출력</h1>
 <div class="container mt-5 mb-5">
     <div id="search-area" class="mt-5">

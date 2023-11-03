@@ -29,6 +29,8 @@
     transition: height 0.4s ease; /* 높이 변경 시 애니메이션 적용, 원하는 지속 시간 및 이징 함수를 설정하세요. */
 }
 
+
+
 #nav-style nav:hover {
     height: 450px; /* 호버 시 높이 변경 */
 }

@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+  <style>
+    .all{
+      margin-top: 250px;
+    }
+  </style>
 </head>
 <body>
 <div th:replace="~{component/nav :: nav}"></div>
+<div class="all">
+</div>
 <div class="container">
   <div class="row text-center">
     <h3 th:text="${session.loginEmail}">님 결제가 완료 되었습니다.</h3>

@@ -3,9 +3,16 @@
 <head>
   <th:block th:replace="~{component/config :: config}"></th:block>
   <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <style>
+    .all{
+      margin-top: 250px;
+    }
+  </style>
 </head>
 <body>
 <div th:replace="~{component/nav :: nav}"></div>
+<div class="all">
+</div>
 <div class="container mt-5 mb-5">
   <form method="post" action="member/login" class="card p-3" name="frm">
     <div class="row justify-content-center">

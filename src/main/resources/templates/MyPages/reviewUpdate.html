@@ -2,10 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <th:block th:replace="~{component/config :: config}"></th:block>
-
+  <style>
+    .all{
+      margin-top: 250px;
+    }
+  </style>
 </head>
 <body>
 <div th:replace="~{component/nav :: nav}"></div>
+<div class="all">
+</div>
 
 <div class="container mt-5 mb-5">
   <!-- 화면에 보여질 내용이 들어갈 부분 -->

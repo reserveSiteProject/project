@@ -3,10 +3,17 @@
 <head>
     <link rel="stylesheet" th:href="@{/css/input/payStyle.css}">
     <th:block th:replace="~{component/config :: config}"></th:block>
+    <style>
+        .all{
+            margin-top: 250px;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="~{component/nav :: nav}"></div>
 <div class="container mt-5 mb-5">
+    <div class="all">
+    </div>
     <h3>객실선택</h3>
     <div class="row">
         <table class="table table-hover">
