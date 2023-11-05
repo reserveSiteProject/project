@@ -1,6 +1,5 @@
 package com.example.reservation.dto;
 
-import com.example.reservation.entity.RoomEntity;
 import com.example.reservation.entity.RoomFileEntity;
 import lombok.Data;
 

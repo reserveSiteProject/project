@@ -1,7 +1,6 @@
 package com.example.reservation.dto;
 
 import com.example.reservation.entity.ReserveCancelEntity;
-import com.example.reservation.entity.ReserveStatusEntity;
 import com.example.reservation.util.UtilClass;
 import lombok.Data;
 

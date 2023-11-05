@@ -1,14 +1,10 @@
 package com.example.reservation.entity;
 
 import com.example.reservation.dto.ReviewDTO;
-import jdk.jshell.Snippet;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

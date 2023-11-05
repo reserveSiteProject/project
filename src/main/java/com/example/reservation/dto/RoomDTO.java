@@ -1,13 +1,11 @@
 package com.example.reservation.dto;
 
-import com.example.reservation.entity.ReviewFileEntity;
 import com.example.reservation.entity.RoomEntity;
 import com.example.reservation.entity.RoomFileEntity;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 

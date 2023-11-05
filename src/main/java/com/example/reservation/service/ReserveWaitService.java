@@ -1,12 +1,9 @@
 package com.example.reservation.service;
 
-import com.example.reservation.dto.ReserveDTO;
 import com.example.reservation.dto.ReserveWaitDTO;
-import com.example.reservation.dto.RoomDTO;
 import com.example.reservation.entity.MemberEntity;
 import com.example.reservation.entity.ReserveEntity;
 import com.example.reservation.entity.ReserveWaitEntity;
-import com.example.reservation.entity.RoomEntity;
 import com.example.reservation.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

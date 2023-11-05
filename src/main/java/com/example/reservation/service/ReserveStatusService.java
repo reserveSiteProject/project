@@ -6,7 +6,6 @@ import com.example.reservation.entity.ReserveStatusEntity;
 import com.example.reservation.repository.ReserveRepository;
 import com.example.reservation.repository.ReserveStatusRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;

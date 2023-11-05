@@ -1,6 +1,5 @@
 package com.example.reservation.controller;
 
-import com.example.reservation.dto.MemberDTO;
 import com.example.reservation.dto.NoticeDTO;
 import com.example.reservation.service.MemberService;
 import com.example.reservation.service.MessageService;

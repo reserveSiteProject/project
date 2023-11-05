@@ -1,9 +1,8 @@
 package com.example.reservation.controller;
 
+//import com.example.reservation.controller.dto.*;
 import com.example.reservation.dto.*;
 import com.example.reservation.entity.MemberEntity;
-import com.example.reservation.entity.ReserveCancelEntity;
-import com.example.reservation.entity.ReserveEntity;
 import com.example.reservation.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

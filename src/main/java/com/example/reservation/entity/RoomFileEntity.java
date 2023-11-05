@@ -4,7 +4,6 @@ import com.example.reservation.dto.RoomDTO;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 

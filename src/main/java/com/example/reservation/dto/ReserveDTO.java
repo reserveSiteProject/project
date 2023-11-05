@@ -1,12 +1,10 @@
 package com.example.reservation.dto;
 
 
-import com.example.reservation.entity.PaymentEntity;
 import com.example.reservation.entity.ReserveEntity;
 import com.example.reservation.entity.RoomFileEntity;
 import com.example.reservation.util.UtilClass;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;

@@ -1,7 +1,6 @@
 package com.example.reservation.service;
 
 import com.example.reservation.dto.CouponDTO;
-import com.example.reservation.dto.MemberDTO;
 import com.example.reservation.entity.CouponEntity;
 import com.example.reservation.entity.MemberEntity;
 import com.example.reservation.repository.CouponRepository;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

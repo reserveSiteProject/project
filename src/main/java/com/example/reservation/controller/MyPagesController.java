@@ -1,5 +1,6 @@
 package com.example.reservation.controller;
 
+import com.example.reservation.controller.dto.*;
 import com.example.reservation.dto.*;
 import com.example.reservation.service.MyPagesService;
 import lombok.RequiredArgsConstructor;

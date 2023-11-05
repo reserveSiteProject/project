@@ -2,8 +2,6 @@ package com.example.reservation.service;
 
 import com.example.reservation.dto.ReserveDTO;
 import com.example.reservation.dto.ReserveStatusDTO;
-import com.example.reservation.dto.ReserveWaitDTO;
-import com.example.reservation.dto.RoomDTO;
 import com.example.reservation.entity.*;
 import com.example.reservation.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.*;
 

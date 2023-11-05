@@ -1,11 +1,9 @@
 package com.example.reservation.controller;
 
+import com.example.reservation.controller.dto.*;
 import com.example.reservation.dto.*;
-import com.example.reservation.entity.ReserveEntity;
-import com.example.reservation.entity.ReserveStatusEntity;
 import com.example.reservation.repository.ReserveRepository;
 import com.example.reservation.service.*;
-import com.example.reservation.entity.ReserveWaitEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Controller
 @RequiredArgsConstructor

@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import lombok.Setter;
 import lombok.extern.java.Log;
 
-import javax.servlet.http.HttpSession;
-
 @Log
 @Controller
 @RequiredArgsConstructor
