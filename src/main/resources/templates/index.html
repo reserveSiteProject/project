@@ -17,11 +17,24 @@
         .all2{
             margin-top: 150px;
         }
+
+        #chat-div {
+            z-index: 9999;
+            position: fixed;
+            bottom: 10px; /* chat-icon을 화면 상단에 고정 */
+            right: 10px; /* chat-icon을 화면 우측 상단에 고정 */
+        }
+        .text-box div:nth-child(n+1) {
+            display: none;
+        }
     </style>
 </head>
 <body>
 <div th:replace="~{component/nav :: nav}"></div>
 <div class="all">
+</div>
+<div class="text-end" id="chat-div">
+    <i class="bi bi-chat-dots me-5" style="font-size: 60px; cursor: pointer " id="chat-icon" onclick="show_chat()"></i>
 </div>
 <div id="first-slide">
     <div class="swiper mySwiper">
@@ -186,6 +199,36 @@
 
 
 
+    $("#chat-icon").hover(
+        function() {
+            $(this).removeClass("bi-chat-dots");
+            $(this).addClass("bi-chat-dots-fill");
+        }, function() {
+            $(this).addClass("bi-chat-dots");
+            $(this).removeClass("bi-chat-dots-fill");
+        }
+    );
+
+    $(window).scroll(function() {
+        var chatIcon = $("#chat-icon");
+        var offset = chatIcon.offset();
+        if (offset.top > 10) {
+            chatIcon.addClass("chat-icon-fixed");
+        } else {
+            chatIcon.removeClass("chat-icon-fixed");
+        }
+    });
+
+
+    const show_chat = () => {
+        const member = [[${session.memberDTO}]]
+        const id=member.id;
+        if(id!=null){
+            window.open(`${id}`, "_blank", "width=600, height=1300, left=100, top=50");
+        }else{
+            alert("로그인해주세요")
+        }
+    }
 
 
 </script>
