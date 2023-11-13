@@ -30,4 +30,9 @@ public class HomeController {
         return "spot";
     }
 
+    @GetMapping("/error/404")
+    public String error(){
+        return "error";
+    }
+
 }
