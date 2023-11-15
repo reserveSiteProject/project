@@ -20,7 +20,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         // 세션객체 생성
         HttpSession session = request.getSession();
         // 세션에 저장된 로그인 정보 확인
-        if (session.getAttribute("user") == null) {
+        if (session.getAttribute("memberDTO") == null) {
             // 로그인하지 않았다면 로그인페이지로 보내면서
             // 요청한 주소값도 같이 보냄
             response.sendRedirect("/member/login?redirectURI=" + requestURI);

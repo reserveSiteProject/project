@@ -18,6 +18,7 @@
     <div class="row justify-content-center">
         <h3 class="text-center">로그인페이지</h3>
     </div>
+    <input type="hidden" name="redirectURI" th:value="${redirectURI}">
     <div class="row justify-content-center mt-5">
       <div class="col-3">
       <div class="input-group">
@@ -80,6 +81,7 @@
     const memberEmail = document.querySelector("[name = 'memberEmail']").value;
     const memberPassword = document.querySelector("[name = 'memberPassword']").value;
     const loginCheck = document.getElementById("login-check");
+    const redirectURI =$(frm.redirectURI).val();
     const keep=$(frm.keep).is(":checked");
     if(memberEmail==""){
       loginCheck.innerHTML = "이메일 입력바람";
@@ -94,10 +96,10 @@
         type:"post",
         url:"/member/login",
         data:{
-          memberEmail, memberPassword, keep
+          memberEmail, memberPassword, keep, redirectURI
         },
         success:function(data){
-          location.href="/";
+          location.href= data;
         }, error:function (data){
           console.log(data)
           loginCheck.innerHTML = "아이디 또는 비밀번호 확인바람";
@@ -123,6 +125,7 @@
             console.log(response)
             const memberEmail = response.kakao_account.email;
             const nickName = response.properties.nickname;
+            const redirectURI =$(frm.redirectURI).val();
             $.ajax({
               url:"/member/kakao",
               type:"get",
@@ -134,11 +137,11 @@
                   type:"post",
                   url:"/member/kakao/login",
                   data:{
-                    memberEmail
+                    memberEmail, redirectURI
                   },
                   success:function(data){
                     console.log(data)
-                    location.href="/";
+                    location.href= data;
                   }
                 })
               },error:function(data){

@@ -64,7 +64,9 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public String login(){
+    public String login(@RequestParam(value = "redirectURI", defaultValue = "/") String redirectURI, Model model){
+        System.out.println("redirectURI = " + redirectURI);
+        model.addAttribute("redirectURI", redirectURI);
         return "memberPages/memberLogin";
     }
 
@@ -97,7 +99,7 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@ModelAttribute MemberDTO memberDTO, @RequestParam("keep") boolean keep, HttpSession session, HttpServletResponse response){
+    public ResponseEntity login(@ModelAttribute MemberDTO memberDTO, @RequestParam("keep") boolean keep, HttpSession session, HttpServletResponse response, @RequestParam("redirectURI") String redirectURI){
         MemberDTO login = memberService.login(memberDTO);
         if(login!=null){
             session.setAttribute("memberDTO", login);
@@ -110,7 +112,7 @@ public class MemberController {
                 cookie.setPath("/");
                 response.addCookie(cookie);
             }
-            return new ResponseEntity<>(memberDTO, HttpStatus.OK);
+            return new ResponseEntity<>(redirectURI, HttpStatus.OK);
         }else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -119,15 +121,16 @@ public class MemberController {
 
     //카카오용
     @PostMapping("/kakao/login")
-    public ResponseEntity login(@RequestParam("memberEmail") String memberEmail, HttpSession session){
+    public ResponseEntity login(@RequestParam("memberEmail") String memberEmail, HttpSession session, @RequestParam("redirectURI") String redirectURI){
         System.out.println("memberEmail = " + memberEmail);
+        System.out.println("redirectURI = " + redirectURI);
         MemberDTO memberDTO = memberService.findByMemberEmail(memberEmail);
         MemberDTO login = memberService.login(memberDTO);
         if(login!=null){
             session.setAttribute("loginEmail", memberDTO.getMemberEmail());
             session.setAttribute("memberDTO", memberDTO);
             System.out.println("login = " + login);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(redirectURI, HttpStatus.OK);
         }else{
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
