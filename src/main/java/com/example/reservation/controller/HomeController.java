@@ -10,15 +10,6 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/room")
-    public String roomIndex() {
-        return "roomList";
-    }
-
-    @GetMapping("/introduction")
-    public String introduction() {
-        return "introduction";
-    }
 
     @GetMapping("/direction")
     public String direction() {
