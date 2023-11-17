@@ -32,7 +32,7 @@
                 <li><a href="/spot" aria-label="spot">관광지 소개</a></li>
               </ul>
             </li>
-            <li class="str" th:if="${session.loginEmail!=null and session.loginEmail != 'admin.admin.com'}"><a href="/member/login">MyPage</a>
+            <li class="str" th:if="${session.loginEmail!=null and session.loginEmail != 'admin@admin.com'}"><a href="/member/login">MyPage</a>
               <ul class="sub-menu">
                 <li><a href="/myPages" aria-label="subemnu">회원수정</a></li>
                 <li><a href="/myPages/review" aria-label="subemnu">내 리뷰</a></li>
@@ -52,7 +52,7 @@
                 <li><a href="/room/list" aria-label="roomlist">방리스트</a></li>
               </ul>
             </li>
-            <li class="str" th:if="${session.loginEmail == 'admin.admin.com'}"><a href="#">ADMIN</a>
+            <li class="str" th:if="${session.loginEmail == 'admin@admin.com'}"><a href="#">ADMIN</a>
               <ul class="sub-menu">
                 <li><a href="/admin/reserve" aria-label="subemnu">예약관리</a></li>
                 <li><a href="/admin/manage" aria-label="subemnu">멤버관리</a></li>
