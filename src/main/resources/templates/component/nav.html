@@ -32,12 +32,12 @@
                 <li><a href="/spot" aria-label="spot">관광지 소개</a></li>
               </ul>
             </li>
-            <li class="str" th:if="${session.loginEmail!=null and session.loginEmail != 'admin.admin.com'}"><a href="/member/login">MyPage</a>
+            <li class="str" th:if="${session.loginEmail!=null and session.loginEmail != 'admin.admin.com'}"><a href="/member/login"> MyPage </a>
               <ul class="sub-menu">
-                <li><a href="/myPages" aria-label="subemnu">회원수정</a></li>
-                <li><a href="/myPages/review" aria-label="subemnu">내 리뷰</a></li>
-                <li><a href="/myPages/book" aria-label="subemnu">나의 예약</a></li>
-                <li><a href="/myPages/coupon" aria-label="subemnu">나의 쿠폰</a></li>
+                <li><a href="/myPages" aria-label="submenu">회원수정</a></li>
+                <li><a href="/myPages/review" aria-label="submenu">내 리뷰</a></li>
+                <li><a href="/myPages/book" aria-label="submenu">나의 예약</a></li>
+                <li><a href="/myPages/coupon" aria-label="submenu">나의 쿠폰</a></li>
               </ul>
             </li>
             <li class="str"><a href="/board/review">BULLETIN BOARD</a>
@@ -54,9 +54,9 @@
             </li>
             <li class="str" th:if="${session.loginEmail == 'admin.admin.com'}"><a href="#">ADMIN</a>
               <ul class="sub-menu">
-                <li><a href="/admin/reserve" aria-label="subemnu">예약관리</a></li>
-                <li><a href="/admin/manage" aria-label="subemnu">멤버관리</a></li>
-                <li><a href="/admin/room/save" aria-label="subemnu">방등록</a></li>
+                <li><a href="/admin/reserve" aria-label="submenu">예약관리</a></li>
+                <li><a href="/admin/manage" aria-label="submenu">멤버관리</a></li>
+                <li><a href="/admin/room/save" aria-label="submenu">방등록</a></li>
               </ul>
             </li>
           </ul>
